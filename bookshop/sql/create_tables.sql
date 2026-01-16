@@ -28,6 +28,7 @@ CREATE TABLE product (
   series_id INT,
   publisher VARCHAR(100),
   recommend_flg TINYINT DEFAULT 0,
+  img VARCHAR(100),
   FOREIGN KEY (category_id) REFERENCES category(id),
   FOREIGN KEY (series_id) REFERENCES series(id)
 );
