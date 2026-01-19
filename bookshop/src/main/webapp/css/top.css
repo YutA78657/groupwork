@@ -1,17 +1,17 @@
 @charset "UTF-8";
-#book_img {
+.book_img {
 	width:auto;
 	height:100%;
 	display:block;
 	margin: auto;
 }
 
-#book_img_area {
+.book_img_area {
 	height: 55%;
 	background-color: aquamarine;
 }
 
-#book_text_area {
+.book_text_area {
 	height: 40%;
 	width: 95%;
 	background-color: antiquewhite;
@@ -19,7 +19,7 @@
 	margin: auto;
 }
 
-#book {
+.book {
 	width: 18%;
 	aspect-ratio: 3/4;
 	background-color: cornflowerblue;
@@ -31,21 +31,19 @@
 
 #parent {
 	display:flex;
-	width: 2000px;
+	width: 1500px;
 	margin: auto;
 	background-color: cadetblue;
 	justify-content: space-between;
-	padding-left: 20px;
-	padding-right: 20px;
 	flex-wrap: wrap;
 }
 
-#title {
-	font-size: 20px;
+.title {
+	font-size: 1em;
 }
 
-#price {
-	font-size:20px;
+.price {
+	font-size:1em;
 	color:darkred;
 }
 
