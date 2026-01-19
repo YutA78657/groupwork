@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+header{
+	background-color: brown;
+	height: 100px;
+	min-width: 1500px;
+}
