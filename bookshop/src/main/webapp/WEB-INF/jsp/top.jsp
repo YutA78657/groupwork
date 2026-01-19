@@ -19,8 +19,8 @@
 		</div>
 		<div class="book_text_area">
 			<p class="title"><a href="https://www.hanmoto.com/bd/isbn/9784297153335#"><%=book.getTitle()%></a></p>
-			<p><%=book.getAuther()%></p>
-			<p class="price"><%=book.getPrice()%>円</p>
+			<p class="auther"><%=book.getAuther()%></p>
+			<p class="price">￥<%=book.getPrice()%></p>
 		</div>
 			
 		<div>
