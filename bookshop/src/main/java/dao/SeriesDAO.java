@@ -8,21 +8,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeriesDAO {
+import model.Series;
+
+
+
+public class SeriesDAO extends DAO{
 	
 	public List<Series>findAll(){
+		load();
 		List<Series> list = new ArrayList<>();
 		
 		String sql = "SELECT id ,name FROM categories ORDER BY id";
 
-		try (Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+		try (Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()){
+			
+			
 
 			while(rs.next()) {
-				Series series = new Series();
-				series.setId(rs.getInt("id"));
-				series.setName(rs.getString("name"));
+				Series series = new Series(rs.getInt("id"),rs.getString("name"));
 				list.add(series);
 				
 				
