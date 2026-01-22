@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+/* --- 全体の初期設定 --- */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- ロゴエリア（フォームの外） --- */
+.logo-area {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.site-logo {
+  max-width: 300px; 
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+/* --- ログインフォーム全体のコンテナ --- */
+.login-container {
+  background-color: #ffffff;
+  padding: 40px 60px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 700px;
+  min-height: 420px;
+}
+
+/* --- タイトル --- */
+h1 {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #000000;
+  font-size: 24px;
+}
+
+/* --- 入力フィールドのグループ --- */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+/* --- ボタンエリア --- */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.form-actions input[type="submit"],
+.form-actions button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+/* --- ログインボタン --- */
+.form-actions input[type="submit"] {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.form-actions input[type="submit"]:hover {
+  background-color: #d5d5d5;
+}
+
+/* --- 新規登録ボタン --- */
+.form-actions button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.form-actions button:hover {
+  background-color: #d5d5d5;
+}
+
+/* --- スマホ・小画面用の調整 --- */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 24px 20px;
+    max-width: 95%;
+    min-height: auto;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .form-actions input[type="submit"],
+  .form-actions button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .site-logo {
+    max-width: 220px; /* スマホでは少し小さめに */
+  }
+}
