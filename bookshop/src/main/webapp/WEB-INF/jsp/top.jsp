@@ -12,6 +12,8 @@ List<Book> recobooks = (List<Book>) request.getAttribute("recobooks");
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/top.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
 <script src="${pageContext.request.contextPath}/js/top.js" defer></script>
 </head>
 <body>
