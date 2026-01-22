@@ -96,25 +96,29 @@ header{
 }
 .overlay-text {
     position: absolute;
-    top: 47%;          /* 親の中央 */
-    left: 57%;         /* 親の中央 */
-    transform: translate(-50%, -50%); /* 完全中央 */
-    color: rgb(255, 255, 255);
+    top: 47%;         
+    left: 57%;        
+    transform: translate(-50%, -50%);
+    color: white;
     font-size: 20px;
     font-weight: bold;
-    text-shadow: 0 0 5px black; /* 読みやすくする影 */
 }
 
 #menu-box {
 	position: fixed;
 	top: 100px;
-	left: -300px; /* 初期状態は画面外に隠す */
-	width: 250px;
+	left: -270px; /* 初期状態は画面外に隠す */
+	width: 220px;
 	height: 100%;
+	padding-left: 50px;
 	background: rgb(34, 33, 35);
-	padding: 20px;
 	transition: left 0.3s ease; /* スライドするアニメーション */
 	z-index: 1001;
+}
+
+#menu-box a{
+	color:white;
+	font-size:24px;
 }
 
 #menu-box.active{
