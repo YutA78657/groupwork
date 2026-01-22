@@ -24,47 +24,145 @@
 }
 
 .book {
-	width: 18%;
+	width:auto;
 	aspect-ratio: 3/4;
-	background-color: cornflowerblue;
-	margin: 10px;
+	margin: 15px;
 	border: 1px solid black;
 	border-radius : 8px;
 }
 
-#parent {
-	display:flex;
-	width: 1500px;
-	margin: auto;
-	justify-content: space-between;
-	flex-wrap: wrap;
+.book-area{
+	width: 20%;
 }
+
+
 
 .title {
 	font-size: 1em;
 	margin:0;
 }
 
+.title a{
+	color:rgb(0, 0, 0);
+}
 
 
 .auther{
 	margin-top:0.5rem;
-	margin-bottom:0.5rem;
+	margin-bottom:0;
 }
 
 .price {
+	width: 45%;
 	font-size:1.5em;
 	color:rgb(0, 0, 0);
 	margin-top:0.5rem;
 	margin-bottom:0.5rem;
 }
 
+#cart-btn-box{
+	display: flex;
+	width: 100%;
+	height:50px;
+	align-items: center;
+}
+
+
+#cart-btn-box p{
+	margin-top:0;
+	margin-bottom:0;
+}
+
+#cart-btn-box form{
+	height:100%;
+	width: 55%;
+	margin-bottom: auto;
+	display:flex;
+	align-items: center;
+}
+
+
+#cart-btn-box form input{
+	width: 100%;
+	height: 70%;
+	background-color: rgb(73, 73, 73);
+	border-radius: 18px;
+	color: white;
+}
+
 body{
 	display:flex;
 	flex-direction: column;
 	margin:0;
-	background-color: rgb(73, 73, 73);
+	/*background-color: antiquewhite;*/
+	height: auto;
 }
 html{
 	margin:0;
+	height: auto;
 }
+
+.parent{
+	width: 1700px;
+	height: auto;
+	background-color: antiquewhite;
+	margin: auto;
+	border-right:1px solid black;
+	border-left:1px solid black;	
+	padding-bottom: 50px;;
+}
+
+
+.box {
+	display:flex;
+	width: 1500px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top:20px;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+
+
+
+
+.slideshow {
+  width: 100%;
+  max-width: 1500px;
+  overflow: hidden; /* 外にはみ出した部分は隠す */
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  border-bottom: 1px solid black;
+}
+
+.slideshow h1{
+	margin-left: 15px;
+}
+
+.slidesbox {
+  display: flex;
+  transition: transform 0.5s ease; /* スライド時のアニメーション */
+  
+}
+
+
+/* ボタン */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  z-index: 10;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+
