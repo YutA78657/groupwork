@@ -15,11 +15,7 @@ public class UsersDAO extends DAO {
     // ログイン認証
     public User findByEmailAndPass(String email, String pass) {
     	
-    	try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	load();
     	
         User user = null;
 
@@ -54,11 +50,7 @@ public class UsersDAO extends DAO {
     // 新規登録
     public boolean create(User user) {
     	
-    	try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	load();
 
         String sql = "INSERT INTO users(email, pass, name, admin_flg) "
                    + "VALUES(?, ?, ?,0)";
@@ -84,11 +76,7 @@ public class UsersDAO extends DAO {
     // ユーザー情報取得
     public User findById(int id) {
     	
-    	try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	load();
 
         User user = null;
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -122,11 +110,7 @@ public class UsersDAO extends DAO {
 
     	List<User> userList = new ArrayList<>();
 
-    	try {
-    		load();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+    	load();
 
     	String sql = "SELECT * FROM users ORDER BY id";
 
