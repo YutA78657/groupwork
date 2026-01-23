@@ -26,7 +26,31 @@ public class User implements Serializable {
         this.adminFlg = adminFlg;
     }
     
-    // User登録
+    public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setAdminFlg(int adminFlg) {
+		this.adminFlg = adminFlg;
+	}
+
+	// User登録
     public User(String email, String pass, String name) {
         this.email = email;
         this.pass = pass;

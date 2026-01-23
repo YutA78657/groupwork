@@ -151,4 +151,66 @@ public class UsersDAO extends DAO {
 
     	return userList;
     }
+    
+    // 更新
+    public boolean update(User user) {
+    	
+    	try {
+			load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	String sql = """
+			    UPDATE users
+			    SET
+			        pass = ?,
+			        name = ?,
+			        address = ?,
+			        admin_flg = ?
+			""";
+    	
+    	try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, user.getPass());
+			ps.setString(2, user.getName());
+			ps.setString(3, user.getAddress());
+			ps.setInt(4, user.getAdminFlg());
+			
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+    
+    // 削除
+    public boolean delete(int id) {
+
+		try {
+			load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String sql = "DELETE FROM users WHERE id = ?";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, id);
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }
