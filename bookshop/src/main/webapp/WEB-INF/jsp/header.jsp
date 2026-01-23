@@ -29,7 +29,7 @@
 		
 	</div>
 	<div id="menu-box">
-		<a href="login"><p>ログイン</p></a>
+		<a href="Login"><p>ログイン</p></a>
 		<a href="mypage"><p>マイページ</p></a>
 		<a href="order"><p>注文履歴</p></a>
 		<a href="logout"><p>ログアウト</p></a>
