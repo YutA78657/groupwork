@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import model.User;
+
 /**
  * Servlet implementation class MyPageServlet
  */
@@ -29,6 +31,12 @@ public class MyPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		
+		
+		User user = new User(1,"mail","password","yuta","adsress",1);
+		request.setAttribute("user", user);
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp");
 		dis.forward(request, response);
 	}
