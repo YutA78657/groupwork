@@ -17,10 +17,9 @@ public class User implements Serializable {
     }
     
     // DB取得用
-    public User(int id, String email, String pass, String name, String address, int adminFlg) {
+    public User(int id, String email, String name, String address, int adminFlg) {
         this.id = id;
         this.email = email;
-        this.pass = pass;
         this.name = name;
         this.address = address;
         this.adminFlg = adminFlg;
