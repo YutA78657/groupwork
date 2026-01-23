@@ -22,7 +22,10 @@ public class ProductsDAO extends DAO{
 	        e.printStackTrace();
 	    }
 
-	    String sql = "SELECT id, title, price, stock, img, category_id, series_id FROM product";
+	    String sql = """
+	    		SELECT id, title, price, stock, img, category_id, series_id 
+	    		FROM product
+	    		""";
 
 	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 	         PreparedStatement ps = con.prepareStatement(sql);
@@ -66,7 +69,7 @@ public class ProductsDAO extends DAO{
 	        OR author LIKE ? 
 	        OR IFNULL(description, '') LIKE ? 
 	        OR publisher LIKE ?
-	    """;
+	    		""";
 
 	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 	         PreparedStatement ps = con.prepareStatement(sql)) {
@@ -108,8 +111,11 @@ public class ProductsDAO extends DAO{
 			e.printStackTrace();
 		}
 
-        String sql = "INSERT INTO product(title, price, stock, author, description, publisher, recommend_flg, img, category_id, series_id)"
-        		 + "VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, ?)";
+        String sql = """
+        		INSERT INTO product(
+        		title, price, stock, author, description, publisher, recommend_flg, img, category_id, series_id)
+        		VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+        """;
         
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
                 PreparedStatement ps = con.prepareStatement(sql)) {
@@ -133,5 +139,81 @@ public class ProductsDAO extends DAO{
         }
         
         return false;
+	}
+	
+	// 更新
+	public boolean update(Product product) {
+
+		try {
+			load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String sql = """
+				    UPDATE product
+				    SET
+				        title = ?,
+				        price = ?,
+				        stock = ?,
+				        author = ?,
+				        description = ?,
+				        publisher = ?,
+				        recommend_flg = ?,
+				        img = ?,
+				        category_id = ?,
+				        series_id = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, product.getTitle());
+			ps.setInt(2, product.getPrice());
+			ps.setInt(3, product.getStock());
+			ps.setString(4, product.getAuthor());
+			ps.setString(5, product.getDescription());
+			ps.setString(6, product.getPublisher());
+			ps.setInt(7, product.getRecommend_flg());
+			ps.setString(8, product.getImg());
+			ps.setInt(9, product.getCategory_id());
+			ps.setInt(10, product.getSeries_id());
+			ps.setInt(11, product.getId());
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	// 削除
+	public boolean delete(int id) {
+
+		try {
+			load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String sql = "DELETE FROM product WHERE id = ?";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, id);
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 }

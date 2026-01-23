@@ -45,10 +45,66 @@ public class Product {
 		this.publisher = publisher;
 		this.category_id = category_id;
 	}
+	
 
 	public int getId() {
 		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+
+	public void setRecommend_flg(int recommend_flg) {
+		this.recommend_flg = recommend_flg;
+	}
+
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+
+
+	public void setSeries_id(int series_id) {
+		this.series_id = series_id;
+	}
+
 
 	public String getTitle() {
 		return title;
