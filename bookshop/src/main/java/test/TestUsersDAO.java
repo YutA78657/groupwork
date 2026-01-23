@@ -13,12 +13,9 @@ public class TestUsersDAO {
 
         // 新規登録
         User newUser = new User(
-            0,
             "test@example.com",
             "1234",
-            "テスト太郎",
-            null,
-            0
+            "テスト太郎"
         );
 
         boolean created = dao.create(newUser);
@@ -49,13 +46,49 @@ public class TestUsersDAO {
             );
         }
 
-        // 更新（最初のユーザーを更新）
+        // 更新
         if (!list.isEmpty()) {
-            User u = list.get(0);
-            u.setName("名前変更テスト");
+            User u = list.get(list.size() - 1);
+            u.setEmail("5353@gmail.com");
+            u.setName("テスト");
+
 
             boolean updated = dao.update(u);
             System.out.println(updated ? "更新成功" : "更新失敗");
+        }
+        
+     // 全件取得
+        System.out.println("----- 全ユーザー -----");
+        list = dao.findAll();
+
+        for (User u : list) {
+            System.out.println(
+                "ID=" + u.getId()
+                + " / email=" + u.getEmail()
+                + " / name=" + u.getName()
+                + " / admin=" + u.getAdminFlg()
+            );
+        }
+        
+        // パスワード更新
+        loginUser.setPass("newpass");
+
+        boolean passUpdated = dao.updatePassword(loginUser);
+        System.out.println(
+            passUpdated ? "パスワード変更成功" : "パスワード変更失敗"
+        );
+        
+     // 全件取得
+        System.out.println("----- 全ユーザー -----");
+        list = dao.findAll();
+
+        for (User u : list) {
+            System.out.println(
+                "ID=" + u.getId()
+                + " / email=" + u.getEmail()
+                + " / name=" + u.getName()
+                + " / admin=" + u.getAdminFlg()
+            );
         }
 
         // 削除（最後のユーザーを削除）
@@ -63,6 +96,19 @@ public class TestUsersDAO {
             int deleteId = list.get(list.size() - 1).getId();
             boolean deleted = dao.delete(deleteId);
             System.out.println(deleted ? "削除成功" : "削除失敗");
+        }
+        
+     // 全件取得
+        System.out.println("----- 全ユーザー -----");
+        list = dao.findAll();
+
+        for (User u : list) {
+            System.out.println(
+                "ID=" + u.getId()
+                + " / email=" + u.getEmail()
+                + " / name=" + u.getName()
+                + " / admin=" + u.getAdminFlg()
+            );
         }
     }
 }
