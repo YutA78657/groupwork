@@ -6,7 +6,7 @@ public class DAO {
 	protected String DB_USER = "root";
 	protected String DB_PASS = "";
 	
-	public void load() throws Exception{
+	public void load(){
 		//JDBCドライバを読み込む
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
