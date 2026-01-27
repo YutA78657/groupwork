@@ -16,11 +16,7 @@ public class ProductsDAO extends DAO{
 
 	    List<Product> list = new ArrayList<>();
 
-	    try {
-	        load();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	    load();
 
 	    String sql = """
 	    		SELECT id, title, price, stock, img, category_id, series_id 
@@ -56,11 +52,7 @@ public class ProductsDAO extends DAO{
 
 	    List<Product> list = new ArrayList<>();
 
-	    try {
-	        load();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	    load();
 
 	    String sql = """
 	        SELECT id, title, price, stock, img, category_id, series_id
@@ -105,11 +97,7 @@ public class ProductsDAO extends DAO{
 	public boolean create(Product product) {
 		
 		
-		try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		load();
 
         String sql = """
         		INSERT INTO product(
@@ -144,11 +132,7 @@ public class ProductsDAO extends DAO{
 	// 更新
 	public boolean update(Product product) {
 
-		try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		load();
 
 		String sql = """
 				    UPDATE product
@@ -194,11 +178,7 @@ public class ProductsDAO extends DAO{
 	// 削除
 	public boolean delete(int id) {
 
-		try {
-			load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		load();
 
 		String sql = "DELETE FROM product WHERE id = ?";
 
