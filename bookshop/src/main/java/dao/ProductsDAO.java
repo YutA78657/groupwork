@@ -87,11 +87,13 @@ public class ProductsDAO extends DAO{
 	        }
 
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	    	e.printStackTrace();
 	    }
 
 	    return list;
 	}
+
+	
 	
 	//idによる取得
 	public Product findById(int pid) {
