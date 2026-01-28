@@ -102,7 +102,7 @@ public class ProductsDAO extends DAO{
         String sql = """
         		INSERT INTO product(
         		title, price, stock, author, description, publisher, recommend_flg, img, category_id, series_id)
-        		VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+        		VALUES("", , , "", "", "", 0, , , )
         """;
         
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
