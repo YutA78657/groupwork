@@ -16,7 +16,7 @@ public class ProductsDAO extends DAO{
 
 	    List<Product> list = new ArrayList<>();
 
-	    load();
+	   load();
 
 	    String sql = """
 	    		SELECT id, title, price, stock, img, category_id, series_id 
@@ -87,10 +87,44 @@ public class ProductsDAO extends DAO{
 	        }
 
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	    	e.printStackTrace();
 	    }
 
 	    return list;
+	}
+
+	
+	
+	//idによる取得
+	public Product findById(int pid) {
+		
+		Product product = null;
+		
+		load();
+
+	    String sql = "select * from product where id = ?";
+
+	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setInt(1, pid);
+	        ResultSet rs = ps.executeQuery();
+	        while(rs.next()) {
+	        	product = new Product(
+		                rs.getInt("id"),
+		                rs.getString("title"),
+		                rs.getInt("price"),
+		                rs.getInt("stock"),
+		                rs.getString("img"),
+		                rs.getInt("category_id"),
+		                rs.getInt("series_id")
+		            );	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return product;
 	}
 	
 	// 商品登録
@@ -102,7 +136,7 @@ public class ProductsDAO extends DAO{
         String sql = """
         		INSERT INTO product(
         		title, price, stock, author, description, publisher, recommend_flg, img, category_id, series_id)
-        		VALUES("", , , "", "", "", 0, , , )
+        		VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
         """;
         
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);

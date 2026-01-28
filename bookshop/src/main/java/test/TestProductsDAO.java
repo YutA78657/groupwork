@@ -64,6 +64,7 @@ public class TestProductsDAO {
 
 			System.out.println("\n===== 削除後一覧 =====");
 			printList(dao.findAll());
+			
 		}
 	}
 
@@ -86,4 +87,6 @@ public class TestProductsDAO {
 					);
 		}
 	}
+	
+	
 }
