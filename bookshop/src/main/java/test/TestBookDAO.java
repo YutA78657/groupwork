@@ -21,13 +21,13 @@ public class TestBookDAO {
             }
         }
 
-        System.out.println("\n----- カテゴリ別（技術） -----");
-        List<Book> techBooks = dao.findRandomByCategory("技術", 5);
+        System.out.println("\n----- カテゴリ別（資格・試験） -----");
+        List<Book> examBooks = dao.findRandomByCategory("資格・試験", 5);
 
-        if (techBooks.isEmpty()) {
-            System.out.println("技術カテゴリの本が取得できませんでした");
+        if (examBooks.isEmpty()) {
+            System.out.println("資格・試験カテゴリの本が取得できませんでした");
         } else {
-            for (Book b : techBooks) {
+            for (Book b : examBooks) {
                 printBook(b);
             }
         }

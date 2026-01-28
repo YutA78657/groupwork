@@ -125,4 +125,73 @@ public class BookDAO extends DAO{
 
 		return list;
 	}
+	
+	// Search用
+	public List<Book> search(String categoryName, String word) {
+
+	    List<Book> list = new ArrayList<>();
+	    load();
+
+	    StringBuilder sql = new StringBuilder("""
+	        SELECT
+	            p.id,
+	            p.title,
+	            p.price,
+	            p.stock,
+	            p.author,
+	            p.description,
+	            c.category_name AS cname,
+	            p.publisher,
+	            p.recommend_flg,
+	            p.img
+	        FROM product p
+	        JOIN category c ON p.category_id = c.id
+	        WHERE 1=1
+	    """);
+
+	    if (categoryName != null) {
+	        sql.append(" AND c.category_name = ? ");
+	    }
+
+	    if (word != null) {
+	        sql.append(" AND (p.title LIKE ? OR p.author LIKE ?) ");
+	    }
+
+	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+	         PreparedStatement ps = con.prepareStatement(sql.toString())) {
+
+	        int idx = 1;
+
+	        if (categoryName != null) {
+	            ps.setString(idx++, categoryName);
+	        }
+
+	        if (word != null) {
+	            ps.setString(idx++, "%" + word + "%");
+	            ps.setString(idx++, "%" + word + "%");
+	        }
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            list.add(new Book(
+	                rs.getInt("id"),
+	                rs.getString("title"),
+	                rs.getInt("price"),
+	                rs.getInt("stock"),
+	                rs.getString("author"),
+	                rs.getString("description"),
+	                rs.getString("cname"),
+	                rs.getString("publisher"),
+	                rs.getBoolean("recommend_flg"),
+	                rs.getString("img")
+	            ));
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	}
 }
