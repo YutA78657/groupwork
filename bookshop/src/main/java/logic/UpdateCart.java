@@ -12,7 +12,7 @@ public class UpdateCart {
 		List<Cart> cartlist = new ArrayList<>();
 		ProductsDAO pd = new ProductsDAO();
 		for(int i = 0;i < pid.length;i++) {
-			Product product = pd.findById(i);
+			Product product = pd.findById(pid[i]);
 			Cart cart = new Cart(product,quantity[i]);
 			cartlist.add(cart);
 		}

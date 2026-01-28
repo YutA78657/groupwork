@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import logic.AddCart;
 import logic.DeleteCart;
 import logic.UpdateCart;
@@ -67,14 +66,19 @@ public class CartServlet extends HttpServlet {
 			int[] quantity = new int[squantity.length];
 			for(int i = 0;i<pid.length;i++) {
 				pid[i] = Integer.parseInt(spid[i]);
+				System.out.println(pid[i]);
 			}
 			for(int i = 0;i<quantity.length;i++) {
 				quantity[i] = Integer.parseInt(squantity[i]);
+				System.out.println(quantity[i]);
 			}
 			cart = UpdateCart.execute(pid, quantity);
 		}else if(action.equals("delete")) {
-			int pid = (int)request.getAttribute("pid");
+			int pid = Integer.parseInt(request.getParameter("pid"));
 			cart = DeleteCart.execute(cart,pid);
+			if(cart.size()==0) {
+				cart = null;
+			}
 		}
 		session.setAttribute("cart", cart);
 		request.getRequestDispatcher("WEB-INF/jsp/cart.jsp").forward(request, response);

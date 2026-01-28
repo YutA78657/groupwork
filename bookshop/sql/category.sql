@@ -1,5 +1,7 @@
 insert into category(category_name) value("文芸");
 insert into category(category_name) value("新書");
+insert into category(category_name) value("文庫");
+insert into category(category_name) value("コミック文庫");
 insert into category(category_name) value("社会一般");
 insert into category(category_name) value("資格・試験");
 insert into category(category_name) value("ビジネス");
@@ -22,8 +24,6 @@ insert into category(category_name) value("学参");
 insert into category(category_name) value("児童図書");
 insert into category(category_name) value("ヤングアダルト");
 insert into category(category_name) value("全集");
-insert into category(category_name) value("文庫");
-insert into category(category_name) value("コミック文庫");
 insert into category(category_name) value("ムック");
 insert into category(category_name) value("雑誌");
 

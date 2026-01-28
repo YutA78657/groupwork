@@ -52,8 +52,8 @@
 					<% if (stock > 0) { %>
 					<!-- 数量変更と削除 -->
 					<form action="cart" method="post">
-						<input type="hidden" name="action" value="update"> <input
-							type="hidden" name="productId" value="<%=p.getId()%>">
+						<input type="hidden" name="action" value="delete"> <input
+							type="hidden" name="pid" value="<%=p.getId()%>">
 
 						数量：
 						<!-- 数量セレクトにクラスと価格データ属性を追加 -->
