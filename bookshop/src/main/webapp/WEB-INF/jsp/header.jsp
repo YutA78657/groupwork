@@ -13,7 +13,7 @@
 	<div id="header-div">
 		<button id="menu-btn" class="header-btn">≡</button>
 		<a id="icon" href="index"><img src="image/material/icon2.png"></a>
-		<form id="search" action="top" method="get">
+		<form id="search" action="search" method="get">
 			<select id="search-type" >
 				<option>すべて</option>
 				<option>マンガ</option>
