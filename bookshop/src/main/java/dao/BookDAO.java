@@ -33,6 +33,7 @@ public class BookDAO extends DAO{
 				    FROM product p
 				    JOIN category c ON p.category_id = c.id
 				    WHERE p.recommend_flg = true
+				    ORDER by id
 				    LIMIT ?
 				""";
 

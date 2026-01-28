@@ -7,9 +7,9 @@ CREATE TABLE users (
   admin_flg TINYINT(1) NOT NULL DEFAULT 0
 );
 
-CREATE TABLE category (
+CREATE TABLE category(category_name) (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  category_name VARCHAR(100) NOT NULL
+  category(category_name)_name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE series (
@@ -24,12 +24,12 @@ CREATE TABLE product (
   stock INT NOT NULL,
   author VARCHAR(100),
   description TEXT,
-  category_id INT,
+  category(category_name)_id INT,
   series_id INT,
   publisher VARCHAR(100),
   recommend_flg TINYINT DEFAULT 0,
   img VARCHAR(100),
-  FOREIGN KEY (category_id) REFERENCES category(id),
+  FOREIGN KEY (category(category_name)_id) REFERENCES category(category_name)(id),
   FOREIGN KEY (series_id) REFERENCES series(id)
 );
 

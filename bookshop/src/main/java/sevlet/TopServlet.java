@@ -32,8 +32,10 @@ public class TopServlet extends HttpServlet {
 		BookDAO bookDao = new BookDAO();
 		CategoriesDAO cd = new CategoriesDAO();
 		// おすすめ本
-		List<Book> recBooks = bookDao.findRecommendBooks(10);
+		List<Book> recBooks = bookDao.findRecommendBooks(9);
 		request.setAttribute("recBooks", recBooks);
+
+		
 
 		// カテゴリ一覧取得
 		
@@ -46,7 +48,7 @@ public class TopServlet extends HttpServlet {
 
 			if (!books.isEmpty()) {
 				CategorySet set =
-						new CategorySet(c.getName() + "Books", books);
+						new CategorySet(c.getName(), books);
 				categoryBooks.add(set);
 			}
 		}

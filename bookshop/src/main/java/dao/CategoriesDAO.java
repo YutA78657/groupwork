@@ -23,9 +23,7 @@ public class CategoriesDAO extends DAO{
 				ResultSet rs = ps.executeQuery()){
 
 			while(rs.next()) {
-				Category category = new Category();
-				category.setId(rs.getInt("id"));
-				category.setName(rs.getString("name"));
+				Category category = new Category(rs.getInt("id"),rs.getString("category_name"));
 				list.add(category);
 				
 				

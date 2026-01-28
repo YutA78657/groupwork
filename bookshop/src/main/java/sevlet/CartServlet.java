@@ -1,6 +1,7 @@
 package sevlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -48,17 +49,30 @@ public class CartServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		List<Cart> cart = (List<Cart>)session.getAttribute("cart");;
-		String action = (String)request.getAttribute("action");
+		if(cart == null) {
+			cart = new ArrayList<>();
+		}
+		String action = (String)request.getParameter("action");
+		System.out.println(action);
+		System.out.println(request.getParameter("pid"));
 		
-		if(action == "add") {
-			int pid = (int)request.getAttribute("pid");
-			int quantity = (int)request.getAttribute("quantity");
-			cart = AddCart.execute(cart, pid, quantity);
-		}else if(action == "update"){
-			int[] pid = (int[])request.getAttribute("pid");
-			int[] quantity = (int[])request.getAttribute("quantity");
+		if(action.equals("add")) {
+			System.out.println("!!!");
+			int pid = Integer.parseInt(request.getParameter("pid"));
+			cart = AddCart.execute(cart, pid);
+		}else if(action.equals("update")){
+			String[] spid = request.getParameterValues("pid[]");
+			String[] squantity = request.getParameterValues("quantity[]");
+			int[] pid = new int[spid.length];
+			int[] quantity = new int[squantity.length];
+			for(int i = 0;i<pid.length;i++) {
+				pid[i] = Integer.parseInt(spid[i]);
+			}
+			for(int i = 0;i<quantity.length;i++) {
+				quantity[i] = Integer.parseInt(squantity[i]);
+			}
 			cart = UpdateCart.execute(pid, quantity);
-		}else if(action == "delete") {
+		}else if(action.equals("delete")) {
 			int pid = (int)request.getAttribute("pid");
 			cart = DeleteCart.execute(cart,pid);
 		}

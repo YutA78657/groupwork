@@ -81,16 +81,17 @@
 			</div>
 
 			<!-- 購入・更新ボタンを横並びで表示 -->
-			<form action="purchase" method="post"
+			<form action="cart" method="post"
 				style="display: flex; gap: 10px;">
 				<%for(Cart cart:cartlist){ 
 				    Product p = cart.getProduct();%>
-					<input type="hidden" name="pid" value="<%=p.getId()%>">
-					<input type="hidden" id="shared<%=p.getId()%>" name="quantity" value="<%=cart.getQuantity()%>">
+					<input type="hidden" name="pid[]" value="<%=p.getId()%>">
+					<input type="hidden" id="shared<%=p.getId()%>" name="quantity[]" value="<%=cart.getQuantity()%>">
 					
 				<%} %>
 				<!-- 更新ボタン（仮のsubmit） -->
-				<input type="submit" value="更新" name="update">
+				<input type="hidden" name="action" value="update">
+				<input type="submit" value="更新">
 				<!-- 購入ボタン -->
 				<input type="submit" value="購入する" name="purchase">
 			</form>
