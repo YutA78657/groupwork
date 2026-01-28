@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>ログイン</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/register.css">
+	href="${pageContext.request.contextPath}/css/userRegister.css">
 </head>
 <body>
 
