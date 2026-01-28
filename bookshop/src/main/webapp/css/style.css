@@ -14,9 +14,6 @@ html{
 .parent{
 	width: 1700px;
 	height: auto;
-	background-color: antiquewhite;
 	margin: auto;
-	border-right:1px solid black;
-	border-left:1px solid black;	
 	padding-bottom: 20px;;
 }
