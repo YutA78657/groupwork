@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.util.*, model.Product"%>
+<%@ page import="java.util.*, model.*"%>
 <html>
 <head>
 <title>カートの中身</title>
@@ -13,10 +13,10 @@
 		<h2>カート</h2>
 
 		<%
-      List<Product> productList = (List<Product>) session.getAttribute("productList");
-      Map<Integer, Integer> quantityMap = (Map<Integer, Integer>) session.getAttribute("quantityMap");
+			List<Cart> cartlist = (List<Cart>)session.getAttribute("cart");
+			
 
-      if (productList == null || productList.isEmpty()) {
+      if (cartlist == null) {
     %>
 		<p style="padding: 20px;">カートは空です。</p>
 		<%
@@ -27,11 +27,12 @@
 		<!-- 商品一覧をスクロール可能にする -->
 		<div class="cart-list">
 			<%
-        for (Product p : productList) {
-          int quantity = quantityMap.get(p.getId()) != null ? quantityMap.get(p.getId()) : 0;
+        for (Cart cart:cartlist) {
+          Product p = cart.getProduct();
+          int quantity = cart.getQuantity();
           int subtotal = p.getPrice() * quantity;
           total += subtotal;
-          int stock = 5; // 仮の在庫数
+          int stock = p.getStock();
       %>
 
 			<!-- 商品1件分の表示 -->
@@ -56,8 +57,8 @@
 
 						数量：
 						<!-- 数量セレクトにクラスと価格データ属性を追加 -->
-						<select name="quantity" class="quantity-select"
-							data-price="<%=p.getPrice()%>">
+						<select   name="quantity" class="quantity-select"
+							data-price="<%=p.getPrice()%>"  onchange="document.getElementById('shared<%=p.getId() %>').value=this.value">
 							<% for (int i = 1; i <= stock; i++) {
                    String selected = (i == quantity) ? "selected" : ""; %>
 							<option value="<%=i%>" <%=selected%>><%=i%></option>
@@ -82,6 +83,12 @@
 			<!-- 購入・更新ボタンを横並びで表示 -->
 			<form action="purchase" method="post"
 				style="display: flex; gap: 10px;">
+				<%for(Cart cart:cartlist){ 
+				    Product p = cart.getProduct();%>
+					<input type="hidden" name="pid" value="<%=p.getId()%>">
+					<input type="hidden" id="shared<%=p.getId()%>" name="quantity" value="<%=cart.getQuantity()%>">
+					
+				<%} %>
 				<!-- 更新ボタン（仮のsubmit） -->
 				<input type="submit" value="更新" name="update">
 				<!-- 購入ボタン -->

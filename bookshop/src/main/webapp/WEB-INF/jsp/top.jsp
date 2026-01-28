@@ -44,7 +44,8 @@ List<Book> recobooks = (List<Book>) request.getAttribute("recobooks");
 					<div id="cart-btn-box">
 						<p class="price">
 							￥<%=book.getPrice()%></p>
-						<form action="" method="">
+						<form action="cart" method="post">
+							<input type="hidden" name="pid" value="<%=book.getPid() %>">
 							<input type="submit" value="カートに入れる">
 						</form>
 					</div>
@@ -56,7 +57,20 @@ List<Book> recobooks = (List<Book>) request.getAttribute("recobooks");
 		</div>
 	</div>
 	
-	<div class="box">
+	
+	<%--
+	
+	<%
+	for(CategorySet set :categorysets){
+		List<Book> books = set.getBookList();
+	
+	%>
+	<div class="slideshow">
+		<h1><%=set.getCategoryName() %></h1>
+		<button class="prev">&#10094;</button>
+    	<button class="next">&#10095;</button>
+		<div class="slidesbox">
+		
 		<%
 		for (Book book : books) {
 		%>
@@ -82,7 +96,10 @@ List<Book> recobooks = (List<Book>) request.getAttribute("recobooks");
 			</div>
 		</div>
 		<% } %>
+		</div>
 	</div>
+	<%}%>
+	--%>
 </div>
 </body>
 </html>
