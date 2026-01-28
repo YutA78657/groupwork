@@ -35,7 +35,7 @@ public class MyPageServlet extends HttpServlet {
 		
 		
 		
-		User user = new User(1,"mail","password","yuta","adsress",1);
+		User user = new User(1,"mail","password","yuta",1);
 		request.setAttribute("user", user);
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp");
 		dis.forward(request, response);
