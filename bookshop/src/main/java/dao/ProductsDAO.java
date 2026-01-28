@@ -87,11 +87,13 @@ public class ProductsDAO extends DAO{
 	        }
 
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	    	e.printStackTrace();
 	    }
 
 	    return list;
 	}
+
+	
 	
 	// 商品登録
 	public boolean create(Product product) {
