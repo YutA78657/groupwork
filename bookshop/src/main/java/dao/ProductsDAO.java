@@ -34,6 +34,7 @@ public class ProductsDAO extends DAO{
 	                rs.getInt("price"),
 	                rs.getInt("stock"),
 	                rs.getString("img"),
+	                rs.getString("author"),
 	                rs.getInt("category_id"),
 	                rs.getInt("series_id")
 	            );
@@ -80,6 +81,7 @@ public class ProductsDAO extends DAO{
 	                rs.getInt("price"),
 	                rs.getInt("stock"),
 	                rs.getString("img"),
+	                rs.getString("author"),
 	                rs.getInt("category_id"),
 	                rs.getInt("series_id")
 	            );
@@ -116,6 +118,7 @@ public class ProductsDAO extends DAO{
 		                rs.getInt("price"),
 		                rs.getInt("stock"),
 		                rs.getString("img"),
+		                rs.getString("author"),
 		                rs.getInt("category_id"),
 		                rs.getInt("series_id")
 		            );	        }

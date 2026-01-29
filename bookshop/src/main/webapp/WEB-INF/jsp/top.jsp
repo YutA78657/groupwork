@@ -62,7 +62,8 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 			</div>
 		</div>
 
-<%-- 
+
+
 
 		<%
 		for (CategorySet set : categorysets) {
@@ -103,7 +104,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 				%>
 			</div>
 		</div>
-		<%}%>--%>
+		<%}%>
 	</div>
 </body>
 </html>
