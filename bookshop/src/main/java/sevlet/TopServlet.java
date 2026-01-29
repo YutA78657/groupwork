@@ -3,7 +3,6 @@ package sevlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale.Category;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import dao.BookDAO;
+import dao.CategoriesDAO;
 import model.Book;
 import model.CategorySet;
 
@@ -29,17 +29,17 @@ public class TopServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		BookDAO bookDao = new BookDAO();
-		CategoryDAO categoryDao = new CategoryDAO();
+		CategoriesDAO categoryDao = new CategoriesDAO();
 
 		// おすすめ本
 		List<Book> recBooks = bookDao.findRecommendBooks(10);
 		request.setAttribute("recBooks", recBooks);
 
 		// カテゴリ一覧取得
-		List<Category> categories = categoryDao.findAll();
+		List<model.Category> categories = categoryDao.findAll();
 		List<CategorySet> categoryBooks = new ArrayList<>();
 
-		for (Category c : categories) {
+		for (model.Category c : categories) {
 			List<Book> books =
 					bookDao.findRandomByCategory(c.getName(), 20);
 
