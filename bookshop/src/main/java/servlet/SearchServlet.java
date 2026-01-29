@@ -1,4 +1,4 @@
-package sevlet;
+package servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ import model.Book;
 /**
  * Servlet implementation class SerchServlet
  */
-@WebServlet("/SerchServlet")
+@WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class SearchServlet extends HttpServlet {
             dao.search(categoryName, word);
 
         request.setAttribute("SearchResult", result);
-
+        request.setAttribute("word", word);
         request.getRequestDispatcher("/WEB-INF/jsp/search.jsp")
                .forward(request, response);
 	}

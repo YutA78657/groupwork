@@ -25,7 +25,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 
 
 		<div class="slideshow">
-			<h1>おすすめ</h1>
+			<div class="category-title"><h1>おすすめ</h1></div>
 			<button class="prev">&#10094;</button>
 			<button class="next">&#10095;</button>
 			<div class="slidesbox">
@@ -36,7 +36,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 				<div class="book-area">
 					<div class="book">
 						<div class="book_img_area">
-							<img class="book_img" src="image/9784297153335_600.jpg">
+							<img class="book_img" src="image/<%=book.getImg()%>">
 						</div>
 						<div class="book_text_area">
 							<p class="title">
@@ -70,7 +70,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 			List<Book> books = set.getBookList();
 		%>
 		<div class="slideshow">
-			<h1><%=set.getCategoryName()%></h1>
+			<div class="category-title"><h1><%=set.getCategoryName()%></h1></div>
 			<button class="prev">&#10094;</button>
 			<button class="next">&#10095;</button>
 			<div class="slidesbox">
@@ -81,7 +81,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 				<div class="book-area">
 					<div class="book">
 						<div class="book_img_area">
-							<img class="book_img" src="image/9784297153335_600.jpg">
+							<img class="book_img" src="image/<%=book.getImg()%>">
 						</div>
 						<div class="book_text_area">
 							<p class="title">

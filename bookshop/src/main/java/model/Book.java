@@ -61,5 +61,8 @@ public class Book {
 	public boolean getRecommend_flg() {
 		return recommend_flg;
 	}
+	public String getImg() {
+		return img;
+	}
 }
 
