@@ -9,19 +9,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import model.User;
-
 /**
- * Servlet implementation class MyPageServlet
+ * Servlet implementation class TopServlet
  */
-@WebServlet("/mypage")
-public class MyPageServlet extends HttpServlet {
+@WebServlet("/UserList")
+public class UserList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageServlet() {
+    public UserList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,14 +28,7 @@ public class MyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		
-		
-		
-		User user = new User(1,"mail","password","yuta",1);
-		request.setAttribute("user", user);
-		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp");
+		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
 		dis.forward(request, response);
 	}
 

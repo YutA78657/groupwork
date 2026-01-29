@@ -14,16 +14,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Book;
 
 /**
- * Servlet implementation class TopServlet
+ * Servlet implementation class TestSearvlet
  */
-@WebServlet("/index")
-public class TopServlet extends HttpServlet {
+@WebServlet("/search")
+public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TopServlet() {
+    public TestServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,7 +45,7 @@ public class TopServlet extends HttpServlet {
 		
 		request.setAttribute("books", books);
 		request.setAttribute("recobooks", recobooks);
-		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/top.jsp");
+		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/search.jsp");
 		dis.forward(request, response);
 	}
 

@@ -14,21 +14,21 @@ public class Product {
 	private int series_id;
 	
 	//一覧表示
-	public Product(int id, String title, int price, int stock, String img, int category_id, int series_id) {
+	public Product(int id, String title, int price, int stock, String img,String author, int category_id, int series_id) {
 		this.id = id;
 		this.title = title;
 		this.price = price;
 		this.stock = stock;
 		this.img = img;
+		this.author = author;
 		this.category_id = category_id;
 		this.series_id = series_id;
 	}
 
 
 	//DB取得
-	public Product(int id, String title, int price, int stock, String author, String description, String publisher, int recommend_flg, String img, int category_id, int series_id) {
-		this(id, title, price, stock, img, category_id, series_id);
-		this.author = author;
+	public Product(int id, String title, int price, int stock,String author,   String description, String publisher, int recommend_flg, String img, int category_id, int series_id) {
+		this(id, title, price, stock, img, author, category_id, series_id);
 		this.description = description;
 		this.publisher = publisher;
 		this.recommend_flg = recommend_flg;

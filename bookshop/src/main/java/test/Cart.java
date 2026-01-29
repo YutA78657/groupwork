@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 
 import model.Product;
 
-@WebServlet("/cart")
+@WebServlet("/carttest")
 public class Cart extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

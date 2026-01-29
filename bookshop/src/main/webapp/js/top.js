@@ -163,109 +163,99 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 */
-
-
 document.addEventListener("DOMContentLoaded", () => {
-  const slidesbox = document.querySelector(".slidesbox");
-  const prev = document.querySelector(".prev");
-  const next = document.querySelector(".next");
 
-  const visibleCount = 5;
-  let books = document.querySelectorAll(".slidesbox .book-area");
+  document.querySelectorAll(".slideshow").forEach(slideshow => {
 
-  /* ========= サイズ計算 ========= */
-  const style = getComputedStyle(books[0]);
-  const margin =
-    parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-  const slideWidth = books[0].offsetWidth + margin;
+    const slidesbox = slideshow.querySelector(".slidesbox");
+    const prev = slideshow.querySelector(".prev");
+    const next = slideshow.querySelector(".next");
 
-  /* ========= クローン作成 ========= */
-  for (let i = books.length - visibleCount; i < books.length; i++) {
-    slidesbox.prepend(books[i].cloneNode(true));
-  }
-  for (let i = 0; i < visibleCount; i++) {
-    slidesbox.append(books[i].cloneNode(true));
-  }
+    const visibleCount = 5;
+    let books = slidesbox.querySelectorAll(".book-area");
 
-  books = document.querySelectorAll(".slidesbox .book-area");
+    if (books.length <= visibleCount) return;
 
-  /* ========= 初期位置 ========= */
-  let index = visibleCount;
+    /* ===== サイズ計算 ===== */
+    const style = getComputedStyle(books[0]);
+    const margin =
+      parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    const slideWidth = books[0].offsetWidth + margin;
 
-  slidesbox.style.transition = "none";
-  slidesbox.style.transform =
-    `translateX(-${slideWidth * index}px)`;
+    /* ===== クローン ===== */
+    for (let i = books.length - visibleCount; i < books.length; i++) {
+      slidesbox.prepend(books[i].cloneNode(true));
+    }
+    for (let i = 0; i < visibleCount; i++) {
+      slidesbox.append(books[i].cloneNode(true));
+    }
 
-  // 強制リフロー（初期爆速防止）
-  slidesbox.offsetHeight;
+    books = slidesbox.querySelectorAll(".book-area");
 
-  slidesbox.style.transition = "transform 0.4s ease";
-
-  /* ========= スライド処理 ========= */
-  function nextSlide() {
-    index++;
+    /* ===== 初期位置 ===== */
+    let index = visibleCount;
+    slidesbox.style.transition = "none";
     slidesbox.style.transform =
       `translateX(-${slideWidth * index}px)`;
+    slidesbox.offsetHeight;
+    slidesbox.style.transition = "transform 0.4s ease";
 
-    if (index === books.length - visibleCount) {
-      setTimeout(() => {
-        slidesbox.style.transition = "none";
-        index = visibleCount;
-        slidesbox.style.transform =
-          `translateX(-${slideWidth * index}px)`;
-        slidesbox.offsetHeight;
-        slidesbox.style.transition = "transform 0.4s ease";
-      }, 400);
+    /* ===== スライド処理 ===== */
+    function nextSlide() {
+      index++;
+      slidesbox.style.transform =
+        `translateX(-${slideWidth * index}px)`;
+
+      if (index === books.length - visibleCount) {
+        setTimeout(() => {
+          slidesbox.style.transition = "none";
+          index = visibleCount;
+          slidesbox.style.transform =
+            `translateX(-${slideWidth * index}px)`;
+          slidesbox.offsetHeight;
+          slidesbox.style.transition = "transform 0.4s ease";
+        }, 400);
+      }
     }
-  }
 
-  function prevSlide() {
-    index--;
-    slidesbox.style.transform =
-      `translateX(-${slideWidth * index}px)`;
+    function prevSlide() {
+      index--;
+      slidesbox.style.transform =
+        `translateX(-${slideWidth * index}px)`;
 
-    if (index === 0) {
-      setTimeout(() => {
-        slidesbox.style.transition = "none";
-        index = books.length - visibleCount * 2;
-        slidesbox.style.transform =
-          `translateX(-${slideWidth * index}px)`;
-        slidesbox.offsetHeight;
-        slidesbox.style.transition = "transform 0.4s ease";
-      }, 400);
+      if (index === 0) {
+        setTimeout(() => {
+          slidesbox.style.transition = "none";
+          index = books.length - visibleCount * 2;
+          slidesbox.style.transform =
+            `translateX(-${slideWidth * index}px)`;
+          slidesbox.offsetHeight;
+          slidesbox.style.transition = "transform 0.4s ease";
+        }, 400);
+      }
     }
-  }
 
-  next.addEventListener("click", () => {
-    stopAuto();
-    nextSlide();
-    startAuto();
+    next.addEventListener("click", nextSlide);
+    prev.addEventListener("click", prevSlide);
+
+    /* ===== 自動スクロール =====
+    let timer = null;
+    const interval = 3000;
+
+    function startAuto() {
+      if (timer) return;
+      timer = setInterval(nextSlide, interval);
+    }
+
+    function stopAuto() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    setTimeout(startAuto, 1500);
+
+    slideshow.addEventListener("mouseenter", stopAuto);
+    slideshow.addEventListener("mouseleave", startAuto); */
+
   });
-
-  prev.addEventListener("click", () => {
-    stopAuto();
-    prevSlide();
-    startAuto();
-  });
-
-  /* ========= 自動スクロール ========= */
-  let timer = null;
-  const interval = 3000;
-
-  function startAuto() {
-    if (timer) return;
-    timer = setInterval(nextSlide, interval);
-  }
-
-  function stopAuto() {
-    clearInterval(timer);
-    timer = null;
-  }
-
-  // 初回は少し遅らせて開始
-  setTimeout(startAuto, 1000);
-
-  // ホバーで停止
-  slidesbox.addEventListener("mouseenter", stopAuto);
-  slidesbox.addEventListener("mouseleave", startAuto);
 });

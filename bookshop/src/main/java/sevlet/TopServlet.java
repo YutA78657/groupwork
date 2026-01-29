@@ -14,7 +14,7 @@ import dao.BookDAO;
 import dao.CategoriesDAO;
 import model.Book;
 import model.Category;
-import model.CategorySet;;
+import model.CategorySet;
 
 /**
  * Servlet implementation class TopServlet
@@ -30,14 +30,16 @@ public class TopServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		BookDAO bookDao = new BookDAO();
-		CategoriesDAO categoryDao = new CategoriesDAO();
-
+		CategoriesDAO cd = new CategoriesDAO();
 		// おすすめ本
-		List<Book> recBooks = bookDao.findRecommendBooks(10);
+		List<Book> recBooks = bookDao.findRecommendBooks(9);
 		request.setAttribute("recBooks", recBooks);
 
+		
+
 		// カテゴリ一覧取得
-		List<Category> categories = categoryDao.findAll();
+		
+		List<Category> categories = cd.findAll();
 		List<CategorySet> categoryBooks = new ArrayList<>();
 
 		for (Category c : categories) {
@@ -46,7 +48,7 @@ public class TopServlet extends HttpServlet {
 
 			if (!books.isEmpty()) {
 				CategorySet set =
-						new CategorySet(c.getName() + "Books", books);
+						new CategorySet(c.getName(), books);
 				categoryBooks.add(set);
 			}
 		}
