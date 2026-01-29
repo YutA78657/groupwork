@@ -13,7 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import dao.BookDAO;
 import dao.CategoriesDAO;
 import model.Book;
-import model.CategorySet;
+import model.Category;
+import model.CategorySet;;
 
 /**
  * Servlet implementation class TopServlet
@@ -36,10 +37,10 @@ public class TopServlet extends HttpServlet {
 		request.setAttribute("recBooks", recBooks);
 
 		// カテゴリ一覧取得
-		List<model.Category> categories = categoryDao.findAll();
+		List<Category> categories = categoryDao.findAll();
 		List<CategorySet> categoryBooks = new ArrayList<>();
 
-		for (model.Category c : categories) {
+		for (Category c : categories) {
 			List<Book> books =
 					bookDao.findRandomByCategory(c.getName(), 20);
 
