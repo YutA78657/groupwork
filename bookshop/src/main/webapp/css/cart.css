@@ -1,3 +1,8 @@
+/* =========================================================
+   カートページ専用 CSS
+   ※ すべて .cart-container を先頭につけてスコープ化
+   ※ ヘッダーの画像やボタンと絶対に衝突しないように調整済み
+   ========================================================= */
 
 /* カート全体の枠 */
 .cart-container {
@@ -22,21 +27,23 @@
 }
 
 /* 商品一覧部分（スクロール可能） */
-.cart-list {
+.cart-container .cart-list {
   flex-grow: 1;
   overflow-y: auto;
   padding: 20px;
 }
 
 /* 商品1件の表示ブロック */
-.cart-item {
+.cart-container .cart-item {
   display: flex;
   border-bottom: 1px solid #ddd;
   padding: 20px 0;
 }
 
-/* 商品画像 */
-.cart-item img {
+/* ---------------------------------------------------------
+   商品画像（※ヘッダーの画像と衝突しないようにスコープ化）
+   --------------------------------------------------------- */
+.cart-container .cart-item img {
   width: 120px;
   height: auto;
   border-radius: 4px;
@@ -44,34 +51,34 @@
 }
 
 /* 商品情報と操作 */
-.cart-details {
+.cart-container .cart-details {
   flex-grow: 1;
 }
 
-.cart-details h3 {
+.cart-container .cart-details h3 {
   margin: 0 0 8px;
   font-size: 18px;
   color: #222;
 }
 
-.cart-details p {
+.cart-container .cart-details p {
   margin: 4px 0;
   color: #555;
 }
 
 /* 数量変更フォーム */
-.cart-details form {
+.cart-container .cart-details form {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.cart-details select {
+.cart-container .cart-details select {
   padding: 4px 8px;
   margin-right: 10px;
 }
 
-.cart-details input[type="submit"] {
+.cart-container .cart-details input[type="submit"] {
   padding: 4px 12px;
   background-color: #f44336;
   color: white;
@@ -80,19 +87,19 @@
   cursor: pointer;
 }
 
-.cart-details input[type="submit"]:hover {
+.cart-container .cart-details input[type="submit"]:hover {
   background-color: #d32f2f;
 }
 
 /* 在庫なし表示 */
-.out-of-stock {
+.cart-container .out-of-stock {
   color: #d32f2f;
   font-weight: bold;
   margin-top: 10px;
 }
 
 /* 合計金額と購入ボタンのエリア */
-.cart-footer {
+.cart-container .cart-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -101,18 +108,18 @@
   background-color: #fafafa;
 }
 
-.cart-footer .total {
+.cart-container .cart-footer .total {
   font-size: 18px;
   font-weight: bold;
   color: #333;
   margin: 0;
 }
 
-.cart-footer form {
+.cart-container .cart-footer form {
   margin: 0;
 }
 
-.cart-footer form input[type="submit"] {
+.cart-container .cart-footer form input[type="submit"] {
   padding: 10px 20px;
   background-color: #2196F3;
   color: white;
@@ -122,6 +129,6 @@
   cursor: pointer;
 }
 
-.cart-footer form input[type="submit"]:hover {
+.cart-container .cart-footer form input[type="submit"]:hover {
   background-color: #1976D2;
 }
