@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="java.util.*, model.*"%>
+    <%List<Cart> cartlist = (List<Cart>) session.getAttribute("cart");
+      int stock = 0;  
+      if(cartlist != null){
+      	for(Cart cart:cartlist){
+      		stock += cart.getQuantity();
+      	
+      	}
+      }
+      String word = (String)request.getAttribute("word");
+      if(word == null){
+      	word = "";
+      }%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,18 +26,18 @@
 	<div id="header-div">
 		<button id="menu-btn" class="header-btn">≡</button>
 		<a id="icon" href="index"><img src="image/material/icon2.png"></a>
-		<form id="search" action="search" method="get">
-			<select id="search-type" >
+		<form id="search" action="SearchServlet" method="get">
+			<select id="search-type" naem="categoryName">
 				<option>すべて</option>
 				<option>マンガ</option>
 				<option>コミックス(雑誌扱)</option>
 			</select>
-			<input id="search-area" type="text">
+			<input id="search-area" type="text" name="word" value="<%=word %>">
 			<input id="search-btn" type="submit" class="header-btn" value="">
 		</form>
 		<div id="cart-btn"  class="header-btn" >
 			<a href="cart"><img src="image/material/cart2.png"></a>
-			<span class="overlay-text">0</span>
+			<a class="overlay-text"><%=stock %></a>
 		</div>
 		
 	</div>
