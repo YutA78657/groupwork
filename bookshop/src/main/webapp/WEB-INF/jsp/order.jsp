@@ -15,18 +15,23 @@
 		<div class="box">
 			<div class="title-box"><h1>注文履歴</h1></div>
 			<div class="order-box">
+		<%
+		if(orderSets == null){
+			System.out.println("null");
+		}
+		%>
 			<%
 			for(OrderSet orderSet :orderSets){
 			%>
 				<div class="order">
 					<a><h1>注文番号：<%=orderSet.getOrder().getId() %></h1></a>
 					<%
-					List<OrderItem> orderItems = orderSet.getOrderItem(); 
+					List<OrderItemView> orderItems = orderSet.getOrderItem(); 
 					int totalPrice = 0;
-					for(OrderItem orderItem:orderItems){
+					for(OrderItemView orderItem:orderItems){
 						totalPrice += orderItem.getPrice(); 
 					%>
-					<h2><%=orderItem.getTitle()%></h2>
+					<h2><%=orderItem.getName()%></h2>
 					<%
 					}
 					%>

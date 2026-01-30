@@ -36,7 +36,7 @@ public class OrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("loginUser");
 		List<OrderSet> orderSets =  logic.GetOrders.execute(user.getId());
-		session.setAttribute("orderSets", orderSets);
+		request.setAttribute("orderSets", orderSets);
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/order.jsp");
 		dis.forward(request, response);
 	}
