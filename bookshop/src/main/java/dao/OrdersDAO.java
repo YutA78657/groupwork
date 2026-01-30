@@ -34,19 +34,42 @@ public class OrdersDAO extends DAO {
 		}
 		return list;
 	}
+	//id検索
+	public List<Orders> findById(int id){
+		load();
+		List<Orders> list = new ArrayList<>();
+
+		String sql = "SELECT id, user_Id, order_date, status FROM orders where id = ? ORDER BY order_date desc";
+
+		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
+				PreparedStatement ps = conn.prepareStatement(sql);
+				){
+			ps.setInt(1,id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Orders orders = new Orders(rs.getInt("id"), 
+						rs.getInt("user_Id"),
+						rs.getDate("order_date"),
+						rs.getString("status"));
+				list.add(orders);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	//追加
 	public boolean insert(Orders order) {
 		load();
 		
-        String sql = "INSERT INTO orders(user_Id, order_date, status) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO orders(user_Id, order_date, status) VALUES(?, ?,'発送準備中')";
 
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, order.getUserId());
             ps.setDate(2, order.getOrder_date());
-            ps.setString(3, order.getStatus());
 
             int result = ps.executeUpdate();
             return result == 1;
