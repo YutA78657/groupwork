@@ -4,15 +4,15 @@ import java.util.List;
 
 public class OrderSet {
 		private Orders order;
-		private List<OrderItem> orderItem;
-		public OrderSet(Orders order,List<OrderItem> orderItem) {
+		private List<OrderItemView> orderItem;
+		public OrderSet(Orders order,List<OrderItemView> orderItem) {
 			this.order = order;
 			this.orderItem = orderItem;
 		}
 		public Orders getOrder() {
 			return order;
 		}
-		public List<OrderItem> getOrderItem() {
+		public List<OrderItemView> getOrderItem() {
 			return orderItem;
 		}
 }
