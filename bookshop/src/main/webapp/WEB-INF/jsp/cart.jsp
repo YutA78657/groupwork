@@ -21,33 +21,33 @@
 			<h2>カート</h2>
 
 			<%
-                // セッションからカート情報を取得
-                List<Cart> cartlist = (List<Cart>) session.getAttribute("cart");
+			// セッションからカート情報を取得
+			List<Cart> cartlist = (List<Cart>) session.getAttribute("cart");
 
-                // カートが空の場合
-                if (cartlist == null) {
-            %>
+			// カートが空の場合
+			if (cartlist == null) {
+			%>
 
 			<!-- 空表示 -->
 			<p style="padding: 20px;">カートは空です。</p>
 
 			<%
-                } else {
-                    int total = 0; // 合計金額
-            %>
+			} else {
+			int total = 0; // 合計金額
+			%>
 
 			<!-- 商品一覧（スクロール可能） -->
 			<div class="cart-list">
 
 				<%
-                    // カート内の商品を1件ずつ表示
-                    for (Cart cart : cartlist) {
-                        Product p = cart.getProduct();
-                        int quantity = cart.getQuantity();
-                        int subtotal = p.getPrice() * quantity;
-                        total += subtotal;
-                        int stock = p.getStock();
-                %>
+				// カート内の商品を1件ずつ表示
+				for (Cart cart : cartlist) {
+					Product p = cart.getProduct();
+					int quantity = cart.getQuantity();
+					int subtotal = p.getPrice() * quantity;
+					total += subtotal;
+					int stock = p.getStock();
+				%>
 
 				<!-- 商品1件分 -->
 				<div class="cart-item">
@@ -71,9 +71,9 @@
 							￥<%=String.format("%,d", p.getPrice())%></p>
 
 						<%
-                            // 在庫がある場合のみ数量変更と削除を表示
-                            if (stock > 0) {
-                        %>
+						// 在庫がある場合のみ数量変更と削除を表示
+						if (stock > 0) {
+						%>
 
 						<!-- 数量変更 + 削除フォーム（商品ごと） -->
 						<form action="cart" method="post">
@@ -94,13 +94,13 @@
                                         document.getElementById('shared-buy<%=p.getId()%>').value=this.value;
                                     ">
 								<%
-                                    for (int i = 1; i <= stock; i++) {
-                                        String selected = (i == quantity) ? "selected" : "";
-                                %>
+								for (int i = 1; i <= stock; i++) {
+									String selected = (i == quantity) ? "selected" : "";
+								%>
 								<option value="<%=i%>" <%=selected%>><%=i%></option>
 								<%
-                                    }
-                                %>
+								}
+								%>
 							</select>
 
 							<!-- 削除ボタン -->
@@ -108,22 +108,22 @@
 						</form>
 
 						<%
-                            } else {
-                        %>
+						} else {
+						%>
 
 						<!-- 在庫なし表示 -->
 						<p class="out-of-stock">在庫なし</p>
 
 						<%
-                            }
-                        %>
+						}
+						%>
 
 					</div>
 				</div>
 
 				<%
-                    } // 商品ループ終了
-                %>
+				} // 商品ループ終了
+				%>
 
 			</div>
 			<!-- cart-list 終了 -->
@@ -146,16 +146,16 @@
 						<input type="hidden" name="action" value="update">
 
 						<%
-                            // 全商品の hidden を埋め込む
-                            for (Cart cart : cartlist) {
-                                Product p = cart.getProduct();
-                        %>
+						// 全商品の hidden を埋め込む
+						for (Cart cart : cartlist) {
+							Product p = cart.getProduct();
+						%>
 						<input type="hidden" name="pid[]" value="<%=p.getId()%>">
 						<input type="hidden" id="shared<%=p.getId()%>" name="quantity[]"
 							value="<%=cart.getQuantity()%>">
 						<%
-                            }
-                        %>
+						}
+						%>
 
 						<!-- 更新ボタン -->
 						<input type="submit" value="更新">
@@ -168,16 +168,16 @@
 						<input type="hidden" name="purchase" value="true">
 
 						<%
-                            // 購入用 hidden（ID 重複防止のため shared-buyX）
-                            for (Cart cart : cartlist) {
-                                Product p = cart.getProduct();
-                        %>
+						// 購入用 hidden（ID 重複防止のため shared-buyX）
+						for (Cart cart : cartlist) {
+							Product p = cart.getProduct();
+						%>
 						<input type="hidden" name="pid[]" value="<%=p.getId()%>">
 						<input type="hidden" id="shared-buy<%=p.getId()%>"
 							name="quantity[]" value="<%=cart.getQuantity()%>">
 						<%
-                            }
-                        %>
+						}
+						%>
 
 						<!-- 購入ボタン -->
 						<input type="submit" value="購入する">
@@ -190,8 +190,8 @@
 			<!-- cart-footer 終了 -->
 
 			<%
-                } // カートが空でない場合の終了
-            %>
+			} // カートが空でない場合の終了
+			%>
 
 		</div>
 	</div>
