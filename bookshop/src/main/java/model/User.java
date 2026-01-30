@@ -24,6 +24,13 @@ public class User implements Serializable {
         this.address = address;
         this.adminFlg = adminFlg;
     }
+    // User登録
+    public User(String email, String pass, String name) {
+        this.email = email;
+        this.pass = pass;
+        this.name = name;
+    }
+    
     
     public void setId(int id) {
 		this.id = id;
@@ -49,12 +56,7 @@ public class User implements Serializable {
 		this.adminFlg = adminFlg;
 	}
 
-	// User登録
-    public User(String email, String pass, String name) {
-        this.email = email;
-        this.pass = pass;
-        this.name = name;
-    }
+	
     
     public int getId() {
 		return id;
