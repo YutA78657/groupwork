@@ -3,7 +3,7 @@ package test;
 import java.util.List;
 
 import dao.OrderItemsDAO;
-import model.Order_item;
+import model.OrderItem;
 
 public class TestOrderitem {
 
@@ -12,14 +12,14 @@ public class TestOrderitem {
 		OrderItemsDAO oi = new OrderItemsDAO();
 
 		// order_id を指定
-		List<Order_item> list = oi.findByOrderId(5);
+		List<OrderItem> list = oi.findByOrderId(5);
 
-		for (Order_item item : list) {
+		for (OrderItem item : list) {
 			System.out.println("id=" + item.getId() + ", product_id=" + item.getProductId() + ", quantity=" + item.getQuantity() + ", price=" + item.getPrice());
 		}
 
 		// insert
-		Order_item newOrder_item = new Order_item( 0, 5, 2, 3, 1200);
+		OrderItem newOrder_item = new OrderItem( 0, 5, 2, 3, 1200);
 
 		boolean inserted = oi.insert(newOrder_item);
 		System.out.println(inserted ? "登録成功!" : "登録失敗…");

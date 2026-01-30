@@ -20,9 +20,9 @@
 	<div class="login-container">
 		<h1>ログイン</h1>
 
-		<form action="Login" method="post">
+		<form action="login" method="post">
 			<div class="form-group">
-				<label>メールアドレス：</label> <input type="text" name="mail">
+				<label>メールアドレス：</label> <input type="text" name="email">
 			</div>
 
 			<div class="form-group">

@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Order_item;
+import model.OrderItem;
 
 public class OrderItemsDAO extends DAO{
 	// order_idで明細取得
-	public List<Order_item> findByOrderId(int order_id) {
+	public List<OrderItem> findByOrderId(int order_id) {
 		load();
-		List<Order_item> list = new ArrayList<>();
+		List<OrderItem> list = new ArrayList<>();
 
 		String sql = "SELECT * FROM order_item WHERE order_id = ?";
 
@@ -25,7 +25,7 @@ public class OrderItemsDAO extends DAO{
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					Order_item item = new Order_item(
+					OrderItem item = new OrderItem(
 							rs.getInt("id"),
 							rs.getInt("order_id"),
 							rs.getInt("product_id"),
@@ -42,7 +42,7 @@ public class OrderItemsDAO extends DAO{
 	}
 
 	//追加
-	public boolean insert(Order_item order_item) {
+	public boolean insert(OrderItem order_item) {
 		load();
 
 		String sql = "INSERT INTO order_item(order_id, product_id, quantity, price) VALUES(?, ?, ?, ?)";
@@ -85,4 +85,27 @@ public class OrderItemsDAO extends DAO{
 
 		return false;
 	}
+	
+	//注文単位の合計金額の取得
+	public int getTotalPrice(int order_id) {
+		load();
+		int totalPrice = 0;
+
+		String sql = "SELECT SUM(price) FROM order_item WHERE order_id = ? ";
+
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setInt(1, order_id);
+			ResultSet rs = ps.executeQuery();
+			totalPrice = rs.getInt("SUM(price)");
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalPrice;
+	}
+	
+	
 }
