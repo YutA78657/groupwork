@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.User"%>
 <!DOCTYPE html>
-<%  User user = (User)request.getAttribute("user"); %>
+<%  User user = (User)session.getAttribute("loginUser"); %>
 <html>
 <head>
 <meta charset="UTF-8">

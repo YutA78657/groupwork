@@ -14,7 +14,7 @@ import model.User;
 /**
  * Servlet implementation class MyPageServlet
  */
-@WebServlet("/mypage")
+@WebServlet("/Mypage")
 public class MyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

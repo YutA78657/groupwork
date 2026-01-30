@@ -31,7 +31,7 @@
 
 			<div class="form-actions">
 				<input type="submit" value="ログイン">
-				<button type="button" onclick="location.href='UserRegister'">
+				<button type="button" onclick="location.href='userRegister'">
 					新規登録へ</button>
 			</div>
 		</form>
