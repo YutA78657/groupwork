@@ -27,11 +27,16 @@ public class Product {
 
 
 	//DB取得
-	public Product(int id, String title, int price, int stock,String author,   String description, String publisher, int recommend_flg, String img, int category_id, int series_id) {
-		this(id, title, price, stock, img, author, category_id, series_id);
+	public Product(String title, int price, int stock,String author, String description, String publisher, String img, int category_id, int series_id) {
+		this.title = title;
+		this.price = price;
+		this.stock = stock;
+		this.author = author;
 		this.description = description;
 		this.publisher = publisher;
-		this.recommend_flg = recommend_flg;
+		this.img = img;
+		this.category_id = category_id;
+		this.series_id = series_id;
 	}
 	
 	// 登録用
