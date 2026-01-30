@@ -15,6 +15,11 @@ public class Orders {
 		this.order_date = order_date;
 		this.status = status;
 	}
+	//登録用
+	public Orders(int user_Id, Date order_date) {
+		this.user_Id = user_Id;
+		this.order_date = order_date;
+	}
 
 	// getter / setter
 	public int getId() {
