@@ -25,11 +25,15 @@ public class ProductServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// ユーザー情報取得
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
 		boolean isAdmin = (loginUser != null && loginUser.isAdmin());
-
+		
 		String idStr = request.getParameter("id");
+		
+		// 400 Bad Request
 		if (idStr == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
@@ -40,6 +44,7 @@ public class ProductServlet extends HttpServlet {
 		ProductsDAO dao = new ProductsDAO();
 		Product product = dao.findById(id);
 
+		// 404 Not Found
 		if (product == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
@@ -47,6 +52,7 @@ public class ProductServlet extends HttpServlet {
 
 		request.setAttribute("product", product);
 
+		// admin判定
 		if (isAdmin) {
 			request.getRequestDispatcher("WEB-INF/jsp/ProductM.jsp")
 			.forward(request, response);
@@ -62,12 +68,20 @@ public class ProductServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
+		HttpSession session = request.getSession();
+		User loginUser = (User) session.getAttribute("loginUser");
+
+		if (loginUser == null || !loginUser.isAdmin()) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+
 		String action = request.getParameter("action");
 		ProductsDAO dao = new ProductsDAO();
 
-		// ---------- 商品更新 ----------
-		if ("update".equals(action)) {
-
+		switch(action) {
+		case "update":
+			int id = Integer.parseInt(request.getParameter("id"));
 			Product product = new Product(
 					request.getParameter("title"),
 					Integer.parseInt(request.getParameter("price")),
@@ -79,35 +93,30 @@ public class ProductServlet extends HttpServlet {
 					Integer.parseInt(request.getParameter("categoryId")),
 					Integer.parseInt(request.getParameter("seriesId"))
 					);
-
 			dao.update(product);
-
-			// 更新後は再表示
-			request.setAttribute("product", dao.findById(product.getId()));
-			request.getRequestDispatcher("WEB-INF/jsp/productM.jsp")
-			.forward(request, response);
-			return;
-		}
-
-		// ---------- おすすめ切替 ----------
-		if ("recommend".equals(action)) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			dao.toggleRecommend(id);
-
 			request.setAttribute("product", dao.findById(id));
-			request.getRequestDispatcher("WEB-INF/jsp/productM.jsp")
+			request.getRequestDispatcher("WEB-INF/jsp/ProductM.jsp")
 			.forward(request, response);
-			return;
-		}
+			break;
 
-		// ---------- 削除 ----------
-		if ("delete".equals(action)) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			dao.delete(id);
+		case "recommend":
+			int rid = Integer.parseInt(request.getParameter("id"));
+			dao.toggleRecommend(rid);
+			request.setAttribute("product", dao.findById(rid));
+			request.getRequestDispatcher("WEB-INF/jsp/ProductM.jsp")
+			.forward(request, response);
+			break;
 
-			response.sendRedirect("topM");
-			return;
-		}
+		case "delete":
+			int did = Integer.parseInt(request.getParameter("id"));
+			dao.delete(did);
+			response.sendRedirect("top");
+			break;
+
+		default:
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+	    }
+		
 	}
 
 }
