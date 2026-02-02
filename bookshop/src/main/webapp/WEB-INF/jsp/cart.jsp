@@ -4,7 +4,7 @@
 <head>
 <title>カートの中身</title>
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/cart.css">
 <%-- 
 <link rel="stylesheet" href="css/cart.css">--%>
 </head>
