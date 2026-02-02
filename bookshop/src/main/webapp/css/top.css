@@ -1,122 +1,130 @@
 @charset "UTF-8";
+
+/* =========================
+   画像
+========================= */
 .book_img {
-	width:auto;
-	height:100%;
-	display:block;
-	margin: auto;
+  width: auto;
+  height: 100%;
+  display: block;
+  margin: auto;
 }
 
 .book_img_area {
-	height: 60%;
-	background-color: rgb(255, 255, 255);
-	border-radius: 8px 8px 0 0;
-	border-bottom: none;
+  height: 60%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px 8px 0 0;
+  border-bottom: none;
 }
 
+/* =========================
+   テキストエリア（高さ固定で揃える）
+========================= */
 .book_text_area {
-	height: 140px;
-	width: auto;
-	padding-left: 5px;
-	padding-right: 5px;
-	background-color: rgb(255, 255, 255);
-	border-radius: 0 0 8px 8px;
-	border-top: none;
-	border-top:1px solid black;
+  height: 140px;
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* =========================
+   本カード
+========================= */
 .book {
-	width:270px;
-	height: 370px;
-	margin: 15px;
-	border: 1px solid black;
-	border-radius : 8px;
+  width: 270px;
+  height: 370px;
+  margin: 15px;
+  border: 1px solid black;
+  border-radius: 8px;
 }
 
-.book-area{
-	width:300px;
-	height: 400px;
+.book-area {
+  width: 300px;
+  height: 400px;
 }
 
-
-
+/* =========================
+   タイトル・著者名（1行固定＋省略）
+========================= */
 .title {
-	font-size: 1em;
-	margin:0;
+  font-size: 1.2em;
+  margin: 0;
+  height: 1.4em;
+  line-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.title a{
-	color:rgb(0, 0, 0);
+.title a {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
 }
 
-
-.auther{
-	margin-top:0.5rem;
-	margin-bottom:0;
+.auther {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  height: 1.4em;
+  line-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* =========================
+   価格・カートボタン
+========================= */
 .price {
-	width: 45%;
-	font-size:1.5em;
-	color:rgb(0, 0, 0);
-	margin-top:0.5rem;
-	margin-bottom:0.5rem;
+  width: 45%;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-#cart-btn-box{
-	display: flex;
-	width: 100%;
-	height:50px;
-	align-items: center;
+#cart-btn-box {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
 }
 
-
-#cart-btn-box p{
-	margin-top:0;
-	margin-bottom:0;
+#cart-btn-box p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-#cart-btn-box form{
-	height:100%;
-	width: 55%;
-	margin-bottom: auto;
-	display:flex;
-	align-items: center;
+#cart-btn-box form {
+  height: 100%;
+  width: 55%;
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
 }
 
-
-#cart-btn-box form input{
-	width: 100%;
-	height: 70%;
-	background-color: rgb(73, 73, 73);
-	border-radius: 18px;
-	color: white;
+#cart-btn-box form input {
+  width: 100%;
+  height: 70%;
+  background-color: rgb(73, 73, 73);
+  border-radius: 18px;
+  color: white;
 }
 
-
-#mes{
-	align-items: center;
-	margin: auto;
-}
-
-
-.box {
-	display:flex;
-	width: 1500px;
-	margin-right: auto;
-	margin-left: auto;
-	margin-top:20px;
-	justify-content: flex-start;
-	flex-wrap: wrap;
-}
-
-
-
-
-
+/* =========================
+   スライドショー
+========================= */
 .slideshow {
   width: 100%;
   max-width: 1500px;
-  overflow: hidden; /* 外にはみ出した部分は隠す */
+  overflow: hidden;
   position: relative;
   margin-right: auto;
   margin-left: auto;
@@ -127,27 +135,24 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.category-title{
-	height:60px;
-	background-color: #eeeeee;
-	margin:0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.category-title {
+  height: 60px;
+  background-color: #eeeeee;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.category-title h1{
-	
-	text-align: center;
-	margin:0;
+.category-title h1 {
+  text-align: center;
+  margin: 0;
 }
 
 .slidesbox {
   display: flex;
-  transition: transform 0.5s ease; /* スライド時のアニメーション */
-  
+  transition: transform 0.5s ease;
 }
-
 
 /* ボタン */
 .prev, .next {
@@ -166,4 +171,20 @@
 .prev { left: 0; }
 .next { right: 0; }
 
+/* =========================
+   他 JSP で使用される要素
+========================= */
+#mes {
+  align-items: center;
+  margin: auto;
+}
 
+.box {
+  display: flex;
+  width: 1500px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}

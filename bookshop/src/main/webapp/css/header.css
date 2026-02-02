@@ -1,83 +1,91 @@
 @charset "UTF-8";
 
+/* ================================
+   ヘッダー全体
+   ================================ */
 header{
-	background-color: rgb(34, 33, 35);
-	height: 100px;
+    background-color: rgb(34, 33, 35);
+    height: 100px;
     display: flex;
     margin: 0;
     padding: 0;
     min-height: 0;
 }
+
 #header-div {
-	width: 100%;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     position: relative;
 }
 
+/* ================================
+   ボタン共通
+   ================================ */
 .header-btn {
     aspect-ratio: 1 / 1;       
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: none;
     cursor: pointer;
     margin: 0;
     padding: 0;
-
     -webkit-appearance: none;
     appearance: none;
 }
+
+/* ================================
+   ロゴ
+   ================================ */
 #icon{
-	width: 15%;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 #icon img{
-	width: 250px;
-	height: 50px; 
+    width: 250px;
+    height: 50px; 
 }
 
+/* ================================
+   メニューボタン
+   ================================ */
 #menu-btn {
-	height: 100%;
+    height: 100%;
     background-color: rgb(34, 33, 35);
     color: white;
     font-size: 60px;
 }
 
+/* ================================
+   検索フォーム
+   ================================ */
 #search{    
-	position: absolute;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-	height: 60%;
-	width: 50%;
-	display: flex;
-	margin:0;
+    height: 60%;
+    width: 50%;
+    display: flex;
+    margin:0;
 }
 
 #search-type{
-	border-radius: 30px 0 0 30px;
-	font-size: 16px;
-	text-align-last: center;
-}
-
-#search-type option{
-	text-align: left;
+    border-radius: 30px 0 0 30px;
+    font-size: 16px;
+    text-align-last: center;
 }
 
 #search-area{
-	border-right: none;  
-	flex: 1;
+    border-right: none;  
+    flex: 1;
     min-width: 0;
-    -webkit-appearance: none;
-    appearance: none;
-	font-size: 20px;
+    font-size: 20px;
     border: 1px solid #ccc;
-    box-shadow: none;
 }
 
 #search-btn {
@@ -89,53 +97,80 @@ header{
     border-radius: 0 30px 30px 0;
 }
 
+/* ================================
+   カートボタン
+   ================================ */
 #cart-btn{
-	height: 100%;
-	margin-left: auto;
-	position: relative;
+    height: 100%;
+    margin-left: auto;
+    position: relative;
 }
+
+.cart-link {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    align-items: center;
+}
+
+/* カート画像サイズ */
+#cart-btn img {
+    width: auto;        
+    height: 80%;        
+    display: block;
+    margin: auto;
+}
+
+/* カート内の数字 */
 .overlay-text {
     position: absolute;
-    top: 47%;         
-    left: 57%;        
+    top: 50%;
+    left: 58.5%;   
     transform: translate(-50%, -50%);
     color: white;
     font-size: 20px;
     font-weight: bold;
 }
 
+/* ================================
+   スライドメニュー
+   ================================ */
 #menu-box {
-	position: fixed;
-	top: 100px;
-	left: -270px; /* 初期状態は画面外に隠す */
-	width: 220px;
-	height: 100%;
-	padding-left: 50px;
-	background: rgb(34, 33, 35);
-	transition: left 0.3s ease; /* スライドするアニメーション */
-	z-index: 1001;
+    position: fixed;
+    top: 100px;
+    left: -270px;
+    width: 220px;
+    height: 100%;
+    padding-left: 50px;
+    background: rgb(34, 33, 35);
+    transition: left 0.3s ease;
+    z-index: 1001;
 }
 
 #menu-box a{
-	color:white;
-	font-size:24px;
+    color:white;
+    font-size:24px;
 }
 
 #menu-box.active{
-	left:0px;
+    left:0px;
 }
 
+/* ================================
+   オーバーレイ
+   ================================ */
 #overlay {
-	display: none;
-	position: fixed;
-	top: 100px;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.4);
-	z-index: 1000;
+    display: none;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
 }
 
 #overlay.active {
-	display: block;
+    display: block;
 }
