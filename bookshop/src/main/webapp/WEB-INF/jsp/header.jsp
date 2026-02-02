@@ -17,6 +17,12 @@
     }
 %>
 
+<%
+	List<Category> clist = (List<Category>)request.getAttribute("clist");
+	
+	
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +40,18 @@
             <img src="image/material/icon2.png">
         </a>
 
-        <form id="search" action="SearchServlet" method="get">
+        <form id="search" action="search" method="get">
             <select id="search-type" name="categoryName">
-                <option>すべて</option>
-                <option>マンガ</option>
-                <option>コミックス(雑誌扱)</option>
+                <option value="">すべて</option>
+                <% 
+                for(Category category:clist){
+                %>
+                <option><%=category.getName() %></option>
+                
+                
+                <%	
+                }
+                %>
             </select>
             <input id="search-area" type="text" name="word" value="<%=word %>">
             <input id="search-btn" type="submit" class="header-btn" value="">

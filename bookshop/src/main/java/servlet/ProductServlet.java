@@ -9,14 +9,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import dao.BookDAO;
 import dao.ProductsDAO;
+import model.Book;
 import model.Product;
 import model.User;
 
 /**
  * Servlet implementation class ProductServlet
  */
-@WebServlet("/ProductServlet")
+@WebServlet("/product")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,29 +31,31 @@ public class ProductServlet extends HttpServlet {
 		User loginUser = (User) session.getAttribute("loginUser");
 		boolean isAdmin = (loginUser != null && loginUser.isAdmin());
 
-		String idStr = request.getParameter("id");
+		String idStr = request.getParameter("pid");
 		if (idStr == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 
 		int id = Integer.parseInt(idStr);
+		
+		
+		BookDAO bd = new BookDAO();
+		
+		Book book = bd.findById(id);
 
-		ProductsDAO dao = new ProductsDAO();
-		Product product = dao.findById(id);
-
-		if (product == null) {
+		if (book == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 
-		request.setAttribute("product", product);
+		request.setAttribute("book", book);
 
 		if (isAdmin) {
-			request.getRequestDispatcher("WEB-INF/jsp/ProductM.jsp")
+			request.getRequestDispatcher("WEB-INF/jsp/productM.jsp")
 			.forward(request, response);
 		} else {
-			request.getRequestDispatcher("WEB-INF/jsp/Product.jsp")
+			request.getRequestDispatcher("WEB-INF/jsp/product.jsp")
 			.forward(request, response);
 		}
 	}

@@ -42,7 +42,7 @@ public class Book {
 		return stock;
 	}
 
-	public String getAuther() {
+	public String getAuthor() {
 		return auther;
 	}
 

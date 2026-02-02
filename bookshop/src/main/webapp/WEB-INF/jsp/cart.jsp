@@ -6,7 +6,7 @@
 
 <!-- 共通CSS -->
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/cart.css">
 <%-- 
 <link rel="stylesheet" href="css/cart.css">--%>
 </head>

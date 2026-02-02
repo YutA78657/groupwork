@@ -15,7 +15,7 @@ import model.Book;
 /**
  * Servlet implementation class SerchServlet
  */
-@WebServlet("/SearchServlet")
+@WebServlet("/search")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +40,9 @@ public class SearchServlet extends HttpServlet {
 
         List<Book> result =
             dao.search(categoryName, word);
+        if(result.size( ) == 0){
+        	System.out.println("?");
+		}
 
         request.setAttribute("SearchResult", result);
         request.setAttribute("word", word);

@@ -1,16 +1,17 @@
 package servlet;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Servlet implementation class ProductRegisterServlet
  */
-@WebServlet("/ProductRegisterServlet")
+@WebServlet("/productRegister")
 public class ProductRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

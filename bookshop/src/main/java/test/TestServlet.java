@@ -16,7 +16,7 @@ import model.Book;
 /**
  * Servlet implementation class TestSearvlet
  */
-@WebServlet("/search")
+@WebServlet("/Search")
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
