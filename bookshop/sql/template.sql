@@ -3,7 +3,10 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL UNIQUE,
   pass VARCHAR(255) NOT NULL,
   name VARCHAR(100) NOT NULL,
-  address VARCHAR(255),
+  address_number INT(7),
+  address1 VARCHAR(50),
+  address2 VARCHAR(50),
+  address3 VARCHAR(50),
   admin_flg TINYINT(1) NOT NULL DEFAULT 0
 );
 
@@ -37,6 +40,10 @@ CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
   order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  address_number INT(7),
+  address1 VARCHAR(50),
+  address2 VARCHAR(50),
+  address3 VARCHAR(50),
   status VARCHAR(20) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

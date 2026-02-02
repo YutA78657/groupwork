@@ -164,12 +164,13 @@
 					</form>
 
 					<!-- 購入フォーム（更新の右隣） -->
-					<form action="check" method="post">
+					<form action="checkPreview" method="get">
 						<%
 						// 購入用 hidden（ID 重複防止のため shared-buyX）
 						for (Cart cart : cartlist) {
 							Product p = cart.getProduct();
 						%>
+						<input type="hidden" name="action" value="update">
 						<input type="hidden" name="pid[]" value="<%=p.getId()%>">
 						<input type="hidden" id="shared-buy<%=p.getId()%>"
 							name="quantity[]" value="<%=cart.getQuantity()%>">

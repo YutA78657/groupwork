@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import model.Cart;
 import model.User;
 
 /**
@@ -30,24 +31,15 @@ public class CheckServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] spid = request.getParameterValues("pid[]");
-		String[] squantity = request.getParameterValues("quantity[]");
 		HttpSession session = request.getSession();
+		@SuppressWarnings("unchecked")
+		List<Cart> cartlist = (List<Cart>)session.getAttribute("cart");
 		User user = (User)session.getAttribute("loginUser");
-		int[] pid = new int[spid.length];
-		int[] quantity = new int[squantity.length];
-		for(int i = 0;i<pid.length;i++) {
-			pid[i] = Integer.parseInt(spid[i]);
-			System.out.println(pid[i]);
-		}
-		for(int i = 0;i<quantity.length;i++) {
-			quantity[i] = Integer.parseInt(squantity[i]);
-			System.out.println(quantity[i]);
-		}
-		Boolean result = logic.StockCheckLogic.execute(pid, quantity);
+		boolean result = logic.StockCheckLogic.execute(cartlist);
 		if(result == true) {
-			Boolean r2 = logic.CheckLogic.execute(user.getId(),pid, quantity);
+			Boolean r2 = logic.CheckLogic.execute(user,cartlist);
 			if(r2 == true) {
+				session.removeAttribute("cart");
 				request.setAttribute("flg", "true");
 				request.getRequestDispatcher("WEB-INF/jsp/check.jsp").forward(request, response);
 			}

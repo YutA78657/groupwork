@@ -7,7 +7,6 @@
 <%
     // Controller から渡された注文セット（注文 + 注文商品一覧）
     List<OrderSet> orderSets = (List<OrderSet>)request.getAttribute("orderSets");
-	String flg = (String)request.getAttribute("flg"); 
 %>
 
 <html>
@@ -15,9 +14,12 @@
 <meta charset="UTF-8">
 <title>注文履歴</title>
 
-<!-- CSS 読み込み -->
+<!-- CSS 読み込み -->	
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/order.css">
+
 </head>
 
 <body>
@@ -26,9 +28,6 @@
 	<jsp:include page="header.jsp" />
 
 	<div class="parent">
-	<%if(flg != null){ %>
-		<div class="messege"><h2>購入が完了しました</h2></div>
-	<%} %>
 		<div class="box">
 
 			<!-- ページタイトル（中央寄せ） -->
@@ -97,7 +96,7 @@
 								<h2><%=orderItem.getName() %></h2>
 
 								<p>
-									単価：<%=orderItem.getPrice() %>円
+									￥<%=String.format("%,d", totalPrice)%>
 								</p>
 
 								<p>
@@ -119,7 +118,7 @@
 
 						<!-- 合計金額（黒・大きめ） -->
 						<div class="total-price">
-							合計金額：￥<%=totalPrice %>
+							合計金額：￥<%=String.format("%,d", totalPrice)%>
 						</div>
 
 						<!-- 発送状況（「発送状況：」は黒、ステータス名だけ色付き） -->

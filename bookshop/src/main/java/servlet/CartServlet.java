@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import logic.AddCart;
 import logic.DeleteCart;
 import logic.UpdateCart;
@@ -53,10 +52,9 @@ public class CartServlet extends HttpServlet {
 			cart = new ArrayList<>();
 		}
 		String action = (String)request.getParameter("action");
-		int addQuantity = Integer.parseInt(request.getParameter("quantity"));
-		
 		
 		if(action.equals("add")) {
+			int addQuantity = Integer.parseInt(request.getParameter("quantity"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
 			cart = AddCart.execute(cart, pid,addQuantity);
 		}else if(action.equals("update")){

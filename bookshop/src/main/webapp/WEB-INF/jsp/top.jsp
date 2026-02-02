@@ -45,7 +45,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 							<p class="auther"><%=book.getAuthor()%></p>
 							<div id="cart-btn-box">
 								<p class="price">
-									￥<%=book.getPrice()%></p>
+									￥<%=String.format("%,d",book.getPrice())%></p>
 								<form action="cart" method="post">
 									<input type="hidden" name="action" value="add">
 									<input type="hidden" name="pid" value="<%=book.getPid()%>">
@@ -91,7 +91,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 							<p class="auther"><%=book.getAuthor()%></p>
 							<div id="cart-btn-box">
 								<p class="price">
-									￥<%=book.getPrice()%></p>
+									￥<%=String.format("%,d",book.getPrice())%></p>
 								<form action="cart" method="post">
 									<input type="hidden" name="action" value="add">
 									<input type="hidden" name="pid" value="<%=book.getPid()%>">

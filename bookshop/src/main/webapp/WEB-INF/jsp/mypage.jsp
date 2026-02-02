@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.User"%>
 <!DOCTYPE html>
-<%  User user = (User)session.getAttribute("loginUser");
-	String address = user.getAddress();
-	if(address == null){
-		address = "";
-	}
-%>
+<%  User user = (User)session.getAttribute("loginUser");%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -17,25 +12,87 @@
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
+<script>
+function searchAddress() {
+	  const el = document.getElementById("zipcode");
+	  console.log(el);
+
+	  if (!el) {
+	    alert("zipcode要素が見つかりません");
+	    return;
+	  }
+
+	  let zip = el.value;
+	  console.log("入力値:", zip);
+
+	  zip = zip.replace(/[０-９]/g, s =>
+	    String.fromCharCode(s.charCodeAt(0) - 0xFEE0)
+	  );
+	  zip = zip.replace(/[^\d]/g, "");
+
+	  console.log("正規化後:", zip);
+
+	  if (zip.length !== 7) {
+	    alert("郵便番号は7桁で入力してください");
+	    return;
+	  }
+
+	  fetch(
+			  "https://zipcloud.ibsnet.co.jp/api/search?zipcode=" +
+			  encodeURIComponent(zip)
+			)
+			  .then(res => res.json())
+			  .then(data => {
+			    console.log(data);
+			    if (data.results) {
+			      const r = data.results[0];
+			      address1.value = r.address1;
+			      address2.value = r.address2;
+			      address3.value = r.address3;
+			    } else {
+			      alert(data.message);
+			    }
+		});
+	}
+
+</script>
+
 <jsp:include page="header.jsp" />
 	<div class="parent">
 		<div class="box">
 			<h1>マイページ</h1>
 			<div class="user">
 				<form action="mypage" method="post">
+					<input type="hidden" name="action" value="update">
 					<div class="form-group">
-						<label>ユーザネーム</label> <input type="text"
+						<label>ユーザネーム</label> <input type="text" name="name"
 							value="<%=user.getName()%>">
 					</div>
 
 					<div class="form-group">
-						<label>メールアドレス</label> <input type="text"
+						<label>メールアドレス</label> <input type="text" name="mail"
 							value="<%=user.getEmail()%>">
 					</div>
 
 					<div class="form-group">
-						<label>住所</label> <input type="text"
-							value="<%=address%>">
+						<label>郵便番号</label> <input type="text" size="7" name="address_number"
+							id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%} %>>
+						<button type="button" onclick="searchAddress()">住所検索</button>
+					</div>
+					
+					<div class="form-group">
+						<label>住所１</label> <input type="text" size="50" name="address1"
+							id="address1" <%if(user.getAddress1() != null){ %>value="<%=user.getAddress1()%>"<%} %>>
+					</div>
+					
+					<div class="form-group">
+						<label>住所２</label> <input type="text" size="50" name="address2"
+							id="address2" <%if(user.getAddress2() != null){ %>value="<%=user.getAddress2()%>"<%} %>>
+					</div>
+					
+					<div class="form-group">
+						<label>住所３</label> <input type="text" size="50" name="address3"
+							id="address3" <%if(user.getAddress3() != null){ %>value="<%=user.getAddress3()%>"<%} %>>
 					</div>
 
 					<div class="form-actions">
@@ -50,6 +107,7 @@
 			<h1>パスワードリセット</h1>
 			<div class="user">
 				<form action="mypage" method="post">
+					<input type="hidden" name="action" value="reset">
 					<div class="form-group">
 						<label>新しいパスワード</label> <input type="password">
 					</div>
@@ -69,6 +127,7 @@
 			<h1>退会</h1>
 			<div class="user">
 				<form action="mypage" method="post">
+					<input type="hidden" name="action" value="delete">
 					<div class="form-actions">
 						<input type="submit" value="アカウント削除">
 					</div>

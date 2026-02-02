@@ -252,4 +252,32 @@ public class ProductsDAO extends DAO{
 
 		return false;
 	}
+	
+	//購入時の在庫変更
+	public boolean stockChange(int id,int quantity) {
+
+		load();
+
+		String sql = """
+				    UPDATE product
+				    SET
+				        stock = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			
+			ps.setInt(1, quantity);
+			ps.setInt(2, id);
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }

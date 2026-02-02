@@ -5,6 +5,7 @@ body{
 	margin:0;
 	/*background-color: antiquewhite;*/
 	height: auto;
+	margin-top: 100px;
 }
 html{
 	margin:0;
@@ -12,6 +13,7 @@ html{
 }
 
 .parent{
+	
 	width: 1700px;
 	height: auto;
 	margin: auto;

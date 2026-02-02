@@ -30,13 +30,16 @@ public class UsersDAO extends DAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                user = new User(
-                    rs.getInt("id"),
-                    rs.getString("email"),
-                    rs.getString("name"),
-                    rs.getString("address"),
-                    rs.getInt("admin_flg")
-                );
+            	user = new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("name"),
+                        rs.getString("address_number"),
+                        rs.getString("address1"),
+                        rs.getString("address2"),
+                        rs.getString("address3"),
+                        rs.getInt("admin_flg")
+                    );
             }
 
         } catch (Exception e) {
@@ -90,7 +93,10 @@ public class UsersDAO extends DAO {
                     rs.getInt("id"),
                     rs.getString("email"),
                     rs.getString("name"),
-                    rs.getString("address"),
+                    rs.getString("address_number"),
+                    rs.getString("address1"),
+                    rs.getString("address2"),
+                    rs.getString("address3"),
                     rs.getInt("admin_flg")
                 );
             }
@@ -117,12 +123,15 @@ public class UsersDAO extends DAO {
 
     		while (rs.next()) {
     			User user = new User(
-    					rs.getInt("id"),
-    					rs.getString("email"),
-    					rs.getString("name"),
-    					rs.getString("address"),
-    					rs.getInt("admin_flg")
-    					);
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("name"),
+                        rs.getString("address_number"),
+                        rs.getString("address1"),
+                        rs.getString("address2"),
+                        rs.getString("address3"),
+                        rs.getInt("admin_flg")
+                    );
     			userList.add(user);
     		}
     	} catch (Exception e) {
@@ -141,8 +150,11 @@ public class UsersDAO extends DAO {
 			    UPDATE users
 			    SET
 			        name = ?,
-			        address = ?,
-			        admin_flg = ?
+			        email = ?,
+			        address_number = ?,
+			        address1 = ?,
+			        address2 = ?,
+			        address3 = ?
 			    WHERE id = ?
 			""";
     	
@@ -150,14 +162,18 @@ public class UsersDAO extends DAO {
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, user.getName());
-			ps.setString(2, user.getAddress());
-			ps.setInt(3, user.getAdminFlg());
-			ps.setInt(4, user.getId());
+			ps.setString(2, user.getEmail());
+			ps.setString(3, user.getAddressNum());
+			ps.setString(4, user.getAddress1());
+			ps.setString(5, user.getAddress2());
+			ps.setString(6, user.getAddress3());
+			ps.setInt(7, user.getId());
 			
 			int result = ps.executeUpdate();
 			return result == 1;
 
 		} catch (Exception e) {
+			System.out.println("update_error");
 			e.printStackTrace();
 		}
 

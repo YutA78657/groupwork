@@ -42,7 +42,7 @@ public class OrderItemsDAO extends DAO{
 	}
 
 	//追加
-	public boolean insert(int oid,int pid,int quantity,int price) {
+	public boolean insert(OrderItem orderItems) {
 		load();
 
 		String sql = "INSERT INTO order_items(order_id, product_id, quantity, price) VALUES(?, ?, ?, ?)";
@@ -50,10 +50,10 @@ public class OrderItemsDAO extends DAO{
 		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setInt(1,oid);
-			ps.setInt(2,pid);
-			ps.setInt(3,quantity);
-			ps.setInt(4,price);
+			ps.setInt(1,orderItems.getOrderId());
+			ps.setInt(2,orderItems.getProductId());
+			ps.setInt(3,orderItems.getQuantity());
+			ps.setInt(4,orderItems.getPrice());
 
 			int result = ps.executeUpdate();
 			return result == 1;

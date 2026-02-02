@@ -7,7 +7,10 @@ public class User implements Serializable {
     private String email;
     private String pass;
     private String name;
-    private String address;
+    private String addressNum;
+    private String address1;
+    private String address2;
+    private String address3;
     private int adminFlg;
     
     // ログイン用
@@ -17,11 +20,14 @@ public class User implements Serializable {
     }
     
     // DB取得用
-    public User(int id, String email, String name, String address, int adminFlg) {
+    public User(int id, String email, String name, String addressNum,String address1,String address2,String address3, int adminFlg) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.address = address;
+        this.addressNum = addressNum;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.address3 = address3;
         this.adminFlg = adminFlg;
     }
     // User登録
@@ -30,35 +36,23 @@ public class User implements Serializable {
         this.pass = pass;
         this.name = name;
     }
+    //update用
+    public User(int id,String email, String name, String addressNum,String address1,String address2,String address3) {
+    	this.id = id;
+        this.email = email;
+        this.name = name;
+        this.addressNum = addressNum;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.address3 = address3;
+    }
     
-    
-    public void setId(int id) {
-		this.id = id;
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	public boolean isAdmin() {
+        return adminFlg == 1;
+    }
 
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setAdminFlg(int adminFlg) {
-		this.adminFlg = adminFlg;
-	}
-
-	
-    
-    public int getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -74,15 +68,23 @@ public class User implements Serializable {
 		return name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAddressNum() {
+		return addressNum;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public String getAddress3() {
+		return address3;
 	}
 
 	public int getAdminFlg() {
 		return adminFlg;
 	}
-
-	public boolean isAdmin() {
-        return adminFlg == 1;
-    }
 }
