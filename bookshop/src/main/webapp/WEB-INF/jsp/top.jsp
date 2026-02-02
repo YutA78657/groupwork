@@ -40,7 +40,7 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 						</div>
 						<div class="book_text_area">
 							<p class="title">
-								<a href="https://www.hanmoto.com/bd/isbn/9784297153335#"><%=book.getTitle()%></a>
+								<a href="product"><%=book.getTitle()%></a>
 							</p>
 							<p class="auther"><%=book.getAuther()%></p>
 							<div id="cart-btn-box">
