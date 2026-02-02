@@ -7,6 +7,7 @@
 <%
     // Controller から渡された注文セット（注文 + 注文商品一覧）
     List<OrderSet> orderSets = (List<OrderSet>)request.getAttribute("orderSets");
+	String flg = (String)request.getAttribute("flg"); 
 %>
 
 <html>
@@ -25,6 +26,9 @@
 	<jsp:include page="header.jsp" />
 
 	<div class="parent">
+	<%if(flg != null){ %>
+		<div class="messege"><h2>購入が完了しました</h2></div>
+	<%} %>
 		<div class="box">
 
 			<!-- ページタイトル（中央寄せ） -->
@@ -34,11 +38,6 @@
 
 			<div class="order-box">
 
-				<%
-                    if(orderSets == null){
-                        System.out.println("orderSets is null");
-                    }
-                %>
 
 				<%
                     // 注文セットを1件ずつ表示

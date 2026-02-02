@@ -60,16 +60,16 @@ public class OrdersDAO extends DAO {
 	}
 	
 	//追加
-	public boolean insert(Orders order) {
+	public boolean insert(int id,int uid) {
 		load();
 		
-        String sql = "INSERT INTO orders(user_Id, order_date, status) VALUES(?, ?,'発送準備中')";
+        String sql = "INSERT INTO orders(id,user_Id, order_date, status) VALUES(?,?, CURRENT_TIMESTAMP,'発送準備中')";
 
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, order.getUserId());
-            ps.setDate(2, order.getOrder_date());
+            ps.setInt(1, id);
+            ps.setInt(2, uid);
 
             int result = ps.executeUpdate();
             return result == 1;

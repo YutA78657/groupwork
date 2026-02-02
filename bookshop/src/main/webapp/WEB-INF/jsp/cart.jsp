@@ -164,11 +164,7 @@
 					</form>
 
 					<!-- 購入フォーム（更新の右隣） -->
-					<form action="cart" method="post">
-
-						<!-- 購入フラグ -->
-						<input type="hidden" name="purchase" value="true">
-
+					<form action="check" method="post">
 						<%
 						// 購入用 hidden（ID 重複防止のため shared-buyX）
 						for (Cart cart : cartlist) {

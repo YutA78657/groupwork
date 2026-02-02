@@ -16,7 +16,7 @@ public class OrderItemsDAO extends DAO{
 		load();
 		List<OrderItem> list = new ArrayList<>();
 
-		String sql = "SELECT * FROM order_item WHERE order_id = ?";
+		String sql = "SELECT * FROM order_items WHERE order_id = ?";
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -42,34 +42,33 @@ public class OrderItemsDAO extends DAO{
 	}
 
 	//追加
-	public boolean insert(OrderItem order_item) {
+	public boolean insert(int oid,int pid,int quantity,int price) {
 		load();
 
-		String sql = "INSERT INTO order_item(order_id, product_id, quantity, price) VALUES(?, ?, ?, ?)";
+		String sql = "INSERT INTO order_items(order_id, product_id, quantity, price) VALUES(?, ?, ?, ?)";
 
 		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setInt(1, order_item.getOrderId());
-			ps.setInt(2, order_item.getProductId());
-			ps.setInt(3, order_item.getQuantity());
-			ps.setInt(4, order_item.getPrice());
+			ps.setInt(1,oid);
+			ps.setInt(2,pid);
+			ps.setInt(3,quantity);
+			ps.setInt(4,price);
 
 			int result = ps.executeUpdate();
 			return result == 1;
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			return false;
 		}
 
-		return false;
 	}
 
 	//削除
 	public boolean delete(int id) {
 		load();
 
-		String sql = "DELETE FROM order_item WHERE id = ?";
+		String sql = "DELETE FROM order_items WHERE id = ?";
 
 		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = con.prepareStatement(sql)) {
@@ -91,7 +90,7 @@ public class OrderItemsDAO extends DAO{
 		load();
 		int totalPrice = 0;
 
-		String sql = "SELECT SUM(price) FROM order_item WHERE order_id = ? ";
+		String sql = "SELECT SUM(price) FROM order_items WHERE order_id = ? ";
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql)) {
