@@ -39,7 +39,7 @@ public class OrdersDAO extends DAO {
 		load();
 		List<Orders> list = new ArrayList<>();
 
-		String sql = "SELECT id, user_Id, order_date, status FROM orders where id = ? ORDER BY order_date desc";
+		String sql = "SELECT id, user_Id, order_date, status FROM orders where user_id = ? ORDER BY order_date desc";
 
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);
