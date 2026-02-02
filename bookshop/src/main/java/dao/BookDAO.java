@@ -134,22 +134,19 @@ public class BookDAO extends DAO{
 	    load();
 
 	    StringBuilder sql = new StringBuilder("""
-	        SELECT
-	            p.id,
-	            p.title,
-	            p.price,
-	            p.stock,
-	            p.author,
-	            p.description,
-	            c.category_name AS cname,
-	            p.publisher,
-	            p.recommend_flg,
-	            p.img
-	        FROM product p
-	        JOIN category c ON p.category_id = c.id
-	        WHERE 1=1
+	        SELECT 
+	    		    p.id,
+	    		    p.title,
+	    		    p.price,
+	    		    p.stock,
+	    		    p.author,
+	    		    p.description,
+	    		    c.category_name AS cname,
+	    		    p.publisher,
+	    		    p.recommend_flg,
+	    		    p.img 
+	    		    FROM product p JOIN category c ON p.category_id = c.id WHERE 1=1
 	    """);
-
 	    if (categoryName != null) {
 	        sql.append(" AND c.category_name = ? ");
 	    }
@@ -162,7 +159,6 @@ public class BookDAO extends DAO{
 	         PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
 	        int idx = 1;
-
 	        if (categoryName != null) {
 	            ps.setString(idx++, categoryName);
 	        }
@@ -170,6 +166,7 @@ public class BookDAO extends DAO{
 	        if (word != null) {
 	            ps.setString(idx++, "%" + word + "%");
 	            ps.setString(idx++, "%" + word + "%");
+	            System.out.println("!");
 	        }
 
 	        ResultSet rs = ps.executeQuery();
@@ -191,6 +188,7 @@ public class BookDAO extends DAO{
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	        System.out.println("!");
 	    }
 
 	    return list;

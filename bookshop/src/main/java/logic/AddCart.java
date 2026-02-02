@@ -7,13 +7,13 @@ import model.Cart;
 import model.Product;
 
 public class AddCart {
-	public static List<Cart> execute(List<Cart> cartlist,int pid){
+	public static List<Cart> execute(List<Cart> cartlist,int pid,int quantity){
 		System.out.println("!!");
 		boolean flg = true;
 
 		for(Cart cart:cartlist) {
 			if(cart.getProduct().getId() == pid) {
-				cart.addQuantity(1);
+				cart.addQuantity(quantity);
 				flg = false;
 				break;
 			}
@@ -24,7 +24,7 @@ public class AddCart {
 		if(flg) {
 			ProductsDAO pd = new ProductsDAO();
 			Product product = pd.findById(pid);
-			Cart cart = new Cart(product,1);
+			Cart cart = new Cart(product,quantity);
 			cartlist.add(cart);
 			System.out.println("!");
 		}

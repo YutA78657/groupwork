@@ -40,15 +40,16 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 						</div>
 						<div class="book_text_area">
 							<p class="title">
-								<a href="product"><%=book.getTitle()%></a>
+								<a href="product?pid=<%=book.getPid()%>"><%=book.getTitle()%></a>
 							</p>
-							<p class="auther"><%=book.getAuther()%></p>
+							<p class="auther"><%=book.getAuthor()%></p>
 							<div id="cart-btn-box">
 								<p class="price">
 									￥<%=book.getPrice()%></p>
 								<form action="cart" method="post">
 									<input type="hidden" name="action" value="add">
 									<input type="hidden" name="pid" value="<%=book.getPid()%>">
+									<input type="hidden" name="quantity" value="1">
 									<input type="submit" value="カートに入れる">
 								</form>
 							</div>
@@ -85,13 +86,16 @@ List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("Categ
 						</div>
 						<div class="book_text_area">
 							<p class="title">
-								<a href="https://www.hanmoto.com/bd/isbn/9784297153335#"><%=book.getTitle()%></a>
+								<a href="product?pid=<%=book.getPid()%>"><%=book.getTitle()%></a>
 							</p>
-							<p class="auther"><%=book.getAuther()%></p>
+							<p class="auther"><%=book.getAuthor()%></p>
 							<div id="cart-btn-box">
 								<p class="price">
 									￥<%=book.getPrice()%></p>
-								<form action="" method="">
+								<form action="cart" method="post">
+									<input type="hidden" name="action" value="add">
+									<input type="hidden" name="pid" value="<%=book.getPid()%>">
+									<input type="hidden" name="quantity" value="1">
 									<input type="submit" value="カートに入れる">
 								</form>
 							</div>
