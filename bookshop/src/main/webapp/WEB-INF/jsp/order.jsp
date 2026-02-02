@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="model.*,java.util.ArrayList,java.util.List"%>
+    pageEncoding="UTF-8"
+    import="model.*,java.util.ArrayList,java.util.List"%>
 
 <!DOCTYPE html>
 
@@ -16,144 +16,145 @@
 
 <!-- CSS 読み込み -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/order.css">
+    href="${pageContext.request.contextPath}/css/order.css">
 </head>
 
 <body>
 
-	<!-- 共通ヘッダー -->
-	<jsp:include page="header.jsp" />
+    <!-- 共通ヘッダー -->
+    <jsp:include page="header.jsp" />
 
-	<div class="parent">
-		<div class="box">
+    <div class="parent">
+        <div class="box">
 
-			<!-- ページタイトル（中央寄せ） -->
-			<div class="title-box">
-				<h1>注文履歴</h1>
-			</div>
+            <!-- ページタイトル（中央寄せ） -->
+            <div class="title-box">
+                <h1>注文履歴</h1>
+            </div>
 
-			<div class="order-box">
+            <div class="order-box">
 
-				<%
-                    if(orderSets == null){
-                        System.out.println("orderSets is null");
-                    }
-                %>
+                <!-- 注文が 0 件のとき -->
+                <% if(orderSets == null || orderSets.isEmpty()) { %>
 
-				<%
-                    // 注文セットを1件ずつ表示
-                    for(OrderSet orderSet : orderSets){
+                    <div style="text-align:center; padding:40px; font-size:20px; color:#555;">
+                        注文履歴はありません
+                    </div>
 
-                        // 注文情報（注文ID、日付、ステータス）
-                        Orders order = orderSet.getOrder();
+                <% } else { %>
 
-                        // 注文商品の一覧を取得
-                        List<OrderItemView> orderItems = orderSet.getOrderItem();
+                    <% 
+                        // 注文セットを1件ずつ表示
+                        for(OrderSet orderSet : orderSets){
 
-                        // 合計金額計算用
-                        int totalPrice = 0;
-                %>
+                            // 注文情報（注文ID、日付、ステータス）
+                            Orders order = orderSet.getOrder();
 
-				<!-- ▼▼▼ 1件の注文カード ▼▼▼ -->
-				<div class="order">
+                            // 注文商品の一覧を取得
+                            List<OrderItemView> orderItems = orderSet.getOrderItem();
 
-					<!-- 注文番号 + 注文日（横並び） -->
-					<div class="order-header">
-						<h1>
-							注文番号：<%=order.getId() %></h1>
-						<h1><%=order.getOrder_date() %></h1>
-					</div>
+                            // 合計金額計算用
+                            int totalPrice = 0;
+                    %>
 
-					<!-- 上段の区切り線 -->
-					<div class="order-header-line"></div>
+                    <!-- ▼▼▼ 1件の注文カード ▼▼▼ -->
+                    <div class="order">
 
-					<!-- 商品一覧（スクロール可能） -->
-					<div class="order-items">
+                        <!-- 注文番号 + 注文日（横並び） -->
+                        <div class="order-header">
+                            <h1>注文番号：<%=order.getId() %></h1>
+                            <h1><%=order.getOrder_date() %></h1>
+                        </div>
 
-						<%
-                            // 商品ごとに表示
-                            for(OrderItemView orderItem : orderItems){
+                        <!-- 上段の区切り線 -->
+                        <div class="order-header-line"></div>
 
-                                // 合計金額（小計）を加算
-                                totalPrice += orderItem.getPrice() * orderItem.getQuantity();
+                        <!-- 商品一覧（スクロール可能） -->
+                        <div class="order-items">
 
-                                // 画像名が null の場合に備えて安全に処理
-                                String imgName = orderItem.getImg();
-                                if(imgName == null || imgName.isEmpty()){
-                                    imgName = "noimage.png"; // フォールバック画像
-                                } else {
-                                    imgName = imgName.replaceFirst("^/", ""); // 先頭の / を除去
-                                }
-                        %>
+                            <%
+                                // 商品ごとに表示
+                                for(OrderItemView orderItem : orderItems){
 
-						<!-- ▼ 商品1つ分のブロック ▼ -->
-						<div class="order-item">
+                                    // 合計金額（小計）を加算
+                                    totalPrice += orderItem.getPrice() * orderItem.getQuantity();
 
-							<!-- 商品画像（トップページと同じ image フォルダを使用） -->
-							<img src="${pageContext.request.contextPath}/image/<%=imgName%>"
-								class="item-img">
+                                    // 画像名が null の場合に備えて安全に処理
+                                    String imgName = orderItem.getImg();
+                                    if(imgName == null || imgName.isEmpty()){
+                                        imgName = "noimage.png"; // フォールバック画像
+                                    } else {
+                                        imgName = imgName.replaceFirst("^/", ""); // 先頭の / を除去
+                                    }
+                            %>
 
-							<!-- 商品情報 -->
-							<div class="item-info">
-								<h2><%=orderItem.getName() %></h2>
+                            <!-- ▼ 商品1つ分のブロック ▼ -->
+                            <div class="order-item">
 
-								<p>
-									単価：<%=orderItem.getPrice() %>円
-								</p>
+                                <!-- 商品画像 -->
+                                <img src="${pageContext.request.contextPath}/image/<%=imgName%>"
+                                     class="item-img">
 
-								<p>
-									数量：<%=orderItem.getQuantity() %></p>
-							</div>
+                                <!-- 商品情報 -->
+                                <div class="item-info">
+                                    <h2><%=orderItem.getName() %></h2>
 
-						</div>
-						<!-- ▲ 商品ブロック終了 ▲ -->
+                                    <p>単価：<%=orderItem.getPrice() %>円</p>
 
-						<%
-                            } // 商品ループ終了
-                        %>
+                                    <p>数量：<%=orderItem.getQuantity() %></p>
+                                </div>
 
-					</div>
-					<!-- 商品一覧終了 -->
+                            </div>
+                            <!-- ▲ 商品ブロック終了 ▲ -->
 
-					<!-- 下段（合計金額・発送状況・キャンセルボタン） -->
-					<div class="order-footer">
+                            <%
+                                } // 商品ループ終了
+                            %>
 
-						<!-- 合計金額（黒・大きめ） -->
-						<div class="total-price">
-							合計金額：￥<%=totalPrice %>
-						</div>
+                        </div>
+                        <!-- 商品一覧終了 -->
 
-						<!-- 発送状況（「発送状況：」は黒、ステータス名だけ色付き） -->
-						<div class="status">
-							発送状況： <span
-								class="
-                                <%= order.getStatus().equals("発送準備中") ? "status-preparing" : "" %>
-                                <%= order.getStatus().equals("発送済み") ? "status-shipped" : "" %>
-                                <%= order.getStatus().equals("配達中") ? "status-delivering" : "" %>
-                                <%= order.getStatus().equals("配達済み") ? "status-delivered" : "" %>
-                            ">
-								<%=order.getStatus()%>
-							</span>
-						</div>
+                        <!-- 下段（合計金額・発送状況・キャンセルボタン） -->
+                        <div class="order-footer">
 
-						<!-- キャンセルボタン（サーブレットへPOST） -->
-						<form action="CancelOrder" method="post">
-							<input type="hidden" name="orderId" value="<%=order.getId()%>">
-							<button type="submit" class="cancel-btn">キャンセル</button>
-						</form>
+                            <!-- 合計金額（黒・大きめ） -->
+                            <div class="total-price">
+                                合計金額：￥<%=totalPrice %>
+                            </div>
 
-					</div>
+                            <!-- 発送状況（「発送状況：」は黒、ステータス名だけ色付き） -->
+                            <div class="status">
+                                発送状況：
+                                <span class="
+                                    <%= order.getStatus().equals("発送準備中") ? "status-preparing" : "" %>
+                                    <%= order.getStatus().equals("発送済み") ? "status-shipped" : "" %>
+                                    <%= order.getStatus().equals("配達中") ? "status-delivering" : "" %>
+                                    <%= order.getStatus().equals("配達済み") ? "status-delivered" : "" %>
+                                ">
+                                    <%=order.getStatus()%>
+                                </span>
+                            </div>
 
-				</div>
-				<!-- ▲▲▲ 注文カード終了 ▲▲▲ -->
+                            <!-- キャンセルボタン -->
+                            <form action="CancelOrder" method="post">
+                                <input type="hidden" name="orderId" value="<%=order.getId()%>">
+                                <button type="submit" class="cancel-btn">キャンセル</button>
+                            </form>
 
-				<%
-                    } // 注文ループ終了
-                %>
+                        </div>
 
-			</div>
-		</div>
-	</div>
+                    </div>
+                    <!-- ▲▲▲ 注文カード終了 ▲▲▲ -->
+
+                    <% 
+                        } // 注文ループ終了
+                    %>
+
+                <% } // 注文なしブロック終了 %>
+
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
