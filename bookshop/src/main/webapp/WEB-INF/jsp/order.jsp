@@ -36,6 +36,13 @@
 			</div>
 
 			<div class="order-box">
+			 <% if(orderSets == null || orderSets.isEmpty()) { %>
+
+                    <div style="text-align:center; padding:40px; font-size:20px; color:#555;">
+                        注文履歴はありません
+                    </div>
+
+                <% } else { %>
 
 
 				<%
@@ -148,6 +155,7 @@
 				<%
                     } // 注文ループ終了
                 %>
+            <% } // 注文なしブロック終了 %>
 
 			</div>
 		</div>
