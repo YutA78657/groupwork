@@ -16,7 +16,7 @@ import model.User;
 /**
  * Servlet implementation class ProductRegisterServlet
  */
-@WebServlet("/ProductRegisterServlet")
+@WebServlet("/productRegister")
 public class ProductRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -53,6 +53,7 @@ public class ProductRegisterServlet extends HttpServlet {
 			return;
 		}
 
+		// オブジェクト生成
 		Product product = new Product(
 				request.getParameter("title"),
 				Integer.parseInt(request.getParameter("price")),
@@ -65,10 +66,11 @@ public class ProductRegisterServlet extends HttpServlet {
 				Integer.parseInt(request.getParameter("seriesId"))
 				);
 
+		// 登録処理
 		ProductsDAO dao = new ProductsDAO();
 		dao.create(product);
 
-		// 登録後は管理者トップへ
+		// リダイレクト
 		response.sendRedirect("top");
 	}
 

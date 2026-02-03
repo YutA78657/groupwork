@@ -10,6 +10,56 @@ import java.util.List;
 import model.Book;
 
 public class BookDAO extends DAO{
+	// 
+	// 詳細表示用
+	public Book findById(int id) {
+
+	    load();
+
+	    String sql = """
+	        SELECT
+	            p.id,
+	            p.title,
+	            p.price,
+	            p.stock,
+	            p.author,
+	            p.description,
+	            c.category_name AS cname,
+	            p.publisher,
+	            p.recommend_flg,
+	            p.img
+	        FROM product p
+	        JOIN category c ON p.category_id = c.id
+	        WHERE p.id = ?
+	    """;
+
+	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setInt(1, id);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return new Book(
+	                rs.getInt("id"),
+	                rs.getString("title"),
+	                rs.getInt("price"),
+	                rs.getInt("stock"),
+	                rs.getString("author"),
+	                rs.getString("description"),
+	                rs.getString("cname"),
+	                rs.getString("publisher"),
+	                rs.getInt("recommend_flg"),
+	                rs.getString("img")
+	            );
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return null;
+	}
 	
 	// recommend_flg = true の本を取得
 	public List<Book> findRecommendBooks(int limit) {
@@ -54,7 +104,7 @@ public class BookDAO extends DAO{
 						rs.getString("description"),
 						rs.getString("cname"),
 						rs.getString("publisher"),
-						rs.getBoolean("recommend_flg"),
+						rs.getInt("recommend_flg"),
 						rs.getString("img")
 						);
 
@@ -113,7 +163,7 @@ public class BookDAO extends DAO{
 						rs.getString("description"),
 						rs.getString("cname"),
 						rs.getString("publisher"),
-						rs.getBoolean("recommend_flg"),
+						rs.getInt("recommend_flg"),
 						rs.getString("img")
 						);
 				
@@ -184,7 +234,7 @@ public class BookDAO extends DAO{
 	                rs.getString("description"),
 	                rs.getString("cname"),
 	                rs.getString("publisher"),
-	                rs.getBoolean("recommend_flg"),
+	                rs.getInt("recommend_flg"),
 	                rs.getString("img")
 	            ));
 	        }

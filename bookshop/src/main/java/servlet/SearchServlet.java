@@ -15,7 +15,7 @@ import model.Book;
 /**
  * Servlet implementation class SerchServlet
  */
-@WebServlet("/SearchServlet")
+@WebServlet("/search")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,25 +26,25 @@ public class SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-        String categoryName = request.getParameter("categoryName");
-        String word = request.getParameter("word");
+		String categoryName = request.getParameter("categoryName");
+		String word = request.getParameter("word");
 
-        if (categoryName != null && categoryName.isBlank()) {
-            categoryName = null;
-        }
-        if (word != null && word.isBlank()) {
-            word = null;
-        }
+		if (categoryName != null && categoryName.isBlank()) {
+			categoryName = null;
+		}
+		if (word != null && word.isBlank()) {
+			word = null;
+		}
 
-        BookDAO dao = new BookDAO();
+		BookDAO dao = new BookDAO();
 
-        List<Book> result =
-            dao.search(categoryName, word);
+		List<Book> result =
+				dao.search(categoryName, word);
 
-        request.setAttribute("SearchResult", result);
-        request.setAttribute("word", word);
-        request.getRequestDispatcher("/WEB-INF/jsp/search.jsp")
-               .forward(request, response);
+		request.setAttribute("SearchResult", result);
+		request.setAttribute("word", word);
+		request.getRequestDispatcher("/WEB-INF/jsp/search.jsp")
+		.forward(request, response);
 	}
 
 	/**

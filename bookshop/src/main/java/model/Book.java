@@ -9,10 +9,10 @@ public class Book {
 	private String description;
 	private String cname;
 	private String publisher;
-	private boolean recommend_flg;
+	private int recommend_flg;
 	private String img;
 	
-	public Book(int pid,String title,int price,int stock,String auther,String description,String cname,String publisher,boolean recommend_flg,String img) {
+	public Book(int pid,String title,int price,int stock,String auther,String description,String cname,String publisher,int recommend_flg,String img) {
 		this.pid = pid;
 		this.title = title;
 		this.price = price;
@@ -58,8 +58,8 @@ public class Book {
 		return publisher;
 	}
 
-	public boolean getRecommend_flg() {
-		return recommend_flg;
+	public boolean isRecommend() {
+		return recommend_flg == 1;
 	}
 	public String getImg() {
 		return img;
