@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
     "/order",
-    "/mypage"
+    "/mypage",
+    "/checkPreview",
+    "/check"
 })
 public class LoginCheckFilter implements Filter {
 
