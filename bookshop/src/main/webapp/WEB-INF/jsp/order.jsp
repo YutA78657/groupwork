@@ -34,7 +34,18 @@
                 <h1>注文履歴</h1>
             </div>
 
+<<<<<<< HEAD
             <div class="order-box">
+=======
+			<div class="order-box">
+			 <% if(orderSets == null || orderSets.isEmpty()) { %>
+
+                    <div style="text-align:center; padding:40px; font-size:20px; color:#555;">
+                        注文履歴はありません
+                    </div>
+
+                <% } else { %>
+>>>>>>> branch 'master' of https://github.com/YutA78657/groupwork.git
 
                 <!-- 注文が 0 件のとき -->
                 <% if(orderSets == null || orderSets.isEmpty()) { %>
@@ -143,7 +154,14 @@
                                 <button type="submit" class="cancel-btn">キャンセル</button>
                             </form>
 
+<<<<<<< HEAD
                         </div>
+=======
+				<%
+                    } // 注文ループ終了
+                %>
+            <% } // 注文なしブロック終了 %>
+>>>>>>> branch 'master' of https://github.com/YutA78657/groupwork.git
 
                     </div>
                     <!-- ▲▲▲ 注文カード終了 ▲▲▲ -->
