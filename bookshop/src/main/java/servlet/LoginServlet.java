@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import dao.UsersDAO;
 import model.User;
 
 /**
@@ -36,8 +35,7 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
         String pass = request.getParameter("pass");
 
-        UsersDAO dao = new UsersDAO();
-        User user = dao.findByEmailAndPass(email, pass);
+        User user = logic.LoginLogic.execute(email, pass);
 
         if (user != null) {
             HttpSession session = request.getSession();

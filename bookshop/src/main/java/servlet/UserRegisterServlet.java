@@ -1,16 +1,21 @@
 package servlet;
 
+import java.io.IOException;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
+
+import model.User;
 
 /**
  * Servlet implementation class UserRegisterServlet
  */
-@WebServlet("/UserRegisterServlet")
+@WebServlet("/userRegister")
 public class UserRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -18,16 +23,28 @@ public class UserRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/userRegister.jsp");
+		dis.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String pass = request.getParameter("pass");
+		User user = new User(email,pass,name);
+		boolean result = logic.RegisterUser.execute(user);
+		if(result) {
+			user = logic.LoginLogic.execute(email, pass);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser",user );
+			response.sendRedirect(request.getContextPath() + "/index");
+		}else {
+			RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/userRegister.jsp");
+			dis.forward(request, response);
+		}
 	}
 
 }

@@ -20,12 +20,12 @@
 	<div class="register-container">
 		<h1>新規作成</h1>
 
-		<form action="" method="post">
+		<form action="userRegister" method="post">
 			<div class="form-group">
 				<label>ユーザーネーム：</label> <input type="text" name="name">
 			</div>
 			<div class="form-group">
-				<label>メールアドレス：</label> <input type="text" name="mail">
+				<label>メールアドレス：</label> <input type="text" name="email">
 			</div>
 
 			<div class="form-group">

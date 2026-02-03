@@ -134,22 +134,19 @@ public class BookDAO extends DAO{
 	    load();
 
 	    StringBuilder sql = new StringBuilder("""
-	        SELECT
-	            p.id,
-	            p.title,
-	            p.price,
-	            p.stock,
-	            p.author,
-	            p.description,
-	            c.category_name AS cname,
-	            p.publisher,
-	            p.recommend_flg,
-	            p.img
-	        FROM product p
-	        JOIN category c ON p.category_id = c.id
-	        WHERE 1=1
+	        SELECT 
+	    		    p.id,
+	    		    p.title,
+	    		    p.price,
+	    		    p.stock,
+	    		    p.author,
+	    		    p.description,
+	    		    c.category_name AS cname,
+	    		    p.publisher,
+	    		    p.recommend_flg,
+	    		    p.img 
+	    		    FROM product p JOIN category c ON p.category_id = c.id WHERE 1=1
 	    """);
-
 	    if (categoryName != null) {
 	        sql.append(" AND c.category_name = ? ");
 	    }
@@ -162,7 +159,6 @@ public class BookDAO extends DAO{
 	         PreparedStatement ps = con.prepareStatement(sql.toString())) {
 
 	        int idx = 1;
-
 	        if (categoryName != null) {
 	            ps.setString(idx++, categoryName);
 	        }
@@ -170,6 +166,7 @@ public class BookDAO extends DAO{
 	        if (word != null) {
 	            ps.setString(idx++, "%" + word + "%");
 	            ps.setString(idx++, "%" + word + "%");
+	            System.out.println("!");
 	        }
 
 	        ResultSet rs = ps.executeQuery();
@@ -191,8 +188,64 @@ public class BookDAO extends DAO{
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	        System.out.println("!");
 	    }
 
 	    return list;
 	}
+	
+	
+	//id検索
+	public Book findById(int id) {
+		
+		Book book = null;
+
+		load();
+
+		String sql = """
+				SELECT
+				        p.id,
+				        p.title,
+				        p.price,
+				        p.stock,
+				        p.author,
+				        p.description,
+				        c.category_name AS cname,
+				        p.publisher,
+				        p.recommend_flg,
+				        p.img
+				    FROM product p
+				    JOIN category c ON p.category_id = c.id
+				    WHERE p.id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				book = new Book(
+						rs.getInt("id"),
+						rs.getString("title"),
+						rs.getInt("price"),
+						rs.getInt("stock"),
+						rs.getString("author"),
+						rs.getString("description"),
+						rs.getString("cname"),
+						rs.getString("publisher"),
+						rs.getBoolean("recommend_flg"),
+						rs.getString("img")
+						);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return book;
+	}
+	
 }

@@ -126,9 +126,30 @@ public class ProductsDAO extends DAO{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-
+	    
 	    return product;
 	}
+	
+	// おすすめ ON / OFF 切り替え
+    public void toggleRecommend(int id) {
+
+        String sql =
+            "UPDATE products " +
+            "SET recommend = CASE " +
+            "WHEN recommend = 1 THEN 0 " +
+            "ELSE 1 END " +
+            "WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+   	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 	// 商品登録
 	public boolean create(Product product) {
@@ -180,7 +201,6 @@ public class ProductsDAO extends DAO{
 				        author = ?,
 				        description = ?,
 				        publisher = ?,
-				        recommend_flg = ?,
 				        img = ?,
 				        category_id = ?,
 				        series_id = ?
@@ -196,11 +216,10 @@ public class ProductsDAO extends DAO{
 			ps.setString(4, product.getAuthor());
 			ps.setString(5, product.getDescription());
 			ps.setString(6, product.getPublisher());
-			ps.setInt(7, product.getRecommend_flg());
-			ps.setString(8, product.getImg());
-			ps.setInt(9, product.getCategory_id());
-			ps.setInt(10, product.getSeries_id());
-			ps.setInt(11, product.getId());
+			ps.setString(7, product.getImg());
+			ps.setInt(8, product.getCategory_id());
+			ps.setInt(9, product.getSeries_id());
+			ps.setInt(10, product.getId());
 
 			int result = ps.executeUpdate();
 			return result == 1;
@@ -223,6 +242,34 @@ public class ProductsDAO extends DAO{
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setInt(1, id);
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	//購入時の在庫変更
+	public boolean stockChange(int id,int quantity) {
+
+		load();
+
+		String sql = """
+				    UPDATE product
+				    SET
+				        stock = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			
+			ps.setInt(1, quantity);
+			ps.setInt(2, id);
 
 			int result = ps.executeUpdate();
 			return result == 1;

@@ -52,13 +52,11 @@ public class CartServlet extends HttpServlet {
 			cart = new ArrayList<>();
 		}
 		String action = (String)request.getParameter("action");
-		System.out.println(action);
-		System.out.println(request.getParameter("pid"));
 		
 		if(action.equals("add")) {
-			System.out.println("!!!");
+			int addQuantity = Integer.parseInt(request.getParameter("quantity"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
-			cart = AddCart.execute(cart, pid);
+			cart = AddCart.execute(cart, pid,addQuantity);
 		}else if(action.equals("update")){
 			String[] spid = request.getParameterValues("pid[]");
 			String[] squantity = request.getParameterValues("quantity[]");

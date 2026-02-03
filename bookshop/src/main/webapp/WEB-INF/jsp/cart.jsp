@@ -6,7 +6,7 @@
 
 <!-- 共通CSS -->
 <link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/cart.css">
 <%-- 
 <link rel="stylesheet" href="css/cart.css">--%>
 </head>
@@ -164,16 +164,13 @@
 					</form>
 
 					<!-- 購入フォーム（更新の右隣） -->
-					<form action="cart" method="post">
-
-						<!-- 購入フラグ -->
-						<input type="hidden" name="purchase" value="true">
-
+					<form action="checkPreview" method="get">
 						<%
 						// 購入用 hidden（ID 重複防止のため shared-buyX）
 						for (Cart cart : cartlist) {
 							Product p = cart.getProduct();
 						%>
+						<input type="hidden" name="action" value="update">
 						<input type="hidden" name="pid[]" value="<%=p.getId()%>">
 						<input type="hidden" id="shared-buy<%=p.getId()%>"
 							name="quantity[]" value="<%=cart.getQuantity()%>">

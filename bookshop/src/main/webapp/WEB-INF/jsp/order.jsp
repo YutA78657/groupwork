@@ -16,6 +16,8 @@
 
 <!-- CSS 読み込み -->
 <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
     href="${pageContext.request.contextPath}/css/order.css">
 </head>
 
