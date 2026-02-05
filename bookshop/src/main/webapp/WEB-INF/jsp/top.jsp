@@ -108,8 +108,5 @@
 
     </div>
 
-    <!-- ★ AIチャットを好きな場所に表示できるように include -->
-    <jsp:include page="chat.jsp" />
-
 </body>
 </html>

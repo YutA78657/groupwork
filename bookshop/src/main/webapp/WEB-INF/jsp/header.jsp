@@ -15,12 +15,8 @@
     if(word == null){
         word = "";
     }
-%>
 
-<%
-	List<Category> clist = (List<Category>)request.getAttribute("clist");
-	
-	
+    List<Category> clist = (List<Category>)request.getAttribute("clist");
 %>
 
 <!DOCTYPE html>
@@ -28,12 +24,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Header</title>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/chat-header.css">
+
 </head>
 <body>
 
 <header>
     <div id="header-div">
+
         <button id="menu-btn" class="header-btn">≡</button>
 
         <a id="icon" href="index">
@@ -43,28 +43,29 @@
         <form id="search" action="search" method="get">
             <select id="search-type" name="categoryName">
                 <option value="">すべて</option>
-                <% 
-                for(Category category:clist){
-                %>
-                <option><%=category.getName() %></option>
-                
-                
-                <%	
-                }
-                %>
+                <% for(Category category:clist){ %>
+                    <option><%=category.getName() %></option>
+                <% } %>
             </select>
+
             <input id="search-area" type="text" name="word" value="<%=word %>">
             <input id="search-btn" type="submit" class="header-btn" value="">
         </form>
 
-        <!-- ▼ 修正ポイント：カート画像に専用クラスを付与 ▼ -->
+        <!-- ▼ チャットアイコン（カート左横） ▼ -->
+        <div id="ai-chat-trigger">
+            <img src="${pageContext.request.contextPath}/image/material/chat.jpg"
+                 class="header-chat-icon">
+        </div>
+        <!-- ▲ ここまで ▲ -->
+
+        <!-- カート -->
         <div id="cart-btn" class="header-btn">
             <a href="cart" class="cart-link">
                 <img src="image/material/cart2.png" class="header-cart-img">
                 <span class="overlay-text"><%=stock %></span>
             </a>
         </div>
-        <!-- ▲ 修正ポイント ▲ -->
 
     </div>
 
@@ -78,6 +79,36 @@
     <div id="overlay"></div>
 </header>
 
+
+<!-- ===============================
+     チャットウィンドウ本体（独立して動く）
+     =============================== -->
+<div id="ai-chat-window" style="display:none;">
+
+    <div id="chat-header">
+        <img src="${pageContext.request.contextPath}/image/material/chat.jpg" class="avatar-mini">
+        <strong>AI店員さんに相談</strong>
+        <span class="close-btn" onclick="toggleChat()">×</span>
+    </div>
+
+    <div id="chat-display">
+        <div class="msg ai">こんにちは！今日はどんな本をお探しですか？</div>
+
+        <div id="chat-loading" style="display:none;">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <div id="chat-input-area">
+        <input type="text" id="chat-input" placeholder="例：ミステリーで軽いもの"
+               onkeypress="if(event.keyCode==13) sendChat('${pageContext.request.contextPath}')">
+
+        <button onclick="sendChat('${pageContext.request.contextPath}')">送信</button>
+    </div>
+</div>
+
+
+<!-- メニュー開閉 -->
 <script>
     const menu_btn = document.querySelector("#menu-btn");
     const menu_box = document.querySelector("#menu-box");
@@ -95,6 +126,9 @@
         }
     });
 </script>
+
+<!-- チャット JS（ヘッダー専用版） -->
+<script src="${pageContext.request.contextPath}/js/chat-header.js?v=<%=System.currentTimeMillis()%>"></script>
 
 </body>
 </html>
