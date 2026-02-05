@@ -108,6 +108,40 @@ public class UsersDAO extends DAO {
         return user;
     }
     
+    // ユーザー情報取得
+    public User findByEmail(String mail) {
+    	
+    	load();
+
+        User user = null;
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, mail);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = new User(
+                    rs.getInt("id"),
+                    rs.getString("email"),
+                    rs.getString("name"),
+                    rs.getString("address_number"),
+                    rs.getString("address1"),
+                    rs.getString("address2"),
+                    rs.getString("address3"),
+                    rs.getInt("admin_flg")
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+    
     // 全ユーザー情報取得
     public List<User> findAll() {
 
@@ -135,7 +169,8 @@ public class UsersDAO extends DAO {
     			userList.add(user);
     		}
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		System.out.println("error");
+    		return null;
     	}
 
     	return userList;
@@ -168,6 +203,47 @@ public class UsersDAO extends DAO {
 			ps.setString(5, user.getAddress2());
 			ps.setString(6, user.getAddress3());
 			ps.setInt(7, user.getId());
+			
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			System.out.println("update_error");
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+    
+ // admin更新
+    public boolean adminUpdate(User user) {
+    	
+    	load();
+    	
+    	String sql = """
+			    UPDATE users
+			    SET
+			        name = ?,
+			        email = ?,
+			        address_number = ?,
+			        address1 = ?,
+			        address2 = ?,
+			        address3 = ?,
+			        admin_flg = ?
+			    WHERE id = ?
+			""";
+    	
+    	try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getEmail());
+			ps.setString(3, user.getAddressNum());
+			ps.setString(4, user.getAddress1());
+			ps.setString(5, user.getAddress2());
+			ps.setString(6, user.getAddress3());
+			ps.setInt(7, user.getAdminFlg());
+			ps.setInt(8, user.getId());
 			
 			int result = ps.executeUpdate();
 			return result == 1;

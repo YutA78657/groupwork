@@ -51,6 +51,19 @@ public class Product {
 		this.category_id = category_id;
 	}
 	
+	// 更新用
+		public Product(int id,String title, int price, int stock, String img, String author, String description, String publisher, int category_id) {
+			this.id = id;
+			this.title = title;
+			this.price = price;
+			this.stock = stock;
+			this.img = img;
+			this.author = author;
+			this.description = description;
+			this.publisher = publisher;
+			this.category_id = category_id;
+		}
+	
 
 	public int getId() {
 		return id;

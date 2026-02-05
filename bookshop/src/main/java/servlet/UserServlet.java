@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import dao.UsersDAO;
 import model.User;
@@ -16,7 +15,7 @@ import model.User;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/user")
+@WebServlet("/admin/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,21 +24,27 @@ public class UserServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession(false);
-		User loginUser = (User) session.getAttribute("loginUser");
-
-		if (loginUser == null || !loginUser.isAdmin()) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return;
-		}
-
 		UsersDAO dao = new UsersDAO();
 		List<User> userList = dao.findAll();
 
 		request.setAttribute("userList", userList);
 		request.getRequestDispatcher("/WEB-INF/jsp/user.jsp")
 		.forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String mail = request.getParameter("mail");
+		String action = request.getParameter("action");
+		if(action.equals("view")) {
+			UsersDAO dao = new UsersDAO();
+			User user = dao.findByEmail(mail);
+			request.setAttribute("searchUser", user);
+			request.getRequestDispatcher("/WEB-INF/jsp/mypageM.jsp")
+			.forward(request, response);
+		}else if(action.equals("update")) {
+			
+		}
+
 	}
 
 }
