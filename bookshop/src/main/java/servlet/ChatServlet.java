@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -34,7 +36,20 @@ public class ChatServlet extends HttpServlet {
         JSONObject json = new JSONObject(body);
         String message = json.getString("message");
 
+        // -----------------------------
+        // ★ セッションから除外リストを取得
+        // -----------------------------
+        HttpSession session = request.getSession();
+        @SuppressWarnings("unchecked")
+        List<String> history = (List<String>) session.getAttribute("bookHistory");
+
+        if (history == null) {
+            history = new ArrayList<>();
+        }
+
+        // -----------------------------
         // 在庫リスト取得
+        // -----------------------------
         BookDAO dao = new BookDAO();
         List<Book> list = dao.search(null, null);
 
@@ -44,16 +59,23 @@ public class ChatServlet extends HttpServlet {
                       " / 内容:" + b.getDescription())
             .collect(Collectors.joining("\n"));
 
+        // -----------------------------
+        // ★ 除外リストを文字列化
+        // -----------------------------
+        String excludeList = String.join(",", history);
+
+        // -----------------------------
         // Gemini 呼び出し
+        // -----------------------------
         ServletContext context = getServletContext();
         GeminiDAO gemini = new GeminiDAO(context);
 
-        String answer = gemini.getChatResponse(message, itemList);
+        String answer = gemini.getChatResponse(message, itemList, excludeList);
 
         System.out.println("Gemini返答(生): " + answer);
 
         // -----------------------------
-        // ★ Markdown の ```json ``` を完全除去
+        // Markdown の ```json ``` を完全除去
         // -----------------------------
         answer = answer
                 .replace("```json", "")
@@ -69,11 +91,13 @@ public class ChatServlet extends HttpServlet {
         // -----------------------------
         String tmpTitle = "";
         String tmpReason = "";
+        boolean more = false;
 
         try {
             JSONObject ai = new JSONObject(answer);
             tmpTitle = ai.optString("title", "");
             tmpReason = ai.optString("reason", "");
+            more = ai.optBoolean("more", false);
         } catch (Exception e) {
             tmpTitle = "おすすめの本";
             tmpReason = answer;
@@ -82,16 +106,29 @@ public class ChatServlet extends HttpServlet {
         final String title = tmpTitle;
         final String reason = tmpReason;
 
+        // -----------------------------
+        // ★ 新しい本なら履歴に追加
+        // -----------------------------
+        if (title != null && !title.isEmpty() && !history.contains(title)) {
+            history.add(title);
+            session.setAttribute("bookHistory", history);
+        }
+
+        // -----------------------------
         // 在庫から一致する本を探す
+        // -----------------------------
         Book target = list.stream()
             .filter(b -> b.getTitle().equals(title))
             .findFirst()
             .orElse(null);
 
+        // -----------------------------
         // JSON返却
+        // -----------------------------
         JSONObject resJson = new JSONObject();
         resJson.put("title", title);
         resJson.put("reason", reason);
+        resJson.put("more", more);
 
         if (target != null) {
             resJson.put("img", target.getImg());

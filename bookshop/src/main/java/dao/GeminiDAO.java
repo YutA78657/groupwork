@@ -25,7 +25,13 @@ public class GeminiDAO {
                         + MODEL + ":generateContent?key=" + API_KEY;
     }
 
-    public String getChatResponse(String userMessage, String itemList) {
+    /**
+     * 選書API
+     * @param userMessage ユーザーの質問
+     * @param itemList 在庫リスト（ジャンル含む）
+     * @param excludeList 除外リスト（すでに提案した本）
+     */
+    public String getChatResponse(String userMessage, String itemList, String excludeList) {
         try {
             URL url = new URL(API_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -34,16 +40,30 @@ public class GeminiDAO {
             conn.setDoOutput(true);
 
             // -----------------------------
-            // ★ プロンプト最適化（1冊だけ選ばせる）
+            // ★ プロンプト最適化（ジャンル優先・創作禁止・性関連優先）
             // -----------------------------
             String prompt =
                     "あなたは優秀な書店員です。以下の在庫リストから、ユーザーの希望に最も合う本を1冊だけ選んでください。\n"
-                  + "回答は必ず次のJSON形式で返してください：\n"
+                  + "\n"
+                  + "【重要なルール】\n"
+                  + "・在庫リストに存在しない本は絶対に創作しない\n"
+                  + "・在庫リストの「ジャンル」を最優先で判断する\n"
+                  + "・ユーザーが性に関する内容を求めた場合は、ジャンルが「ヤングアダルト」「恋愛」「性教育」などの本を優先する\n"
+                  + "・除外リストにある本は絶対に選ばない\n"
+                  + "・同じ質問でも毎回同じ本を選ばない（候補をローテーションする）\n"
+                  + "・理由は内容・雰囲気・読後感など具体的に書く\n"
+                  + "\n"
+                  + "さらに、ユーザーの発言が「追加の本を求めているかどうか」を判定し、\n"
+                  + "more フィールドに true または false を入れてください。\n"
+                  + "\n"
+                  + "回答は必ず次のJSON形式で返す：\n"
                   + "{\n"
                   + "  \"title\": \"選んだ本のタイトル\",\n"
-                  + "  \"reason\": \"短い理由（50文字以内）\"\n"
+                  + "  \"reason\": \"短い理由（50文字以内）\",\n"
+                  + "  \"more\": true または false\n"
                   + "}\n\n"
                   + "【在庫リスト】\n" + itemList + "\n\n"
+                  + "【除外リスト】\n" + excludeList + "\n\n"
                   + "【ユーザーの質問】\n" + userMessage;
 
             // -----------------------------
@@ -86,17 +106,17 @@ public class GeminiDAO {
 
                 JSONArray candidates = jsonResponse.optJSONArray("candidates");
                 if (candidates == null || candidates.length() == 0) {
-                    return "{\"title\":\"不明\",\"reason\":\"AIの返答が取得できませんでした\"}";
+                    return "{\"title\":\"不明\",\"reason\":\"AIの返答が取得できませんでした\",\"more\":false}";
                 }
 
                 JSONObject contentObj = candidates.getJSONObject(0).optJSONObject("content");
                 if (contentObj == null) {
-                    return "{\"title\":\"不明\",\"reason\":\"返答形式が不正です\"}";
+                    return "{\"title\":\"不明\",\"reason\":\"返答形式が不正です\",\"more\":false}";
                 }
 
                 JSONArray partsArr = contentObj.optJSONArray("parts");
                 if (partsArr == null || partsArr.length() == 0) {
-                    return "{\"title\":\"不明\",\"reason\":\"返答が空でした\"}";
+                    return "{\"title\":\"不明\",\"reason\":\"返答が空でした\",\"more\":false}";
                 }
 
                 String answer = partsArr.getJSONObject(0).optString("text", "{}");
@@ -109,11 +129,11 @@ public class GeminiDAO {
                 return answer;
             }
 
-            return "{\"title\":\"不明\",\"reason\":\"エラー Code:" + code + "\"}";
+            return "{\"title\":\"不明\",\"reason\":\"エラー Code:" + code + "\",\"more\":false}";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "{\"title\":\"不明\",\"reason\":\"接続エラーが発生しました\"}";
+            return "{\"title\":\"不明\",\"reason\":\"接続エラーが発生しました\",\"more\":false}";
         }
     }
 }

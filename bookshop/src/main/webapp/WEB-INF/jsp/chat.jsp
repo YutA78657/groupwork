@@ -36,11 +36,11 @@
     <!-- メッセージ表示エリア -->
     <div id="chat-display">
         <div class="msg ai">こんにちは！今日はどんな本をお探しですか？</div>
-    </div>
 
-    <!-- ★ ローディング（クルクル） -->
-    <div id="chat-loading" style="display:none;">
-        <div class="loader"></div>
+        <!-- ★ 最新メッセージの直下にクルクルを表示 -->
+        <div id="chat-loading" style="display:none;">
+            <div class="loader"></div>
+        </div>
     </div>
 
     <!-- 入力エリア -->
@@ -52,5 +52,5 @@
     </div>
 </div>
 
-<!-- JS 読み込み -->
-<script src="${pageContext.request.contextPath}/js/chat.js"></script>
+<!-- JS 読み込み（キャッシュ防止のためクエリを付与） -->
+<script src="${pageContext.request.contextPath}/js/chat.js?v=<%=System.currentTimeMillis()%>"></script>

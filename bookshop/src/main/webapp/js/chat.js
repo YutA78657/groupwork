@@ -134,7 +134,7 @@ function toggleChat() {
 function sendChat(contextPath) {
     const input = document.getElementById("chat-input");
     const display = document.getElementById("chat-display");
-    const loading = document.getElementById("chat-loading"); // ← ★ 追加
+    const loading = document.getElementById("chat-loading");
     const text = input.value.trim();
 
     if (text === "") return;
@@ -151,6 +151,9 @@ function sendChat(contextPath) {
     // ★ ローディング表示
     loading.style.display = "block";
 
+    // ★ ぐるぐるを一番下に移動
+    display.appendChild(loading);
+
     fetch(contextPath + "/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -162,9 +165,7 @@ function sendChat(contextPath) {
         // ★ ローディング非表示
         loading.style.display = "none";
 
-        // ===============================
-        // AI の返答（画像＋リンク付き）
-        // ===============================
+        // AI の返答
         const aiMsg = document.createElement("div");
         aiMsg.className = "msg ai";
 
@@ -181,16 +182,22 @@ function sendChat(contextPath) {
 
         aiMsg.innerHTML = html;
         display.appendChild(aiMsg);
+
+        // ★ ぐるぐるを一番下に移動（これが重要）
+        display.appendChild(loading);
+
         display.scrollTop = display.scrollHeight;
     })
     .catch(err => {
 
-        // ★ エラー時もローディング非表示
         loading.style.display = "none";
 
         const errMsg = document.createElement("div");
         errMsg.className = "msg ai";
         errMsg.textContent = "通信エラーが発生しました。";
         display.appendChild(errMsg);
+
+        // ★ エラー時もぐるぐるを一番下に移動
+        display.appendChild(loading);
     });
 }
