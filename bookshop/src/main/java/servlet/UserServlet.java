@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		User loginUser = (User) session.getAttribute("loginUser");
-
+		
 		if (loginUser == null || !loginUser.isAdmin()) {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
@@ -40,6 +40,48 @@ public class UserServlet extends HttpServlet {
 		request.setAttribute("userList", userList);
 		request.getRequestDispatcher("/WEB-INF/jsp/user.jsp")
 		.forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+
+		String action = request.getParameter("action");
+		UsersDAO dao = new UsersDAO();
+
+		// ---------- ユーザー更新 ----------済
+		if ("update".equals(action)) {
+
+			User user = new User(
+					Integer.parseInt(request.getParameter("id")),
+					request.getParameter("name"),
+					request.getParameter("email"),
+					request.getParameter("address_num"),
+					request.getParameter("address1"),
+					request.getParameter("address2"),
+					request.getParameter("address3")
+					);
+
+			dao.update(user);
+
+			// 更新後は再表示
+			request.setAttribute("user", dao.findById(user.getId()));
+			request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
+			.forward(request, response);
+			return;
+		}
+
+		// ---------- パスワードリセット ----------
+
+		// ---------- 削除 ----------
+		if ("delete".equals(action)) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			dao.delete(id);
+
+			response.sendRedirect("index");
+			return;
+		}
 	}
 
 }

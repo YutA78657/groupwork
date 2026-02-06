@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import dao.UsersDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+import dao.UsersDAO;
 import model.User;
 
 /**
@@ -22,6 +23,7 @@ public class MypageServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp");
 		dis.forward(request, response);
@@ -30,11 +32,12 @@ public class MypageServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		User luser = (User)session.getAttribute("loginUser");
-		if(action.equals("update")) {
+		if("update".equals(action)) {
 			String name = request.getParameter("name");
 			String mail = request.getParameter("mail");
 			String addressNum = request.getParameter("address_number");
@@ -52,6 +55,42 @@ public class MypageServlet extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/top");
 			}
 			
+		}else if("reset".equals(action)){
+			String currentPass = request.getParameter("currentPassword");
+		    String newPass = request.getParameter("newPassword");
+		    
+		    UsersDAO dao = new UsersDAO();
+
+		    // 現在のパスワードチェック
+		    User checkUser = dao.findByEmailAndPass(luser.getEmail(), currentPass);
+		    
+		    if (checkUser == null) {
+		        request.setAttribute("error", "現在のパスワードが違います");
+		        request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
+		               .forward(request, response);
+		        return;
+		    }
+		    
+		    User updateUser = new User(luser.getId(), newPass);
+
+		    
+		    dao.updatePassword(updateUser);
+
+		    // セッション更新
+		    session.setAttribute("loginUser", dao.findById(luser.getId()));
+
+		    response.sendRedirect(request.getContextPath() + "/mypage");
+		    return;
+		}else if("delete".equals(action)) {
+			
+			 UsersDAO dao = new UsersDAO();
+			    dao.delete(luser.getId());
+
+			    // セッション破棄
+			    session.invalidate();
+
+			    response.sendRedirect(request.getContextPath() + "/index");
+			    return;
 		}
 	}
 
