@@ -16,7 +16,7 @@ public class OrdersDAO extends DAO {
 		load();
 		List<Orders> list = new ArrayList<>();
 
-		String sql = "SELECT * FROM orders ORDER BY id";
+		String sql = "SELECT * FROM orders ORDER BY order_date desc";
 
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);

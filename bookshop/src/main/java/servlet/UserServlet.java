@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import dao.UsersDAO;
 import model.User;
@@ -16,7 +15,7 @@ import model.User;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/user")
+@WebServlet("/admin/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

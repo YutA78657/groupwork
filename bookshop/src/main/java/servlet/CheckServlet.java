@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import model.Cart;
 import model.User;
 
@@ -31,21 +32,37 @@ public class CheckServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean flg = true;
+		String mes = "";
 		HttpSession session = request.getSession();
-		@SuppressWarnings("unchecked")
-		List<Cart> cartlist = (List<Cart>)session.getAttribute("cart");
 		User user = (User)session.getAttribute("loginUser");
-		boolean result = logic.StockCheckLogic.execute(cartlist);
-		if(result == true) {
-			Boolean r2 = logic.CheckLogic.execute(user,cartlist);
-			if(r2 == true) {
-				session.removeAttribute("cart");
-				request.setAttribute("flg", "true");
-				request.getRequestDispatcher("WEB-INF/jsp/check.jsp").forward(request, response);
-			}
+		if(user.getAddressNum() == null ||
+				user.getAddress1() == null  ||
+				user.getAddress2() == null  ||
+				user.getAddress3() == null ) {
+			flg = false;
+			mes = "お届け先住所が未設定です";
 		}
-		
-		
+		if(flg) {
+			@SuppressWarnings("unchecked")
+			List<Cart> cartlist = (List<Cart>)session.getAttribute("cart");
+			boolean result = logic.StockCheckLogic.execute(cartlist);
+			if(result == true) {
+				Boolean r2 = logic.CheckLogic.execute(user,cartlist);
+				if(r2 == true) {
+					session.removeAttribute("cart");
+					request.getRequestDispatcher("/WEB-INF/jsp/check.jsp").forward(request, response);
+				}
+			}
+		}else {
+			request.setAttribute(mes,"mes");
+			request.getRequestDispatcher("/WEB-INF/jsp/checkPreview.jsp").forward(request, response);
+		}
+
+
+
+
+
 	}
 
 }

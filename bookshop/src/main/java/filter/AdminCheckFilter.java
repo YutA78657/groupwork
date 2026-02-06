@@ -43,7 +43,7 @@ public class AdminCheckFilter implements Filter {
 
         // ログインしてない or 管理者じゃない
         if (user == null || !user.isAdmin()) {
-            res.sendError(HttpServletResponse.SC_FORBIDDEN);
+        	res.sendRedirect(req.getContextPath() + "/index");;
             return;
         }
         chain.doFilter(request, response);

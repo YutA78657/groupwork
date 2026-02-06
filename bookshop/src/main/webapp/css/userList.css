@@ -1,29 +1,36 @@
 /* ===============================
-   ページ全体の基本レイアウト
-   =============================== */
-body {
-    font-family: sans-serif;
-    margin: 20px;
-    text-align: center;
-}
-
-/* ===============================
    タイトル（ユーザー管理）
    =============================== */
-.page-title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
+
+
+.box{
+	width: 700px;
+	margin:auto;
+	margin-top:20px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+.title{
+	text-align: center;
+	border-bottom:1px solid black;
+	padding:20px;
+	border-radius:20px 20px 0 0;
+	margin:0;
+	background-color: #eeeeee;
+}
 /* ===============================
    検索ボックス
    =============================== */
-.search-box {
+.user-search-box {
+	margin-top:20px;
     margin-bottom: 20px;
+	display:flex;
 }
 
-.search-input {
+.user-search-input {
+	margin:auto;
     width: 300px;
     padding: 8px;
     font-size: 14px;
@@ -44,17 +51,4 @@ body {
     background-color: #fff;
     cursor: pointer;
     transition: 0.2s;
-}
-
-/* ホバー時の見た目 */
-.user-card:hover {
-    background-color: #f5f5f5;
-    transform: translateY(-2px);
-}
-
-/* 各項目の余白 */
-.user-name,
-.user-id,
-.user-email {
-    margin: 0 10px;
 }
