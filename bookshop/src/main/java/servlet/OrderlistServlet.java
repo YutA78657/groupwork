@@ -53,7 +53,10 @@ public class OrderlistServlet extends HttpServlet {
 			mes = "注文のステータス変更に失敗しました";
 			request.setAttribute("mes",mes);
 		}
-		response.sendRedirect(request.getContextPath() + "/order");;
+		List<OrderSet> orderSets = logic.GetAllOrdersLogic.execute();
+		request.setAttribute("orderSets", orderSets);
+		RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/jsp/orderM.jsp");
+		dis.forward(request, response);
 	}
 
 }

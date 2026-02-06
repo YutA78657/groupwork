@@ -108,7 +108,7 @@
 /* 発送状況（黒） */
 .order-footer .status {
 	position: absolute;
-	left: 40%;
+	left: 45%;
 	transform: translateX(-50%);
 	display:flex;
 	justify-content: space-between;
