@@ -109,11 +109,11 @@ function searchAddress() {
 				<form action="mypage" method="post">
 					<input type="hidden" name="action" value="reset">
 					<div class="form-group">
-						<label>新しいパスワード</label> <input type="password">
+						<label>新しいパスワード</label> <input type="password" name="newPassword">
 					</div>
 
 					<div class="form-group">
-						<label>確認</label> <input type="password">
+						<label>確認</label> <input type="password" name="currentPassword">
 					</div>
 					<div class="form-actions">
 						<input type="submit" value="変更">
