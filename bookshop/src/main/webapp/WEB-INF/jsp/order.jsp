@@ -141,13 +141,14 @@
                                 <%= order.getStatus().equals("発送済み") ? "status-shipped" : "" %>
                                 <%= order.getStatus().equals("配達中") ? "status-delivering" : "" %>
                                 <%= order.getStatus().equals("配達済み") ? "status-delivered" : "" %>
+                                <%= order.getStatus().equals("キャンセル") ? "status-cancel" : "" %>
                             ">
 								<%=order.getStatus()%>
 							</span>
 						</div>
 
 						<!-- キャンセルボタン（サーブレットへPOST） -->
-						<form action="CancelOrder" method="post">
+						<form action="order" method="post">
 							<input type="hidden" name="orderId" value="<%=order.getId()%>">
 							<button type="submit" class="cancel-btn">キャンセル</button>
 						</form>
