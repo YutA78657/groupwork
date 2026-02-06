@@ -3,10 +3,7 @@
 // ===============================
 (function () {
     const trigger = document.getElementById("ai-chat-trigger");
-
-    trigger.addEventListener("click", () => {
-        toggleChat();
-    });
+    trigger.addEventListener("click", () => toggleChat());
 })();
 
 
@@ -47,17 +44,12 @@
 // ===============================
 function toggleChat() {
     const chat = document.getElementById("ai-chat-window");
-
-    if (chat.style.display === "none" || chat.style.display === "") {
-        chat.style.display = "block";
-    } else {
-        chat.style.display = "none";
-    }
+    chat.style.display = (chat.style.display === "none" || chat.style.display === "") ? "block" : "none";
 }
 
 
 // ===============================
-// チャット欄サイズ変更時にスクロール領域を更新
+// チャット欄サイズ変更時にスクロール領域を更新（元のまま）
 // ===============================
 (function () {
     const chatWindow = document.getElementById("ai-chat-window");
@@ -66,7 +58,6 @@ function toggleChat() {
     new ResizeObserver(() => {
         const headerHeight = document.getElementById("chat-header").offsetHeight;
         const inputHeight = document.getElementById("chat-input-area").offsetHeight;
-
         const extra = 8;
 
         chatDisplay.style.height =
@@ -76,7 +67,7 @@ function toggleChat() {
 
 
 // ===============================
-// 送信処理
+// 送信処理（LINE風に変更）
 // ===============================
 function sendChat(contextPath) {
     const input = document.getElementById("chat-input");
@@ -86,10 +77,16 @@ function sendChat(contextPath) {
 
     if (text === "") return;
 
+    // ▼ ユーザー吹き出し（右側）
+    const userRow = document.createElement("div");
+    userRow.className = "msg-row user";
+
     const userMsg = document.createElement("div");
     userMsg.className = "msg user";
     userMsg.textContent = text;
-    display.appendChild(userMsg);
+
+    userRow.appendChild(userMsg);
+    display.appendChild(userRow);
 
     input.value = "";
     display.scrollTop = display.scrollHeight;
@@ -107,6 +104,14 @@ function sendChat(contextPath) {
 
         loading.style.display = "none";
 
+        // ▼ AI吹き出し（左側）
+        const aiRow = document.createElement("div");
+        aiRow.className = "msg-row ai";
+
+        const icon = document.createElement("img");
+        icon.src = contextPath + "/image/material/chat.jpg";
+        icon.className = "avatar-mini";
+
         const aiMsg = document.createElement("div");
         aiMsg.className = "msg ai";
 
@@ -122,7 +127,10 @@ function sendChat(contextPath) {
         }
 
         aiMsg.innerHTML = html;
-        display.appendChild(aiMsg);
+
+        aiRow.appendChild(icon);
+        aiRow.appendChild(aiMsg);
+        display.appendChild(aiRow);
 
         display.appendChild(loading);
         display.scrollTop = display.scrollHeight;
@@ -131,10 +139,20 @@ function sendChat(contextPath) {
 
         loading.style.display = "none";
 
+        const aiRow = document.createElement("div");
+        aiRow.className = "msg-row ai";
+
+        const icon = document.createElement("img");
+        icon.src = contextPath + "/image/material/chat.jpg";
+        icon.className = "avatar-mini";
+
         const errMsg = document.createElement("div");
         errMsg.className = "msg ai";
         errMsg.textContent = "通信エラーが発生しました。";
-        display.appendChild(errMsg);
+
+        aiRow.appendChild(icon);
+        aiRow.appendChild(errMsg);
+        display.appendChild(aiRow);
 
         display.appendChild(loading);
     });

@@ -37,7 +37,7 @@ public class ChatServlet extends HttpServlet {
         String message = json.getString("message");
 
         // -----------------------------
-        // ★ セッションから除外リストを取得
+        // ★ セッションから除外リスト（タイトル履歴）を取得
         // -----------------------------
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
@@ -48,6 +48,15 @@ public class ChatServlet extends HttpServlet {
         }
 
         // -----------------------------
+        // ★ 前回選んだ本のタイトル・ジャンル（cname）を取得
+        // -----------------------------
+        String prevTitle = (String) session.getAttribute("prevTitle");
+        String prevGenre = (String) session.getAttribute("prevGenre");
+
+        if (prevTitle == null) prevTitle = "";
+        if (prevGenre == null) prevGenre = "";
+
+        // -----------------------------
         // 在庫リスト取得
         // -----------------------------
         BookDAO dao = new BookDAO();
@@ -56,6 +65,7 @@ public class ChatServlet extends HttpServlet {
         String itemList = list.stream()
             .map(b -> "・タイトル:" + b.getTitle() +
                       " / 著者:" + b.getAuthor() +
+                      " / ジャンル:" + b.getCname() +     // ← ★ ここを修正
                       " / 内容:" + b.getDescription())
             .collect(Collectors.joining("\n"));
 
@@ -70,7 +80,13 @@ public class ChatServlet extends HttpServlet {
         ServletContext context = getServletContext();
         GeminiDAO gemini = new GeminiDAO(context);
 
-        String answer = gemini.getChatResponse(message, itemList, excludeList);
+        String answer = gemini.getChatResponse(
+                message,
+                itemList,
+                excludeList,
+                prevTitle,
+                prevGenre
+        );
 
         System.out.println("Gemini返答(生): " + answer);
 
@@ -115,12 +131,17 @@ public class ChatServlet extends HttpServlet {
         }
 
         // -----------------------------
-        // 在庫から一致する本を探す
+        // ★ 今回選んだ本のジャンル（cname）を保存
         // -----------------------------
         Book target = list.stream()
             .filter(b -> b.getTitle().equals(title))
             .findFirst()
             .orElse(null);
+
+        if (target != null) {
+            session.setAttribute("prevTitle", target.getTitle());
+            session.setAttribute("prevGenre", target.getCname());  // ← ★ ここを修正
+        }
 
         // -----------------------------
         // JSON返却

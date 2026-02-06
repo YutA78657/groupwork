@@ -28,6 +28,10 @@
     overflow: hidden;
     min-width: 260px;
     min-height: 260px;
+
+    /* ヘッダー100pxの下に出す（スクロールが消える原因を解消） */
+    top: 120px;
+    right: 20px;
 }
 
 /* ヘッダー（ドラッグ可能） */
@@ -52,14 +56,16 @@
     cursor: pointer;
 }
 
-/* メッセージ表示エリア */
+/* メッセージ表示エリア（スクロール領域） */
 #chat-display {
     padding: 10px;
     overflow-y: auto;
     box-sizing: border-box;
+
+    /* ResizeObserver が height を計算するので高さ指定は不要 */
 }
 
-/* 入力エリア */
+/* 入力エリア（元の完璧な位置を維持） */
 #chat-input-area {
     padding: 10px;
     display: flex;
@@ -89,4 +95,43 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* ================================
+   LINE風メッセージ
+   ================================ */
+
+/* 行全体（AI or ユーザー） */
+.msg-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+/* ユーザーは右寄せ */
+.msg-row.user {
+    justify-content: flex-end;
+}
+
+/* 吹き出し共通 */
+.msg {
+    max-width: 75%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+/* AI（左） */
+.msg.ai {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 0;
+}
+
+/* ユーザー（右） */
+.msg.user {
+    background: #c8f7c5;
+    border-bottom-right-radius: 0;
 }

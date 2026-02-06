@@ -27,11 +27,14 @@ public class GeminiDAO {
 
     /**
      * 選書API
-     * @param userMessage ユーザーの質問
-     * @param itemList 在庫リスト（ジャンル含む）
-     * @param excludeList 除外リスト（すでに提案した本）
      */
-    public String getChatResponse(String userMessage, String itemList, String excludeList) {
+    public String getChatResponse(
+            String userMessage,
+            String itemList,
+            String excludeList,
+            String prevTitle,
+            String prevGenre
+    ) {
         try {
             URL url = new URL(API_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -39,33 +42,32 @@ public class GeminiDAO {
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             conn.setDoOutput(true);
 
-            // -----------------------------
-            // ★ プロンプト最適化（ジャンル優先・創作禁止・性関連優先）
-            // -----------------------------
-            String prompt =
-                    "あなたは優秀な書店員です。以下の在庫リストから、ユーザーの希望に最も合う本を1冊だけ選んでください。\n"
-                  + "\n"
-                  + "【重要なルール】\n"
-                  + "・在庫リストに存在しない本は絶対に創作しない\n"
-                  + "・在庫リストの「ジャンル」を最優先で判断する\n"
-                  + "・ユーザーが性に関する内容を求めた場合は、ジャンルが「ヤングアダルト」「恋愛」「性教育」などの本を優先する\n"
-                  + "・除外リストにある本は絶対に選ばない\n"
-                  + "・同じ質問でも毎回同じ本を選ばない（候補をローテーションする）\n"
-                  + "・理由は内容・雰囲気・読後感など具体的に書く\n"
-                  + "\n"
-                  + "さらに、ユーザーの発言が「追加の本を求めているかどうか」を判定し、\n"
-                  + "more フィールドに true または false を入れてください。\n"
-                  + "\n"
-                  + "回答は必ず次のJSON形式で返す：\n"
-                  + "{\n"
-                  + "  \"title\": \"選んだ本のタイトル\",\n"
-                  + "  \"reason\": \"短い理由（50文字以内）\",\n"
-                  + "  \"more\": true または false\n"
-                  + "}\n\n"
-                  + "【在庫リスト】\n" + itemList + "\n\n"
-                  + "【除外リスト】\n" + excludeList + "\n\n"
-                  + "【ユーザーの質問】\n" + userMessage;
-
+         // -----------------------------
+         // ★ 修正版プロンプト（「似たやつ」対応・完全合体Ver.）
+         // -----------------------------
+         String prompt =
+               "あなたは熟練の書店員です。在庫リストから最適な1冊を提案してください。\n\n"
+             + "【厳守ルール】\n"
+             + "1. 回答は必ず指定のJSON形式のみとし、前置きや解説は一切含めないこと。\n"
+             + "2. 理由(reason)には、「AIが判断した」「前回が〜だったので」「追加の要望なので」といったシステム的な説明やメタ発言を絶対に含めないこと。\n"
+             + "3. 理由(reason)は、その本の内容、舞台、魅力、読後感のみを100文字以内で具体的に書くこと。\n"
+             + "4. 在庫リストにない本は提案しない。除外リストにある本も選ばない。\n\n"
+             + "【ジャンル選択の優先順位】\n"
+             + "・ユーザーが特定のテーマ（例：動物、ミステリー、感動、怖い話など）を指定した場合：\n"
+             + "  前回ジャンルに関わらず、在庫リストの「cname」や内容がそのテーマに最も合致する本を優先して選ぶこと。\n"
+             + "・ユーザーが追加の提案を求めている場合（例：「ほかには」「別のは」「もっと」「次」「似たやつ」「関連して」など）：\n"
+             + "  前回ジャンル「" + prevGenre + "」を【絶対に維持】し、同じジャンルのリスト内から別の本を選ぶこと。\n\n"
+             + "【データ参照】\n"
+             + "前回提案：" + prevTitle + "（ジャンル：" + prevGenre + "）\n"
+             + "在庫リスト：\n" + itemList + "\n"
+             + "除外リスト：\n" + excludeList + "\n\n"
+             + "【ユーザーの入力】\n" + userMessage + "\n\n"
+             + "回答形式（JSON）：\n"
+             + "{\n"
+             + "  \"title\": \"本のタイトル\",\n"
+             + "  \"reason\": \"（システム的な説明を除き、その本の魅力だけを伝える紹介文）\",\n"
+             + "  \"more\": 同じジャンルの本がまだ在庫にあればtrue、なければfalse\n"
+             + "}";
             // -----------------------------
             // リクエスト JSON 作成
             // -----------------------------
@@ -121,9 +123,6 @@ public class GeminiDAO {
 
                 String answer = partsArr.getJSONObject(0).optString("text", "{}");
 
-                // -----------------------------
-                // ★ Gemini の返答をログ出力
-                // -----------------------------
                 System.out.println("GeminiDAO 返答(JSON想定): " + answer);
 
                 return answer;

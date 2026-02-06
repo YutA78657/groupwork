@@ -81,9 +81,9 @@
 
 
 <!-- ===============================
-     チャットウィンドウ本体（独立して動く）
+     チャットウィンドウ本体（LINE風UI）
      =============================== -->
-<div id="ai-chat-window" style="display:none;">
+<div id="ai-chat-window" style="display:none; bottom:20px; right:20px;">
 
     <div id="chat-header">
         <img src="${pageContext.request.contextPath}/image/material/chat.jpg" class="avatar-mini">
@@ -92,7 +92,10 @@
     </div>
 
     <div id="chat-display">
-        <div class="msg ai">こんにちは！今日はどんな本をお探しですか？</div>
+        <div class="msg-row ai">
+            <img src="${pageContext.request.contextPath}/image/material/chat.jpg" class="avatar-mini">
+            <div class="msg ai">こんにちは！今日はどんな本をお探しですか？</div>
+        </div>
 
         <div id="chat-loading" style="display:none;">
             <div class="loader"></div>
