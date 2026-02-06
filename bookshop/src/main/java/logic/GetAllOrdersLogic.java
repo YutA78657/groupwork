@@ -8,17 +8,16 @@ import dao.OrdersDAO;
 import model.OrderSet;
 import model.Orders;
 
-public class GetOrders {
-	public static List<OrderSet> execute(int id) {
+public class GetAllOrdersLogic {
+	public static List<OrderSet> execute() {
 		List<OrderSet> orderSets = new ArrayList<>();
 		OrdersDAO od = new OrdersDAO();
 		OrderItemViewDAO oivd = new OrderItemViewDAO();
-		List<Orders> orderlist = od.findById(id);
+		List<Orders> orderlist = od.findAll();
 		for(Orders order: orderlist) {
 			OrderSet orderSet = new OrderSet(order,oivd.findById(order.getId()));
 			orderSets.add(orderSet);
 		}
 		return orderSets;
 	}
-
 }

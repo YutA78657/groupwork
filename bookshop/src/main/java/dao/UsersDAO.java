@@ -10,155 +10,155 @@ import java.util.List;
 import model.User;
 
 public class UsersDAO extends DAO {
-	
-	
-    // ログイン認証
-    public User findByEmailAndPass(String email, String pass) {
-    	
-    	load();
-    	
-        User user = null;
 
-        String sql = "SELECT * FROM users WHERE email = ? AND pass = ?";
 
-        try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-             PreparedStatement ps = con.prepareStatement(sql)) {
+	// ログイン認証
+	public User findByEmailAndPass(String email, String pass) {
 
-            ps.setString(1, email);
-            ps.setString(2, pass);
+		load();
 
-            ResultSet rs = ps.executeQuery();
+		User user = null;
 
-            if (rs.next()) {
-            	user = new User(
-                        rs.getInt("id"),
-                        rs.getString("email"),
-                        rs.getString("name"),
-                        rs.getString("address_number"),
-                        rs.getString("address1"),
-                        rs.getString("address2"),
-                        rs.getString("address3"),
-                        rs.getInt("admin_flg")
-                    );
-            }
+		String sql = "SELECT * FROM users WHERE email = ? AND pass = ?";
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
 
-        return user;
-    }
-    
-    // 新規登録
-    public boolean create(User user) {
-    	
-    	load();
+			ps.setString(1, email);
+			ps.setString(2, pass);
 
-        String sql = "INSERT INTO users(email, pass, name, admin_flg) "
-                   + "VALUES(?, ?, ?,0)";
+			ResultSet rs = ps.executeQuery();
 
-        try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-             PreparedStatement ps = con.prepareStatement(sql)) {
+			if (rs.next()) {
+				user = new User(
+						rs.getInt("id"),
+						rs.getString("email"),
+						rs.getString("name"),
+						rs.getString("address_number"),
+						rs.getString("address1"),
+						rs.getString("address2"),
+						rs.getString("address3"),
+						rs.getInt("admin_flg")
+						);
+			}
 
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPass());
-            ps.setString(3, user.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-            int result = ps.executeUpdate();
-            return result == 1;
+		return user;
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	// 新規登録
+	public boolean create(User user) {
 
-        return false;
-    }
-    
-    // ユーザー情報取得
-    public User findById(int id) {
-    	
-    	load();
+		load();
 
-        User user = null;
-        String sql = "SELECT * FROM users WHERE id = ?";
+		String sql = "INSERT INTO users(email, pass, name, admin_flg) "
+				+ "VALUES(?, ?, ?,0)";
 
-        try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-             PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+			ps.setString(1, user.getEmail());
+			ps.setString(2, user.getPass());
+			ps.setString(3, user.getName());
 
-            if (rs.next()) {
-                user = new User(
-                    rs.getInt("id"),
-                    rs.getString("email"),
-                    rs.getString("name"),
-                    rs.getString("address_number"),
-                    rs.getString("address1"),
-                    rs.getString("address2"),
-                    rs.getString("address3"),
-                    rs.getInt("admin_flg")
-                );
-            }
+			int result = ps.executeUpdate();
+			return result == 1;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return user;
-    }
-    
-    // 全ユーザー情報取得
-    public List<User> findAll() {
+		return false;
+	}
 
-    	List<User> userList = new ArrayList<>();
+	// ユーザー情報取得
+	public User findById(int id) {
 
-    	load();
-    	
-    	String sql = "SELECT * FROM users ORDER BY id";
+		load();
 
-    	try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-    			PreparedStatement ps = con.prepareStatement(sql);
-    			ResultSet rs = ps.executeQuery()) {
+		User user = null;
+		String sql = "SELECT * FROM users WHERE id = ?";
 
-    		while (rs.next()) {
-    			User user = new User(
-                        rs.getInt("id"),
-                        rs.getString("email"),
-                        rs.getString("name"),
-                        rs.getString("address_number"),
-                        rs.getString("address1"),
-                        rs.getString("address2"),
-                        rs.getString("address3"),
-                        rs.getInt("admin_flg")
-                    );
-    			userList.add(user);
-    		}
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
 
-    	return userList;
-    }
-    
-    // 更新
-    public boolean update(User user) {
-    	
-    	load();
-    	
-    	String sql = """
-			    UPDATE users
-			    SET
-			        name = ?,
-			        email = ?,
-			        address_number = ?,
-			        address1 = ?,
-			        address2 = ?,
-			        address3 = ?
-			    WHERE id = ?
-			""";
-    	
-    	try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				user = new User(
+						rs.getInt("id"),
+						rs.getString("email"),
+						rs.getString("name"),
+						rs.getString("address_number"),
+						rs.getString("address1"),
+						rs.getString("address2"),
+						rs.getString("address3"),
+						rs.getInt("admin_flg")
+						);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+
+	// 全ユーザー情報取得
+	public List<User> findAll() {
+
+		List<User> userList = new ArrayList<>();
+
+		load();
+
+		String sql = "SELECT * FROM users ORDER BY id";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				User user = new User(
+						rs.getInt("id"),
+						rs.getString("email"),
+						rs.getString("name"),
+						rs.getString("address_number"),
+						rs.getString("address1"),
+						rs.getString("address2"),
+						rs.getString("address3"),
+						rs.getInt("admin_flg")
+						);
+				userList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return userList;
+	}
+
+	// 更新
+	public boolean update(User user) {
+
+		load();
+
+		String sql = """
+					    UPDATE users
+				    SET
+				        name = ?,
+				        email = ?,
+				        address_number = ?,
+				        address1 = ?,
+				        address2 = ?,
+				        address3 = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, user.getName());
@@ -179,25 +179,25 @@ public class UsersDAO extends DAO {
 
 		return false;
 	}
-    
-    // パスワード変更
-    public boolean updatePassword(User user) {
-    	
-    	load();
-    	
-    	String sql = """
-			    UPDATE users
-			    SET
-			        pass = ?
-			    WHERE id = ?
-			""";
-    	
-    	try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+
+	// パスワード変更
+	public boolean updatePassword(User user) {
+
+		load();
+
+		String sql = """
+				    UPDATE users
+				    SET
+				        pass = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setString(1, user.getPass());
 			ps.setInt(2, user.getId());
-			
+
 			int result = ps.executeUpdate();
 			return result == 1;
 
@@ -207,10 +207,10 @@ public class UsersDAO extends DAO {
 
 		return false;
 	}
-    	
-    
-    // 削除
-    public boolean delete(int id) {
+
+
+	// 削除
+	public boolean delete(int id) {
 
 		load();
 

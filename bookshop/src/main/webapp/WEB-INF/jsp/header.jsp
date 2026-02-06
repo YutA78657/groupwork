@@ -36,8 +36,8 @@
 
         <button id="menu-btn" class="header-btn">≡</button>
 
-        <a id="icon" href="index">
-            <img src="image/material/icon2.png">
+        <a id="icon" href="${pageContext.request.contextPath}/index">
+            <img src="${pageContext.request.contextPath}/image/material/icon2.png">
         </a>
 
         <form id="search" action="search" method="get">
@@ -62,7 +62,7 @@
         <!-- カート -->
         <div id="cart-btn" class="header-btn">
             <a href="cart" class="cart-link">
-                <img src="image/material/cart2.png" class="header-cart-img">
+                <img src="${pageContext.request.contextPath}/image/material/cart2.png" class="header-cart-img">
                 <span class="overlay-text"><%=stock %></span>
             </a>
         </div>
@@ -70,10 +70,33 @@
     </div>
 
     <div id="menu-box">
-        <a href="login"><p>ログイン</p></a>
-        <a href="mypage"><p>マイページ</p></a>
-        <a href="order"><p>注文履歴</p></a>
-        <a href="logout"><p>ログアウト</p></a>
+        
+        
+	<%User user = (User)session.getAttribute("loginUser");
+      if(user != null && user.isAdmin()){
+	%>
+		<h2>管理者メニュー</h2>
+		<a href="${pageContext.request.contextPath}/admin/user"><p>ユーザ管理</p></a>
+		<a href="${pageContext.request.contextPath}/admin/productRegister"><p>商品登録</p></a>
+		<a href="${pageContext.request.contextPath}/admin/order"><p>注文一覧</p></a>
+        <a href="${pageContext.request.contextPath}/logout"><p>ログアウト</p></a>
+	<%
+      }else if(user != null){
+    %>
+    	<h2><%=user.getName() %>さん</h2>
+        <a href="${pageContext.request.contextPath}/mypage"><p>マイページ</p></a>
+        <a href="${pageContext.request.contextPath}/order"><p>注文履歴</p></a>
+        <a href="${pageContext.request.contextPath}/logout"><p>ログアウト</p></a>
+    <% 
+      }else{
+    %>
+    	<a href="${pageContext.request.contextPath}/login"><p>ログイン</p></a>
+        <a href="${pageContext.request.contextPath}/mypage"><p>マイページ</p></a>
+        <a href="${pageContext.request.contextPath}/order"><p>注文履歴</p></a>
+        <a href="${pageContext.request.contextPath}/logout"><p>ログアウト</p></a>
+    <%
+      }
+    %>    
     </div>
 
     <div id="overlay"></div>

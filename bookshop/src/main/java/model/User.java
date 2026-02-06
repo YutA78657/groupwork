@@ -47,6 +47,48 @@ public class User implements Serializable {
         this.address3 = address3;
     }
     
+    // パスワード変更用
+    public User(int id, String pass) {
+        this.id = id;
+        this.pass = pass;
+    }
+    
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAddressNum(String addressNum) {
+		this.addressNum = addressNum;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public void setAddress3(String address3) {
+		this.address3 = address3;
+	}
+
+	public void setAdminFlg(int adminFlg) {
+		this.adminFlg = adminFlg;
+	}
 
 	public boolean isAdmin() {
         return adminFlg == 1;

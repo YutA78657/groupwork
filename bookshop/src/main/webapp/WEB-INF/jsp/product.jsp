@@ -7,8 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>商品詳細 - 応用情報技術者 試験によくでる問題集</title>
-<link rel="stylesheet" href="css/product.css">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/product.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" />

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="model.User"%>
 <!DOCTYPE html>
-<%  User user = (User)session.getAttribute("loginUser");%>
+<%  User user = (User)request.getAttribute("searchUser");%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -62,8 +62,9 @@ function searchAddress() {
 		<div class="box">
 			<h1>マイページ</h1>
 			<div class="user">
-				<form action="mypage" method="post">
+				<form action="${pageContext.request.contextPath}/admin/userpage" method="post">
 					<input type="hidden" name="action" value="update">
+					<input type="hidden" name="id" value="<%=user.getId() %>">
 					<div class="form-group">
 						<label>ユーザネーム</label> <input type="text" name="name"
 							value="<%=user.getName()%>">
@@ -75,9 +76,14 @@ function searchAddress() {
 					</div>
 
 					<div class="form-group">
-						<label>郵便番号</label> <input type="text" size="7" name="address_number"
-							id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%} %>>
-						<button type="button" onclick="searchAddress()">住所検索</button>
+						<label>郵便番号</label>
+						<div class="address-area">
+							<input type="text" size="7" name="address_number"
+								id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%} %>>
+							<button class="address-btn" type="button" onclick="searchAddress()">住所検索</button>
+						
+						</div>
+						 
 					</div>
 					
 					<div class="form-group">
@@ -94,8 +100,17 @@ function searchAddress() {
 						<label>住所３</label> <input type="text" size="50" name="address3"
 							id="address3" <%if(user.getAddress3() != null){ %>value="<%=user.getAddress3()%>"<%} %>>
 					</div>
-
+					
+					<div class="form-group">
+						<label>管理者権限</label> 
+						<select name="admin_flg" class="select-box">
+							<option value="1"<%if(user.getAdminFlg() == 1){ %>selected<%} %>>管理者</option>
+							<option value="0"<%if(user.getAdminFlg() == 0){ %>selected<%} %>>一般</option>
+						</select>
+					</div>
+					
 					<div class="form-actions">
+						<input type="hidden" value="update" name="action">
 						<input type="submit" value="変更">
 					</div>
 				</form>
@@ -106,14 +121,14 @@ function searchAddress() {
 		<div class="box">
 			<h1>パスワードリセット</h1>
 			<div class="user">
-				<form action="mypage" method="post">
+				<form action="${pageContext.request.contextPath}/admin/userpage" method="post">
 					<input type="hidden" name="action" value="reset">
 					<div class="form-group">
-						<label>新しいパスワード</label> <input type="password" name="newPassword">
+						<label>新しいパスワード</label> <input type="password">
 					</div>
 
 					<div class="form-group">
-						<label>確認</label> <input type="password" name="currentPassword">
+						<label>確認</label> <input type="password">
 					</div>
 					<div class="form-actions">
 						<input type="submit" value="変更">
@@ -126,7 +141,7 @@ function searchAddress() {
 		<div class="box">
 			<h1>退会</h1>
 			<div class="user">
-				<form action="mypage" method="post">
+				<form action="${pageContext.request.contextPath}/admin/userpage" method="post">
 					<input type="hidden" name="action" value="delete">
 					<div class="form-actions">
 						<input type="submit" value="アカウント削除">
