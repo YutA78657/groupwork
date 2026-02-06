@@ -33,7 +33,7 @@ public class OrderlistServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<OrderSet> orderSets = logic.GetAllOrdersLogic.execute();
 		request.setAttribute("orderSets", orderSets);
-		RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/jsp/order.jsp");
+		RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/jsp/orderM.jsp");
 		dis.forward(request, response);
 	}
 
@@ -41,8 +41,19 @@ public class OrderlistServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String oidStr = request.getParameter("orderId");
+		String status = request.getParameter("status");
+		int oid = 0;
+		if(oidStr != null) {
+			oid = Integer.parseInt(oidStr);
+		}
+		boolean result = logic.OrderStatusChangeLogic.execute(oid,status);
+		String mes = "";
+		if(!result) {
+			mes = "注文のステータス変更に失敗しました";
+			request.setAttribute("mes",mes);
+		}
+		response.sendRedirect(request.getContextPath() + "/order");;
 	}
 
 }

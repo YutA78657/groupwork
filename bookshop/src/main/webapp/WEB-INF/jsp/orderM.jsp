@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/order.css">
+	href="${pageContext.request.contextPath}/css/orderM.css">
 
 </head>
 
@@ -135,23 +135,25 @@
 
 						<!-- 発送状況（「発送状況：」は黒、ステータス名だけ色付き） -->
 						<div class="status">
-							発送状況： <span
-								class="
-                                <%= order.getStatus().equals("発送準備中") ? "status-preparing" : "" %>
-                                <%= order.getStatus().equals("発送済み") ? "status-shipped" : "" %>
-                                <%= order.getStatus().equals("配達中") ? "status-delivering" : "" %>
-                                <%= order.getStatus().equals("配達済み") ? "status-delivered" : "" %>
-                                <%= order.getStatus().equals("キャンセル") ? "status-cancel" : "" %>
-                            ">
-								<%=order.getStatus()%>
+							発送状況： <span>
+								<select class="status-select" name="status">
+								<option class="status-preparing">発送準備中</option>
+								<option class="">発送済み</option>
+								<option>配達中</option>
+								<option>配達完了</option>
+								<option>キャンセル</option>
+							</select>
 							</span>
+							
+							<form id="order-form" action="order" method="post">
+
+								<input type="hidden" name="orderId" value="<%=order.getId()%>">
+								<button type="submit" class="cancel-btn">更新</button>
+							</form>
 						</div>
 
 						<!-- キャンセルボタン（サーブレットへPOST） -->
-						<form action="order" method="post">
-							<input type="hidden" name="orderId" value="<%=order.getId()%>">
-							<button type="submit" class="cancel-btn">キャンセル</button>
-						</form>
+
 
 					</div>
 

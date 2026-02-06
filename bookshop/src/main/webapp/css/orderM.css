@@ -92,7 +92,6 @@
    ========================================================= */
 .order-footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top: 15px;
     padding-top: 15px;
@@ -108,9 +107,22 @@
 
 /* 発送状況（黒） */
 .order-footer .status {
+	position: absolute;
+	left: 40%;
+	transform: translateX(-50%);
+	display:flex;
+	justify-content: space-between;
     font-size: 22px;
     font-weight: bold;
     color: #000;
+	margin-left: 250px;;
+}
+ .status-select{
+	height: 35px;
+	width: 150px;
+	font-size: 22px;
+	border-radius:10px;
+	margin-right: 50px;
 }
 
 /* ステータス名だけ色を変える */
