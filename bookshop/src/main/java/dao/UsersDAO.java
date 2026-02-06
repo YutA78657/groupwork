@@ -179,7 +179,48 @@ public class UsersDAO extends DAO {
 
 		return false;
 	}
+	// 更新
+		public boolean adminUpdate(User user) {
 
+			load();
+
+			String sql = """
+						    UPDATE users
+					    SET
+					        name = ?,
+					        email = ?,
+					        address_number = ?,
+					        address1 = ?,
+					        address2 = ?,
+					        address3 = ?,
+					        admin_flg = ?
+					    WHERE id = ?
+					""";
+
+			try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+					PreparedStatement ps = con.prepareStatement(sql)) {
+
+				ps.setString(1, user.getName());
+				ps.setString(2, user.getEmail());
+				ps.setString(3, user.getAddressNum());
+				ps.setString(4, user.getAddress1());
+				ps.setString(5, user.getAddress2());
+				ps.setString(6, user.getAddress3());
+				ps.setInt(7, user.getAdminFlg());
+				ps.setInt(8, user.getId());
+				
+				int result = ps.executeUpdate();
+				return result == 1;
+
+			} catch (Exception e) {
+				System.out.println("update_error");
+				e.printStackTrace();
+			}
+
+			return false;
+		}
+	
+	
 	// パスワード変更
 	public boolean updatePassword(User user) {
 
