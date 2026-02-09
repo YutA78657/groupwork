@@ -39,15 +39,13 @@ public class MypageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User luser = (User)session.getAttribute("loginUser");
 		UsersDAO dao = new UsersDAO();
-
 		// ---------- ユーザー更新 ----------済
 		if (action.equals("update")) {
-
 			User user = new User(
-					Integer.parseInt(request.getParameter("id")),
+					luser.getId(),
+					request.getParameter("mail"),
 					request.getParameter("name"),
-					request.getParameter("email"),
-					request.getParameter("address_num"),
+					request.getParameter("address_number"),
 					request.getParameter("address1"),
 					request.getParameter("address2"),
 					request.getParameter("address3")
@@ -56,7 +54,7 @@ public class MypageServlet extends HttpServlet {
 			dao.update(user);
 
 			// 更新後は再表示
-			request.setAttribute("user", dao.findById(user.getId()));
+			session.setAttribute("loginUser", dao.findById(user.getId()));
 			request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
 			.forward(request, response);
 

@@ -76,7 +76,7 @@ function searchAddress() {
 
 					<div class="form-group">
 						<label>郵便番号</label> <input type="text" size="7" name="address_number"
-							id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%} %>>
+							id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%}%>>
 						<button type="button" onclick="searchAddress()">住所検索</button>
 					</div>
 					
