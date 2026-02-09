@@ -54,7 +54,7 @@
 
         <!-- ▼ チャットアイコン（カート左横） ▼ -->
         <div id="ai-chat-trigger">
-            <img src="${pageContext.request.contextPath}/image/material/chat.jpg"
+            <img src="${pageContext.request.contextPath}/image/material/AIicon.png"
                  class="header-chat-icon">
         </div>
         <!-- ▲ ここまで ▲ -->

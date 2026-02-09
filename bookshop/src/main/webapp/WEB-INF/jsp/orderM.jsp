@@ -155,7 +155,7 @@ User user = (User) session.getAttribute("loginUser");
 											<%}%>>発送済み</option>
 										<option <%if (order.getStatus().equals("配達中")) {%> selected
 											<%}%>>配達中</option>
-										<option <%if (order.getStatus().equals("配達完了")) {%> selected
+										<option <%if (order.getStatus().equals("配達済み")) {%> selected
 											<%}%>>配達完了</option>
 										<option <%if (order.getStatus().equals("キャンセル")) {%> selected
 											<%}%>>キャンセル</option>

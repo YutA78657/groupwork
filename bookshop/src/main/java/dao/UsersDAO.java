@@ -243,6 +243,7 @@ public class UsersDAO extends DAO {
 			return result == 1;
 
 		} catch (Exception e) {
+			System.out.println("password-error");
 			e.printStackTrace();
 		}
 
