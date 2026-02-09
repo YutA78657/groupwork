@@ -24,6 +24,15 @@ public class UserServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession(false);
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		if (loginUser == null || !loginUser.isAdmin()) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+
 		UsersDAO dao = new UsersDAO();
 		List<User> userList = dao.findAll();
 
@@ -32,19 +41,46 @@ public class UserServlet extends HttpServlet {
 		.forward(request, response);
 	}
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String mail = request.getParameter("mail");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+
 		String action = request.getParameter("action");
-		if(action.equals("view")) {
-			UsersDAO dao = new UsersDAO();
-			User user = dao.findByEmail(mail);
-			request.setAttribute("searchUser", user);
-			request.getRequestDispatcher("/WEB-INF/jsp/mypageM.jsp")
+		UsersDAO dao = new UsersDAO();
+
+		// ---------- ユーザー更新 ----------済
+		if ("update".equals(action)) {
+
+			User user = new User(
+					Integer.parseInt(request.getParameter("id")),
+					request.getParameter("name"),
+					request.getParameter("email"),
+					request.getParameter("address_num"),
+					request.getParameter("address1"),
+					request.getParameter("address2"),
+					request.getParameter("address3")
+					);
+
+			dao.update(user);
+
+			// 更新後は再表示
+			request.setAttribute("user", dao.findById(user.getId()));
+			request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
 			.forward(request, response);
-		}else if(action.equals("update")) {
-			
+			return;
 		}
 
+		// ---------- パスワードリセット ----------
+
+		// ---------- 削除 ----------
+		if ("delete".equals(action)) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			dao.delete(id);
+
+			response.sendRedirect("index");
+			return;
+		}
 	}
 
 }
