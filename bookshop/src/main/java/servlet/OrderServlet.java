@@ -45,8 +45,18 @@ public class OrderServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String oidStr = request.getParameter("orderId");
+		int oid = 0;
+		if(oidStr != null) {
+			oid = Integer.parseInt(oidStr);
+		}
+		boolean result = logic.OrderStatusChangeLogic.execute(oid,"キャンセル");
+		String mes = "";
+		if(!result) {
+			mes = "注文のキャンセルに失敗しました";
+			request.setAttribute("mes",mes);
+		}
+		response.sendRedirect(request.getContextPath() + "/order");;
 	}
 
 }

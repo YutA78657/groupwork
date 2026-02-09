@@ -118,6 +118,7 @@
 .status-shipped { color: #0275d8; }
 .status-delivering { color: #5bc0de; }
 .status-delivered { color: #5cb85c; }
+.status-cancel { color: #d9534f; }
 
 /* キャンセルボタン */
 .cancel-btn {

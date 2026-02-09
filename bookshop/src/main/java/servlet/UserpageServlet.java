@@ -27,8 +27,9 @@ public class UserpageServlet extends HttpServlet{
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
+		UsersDAO dao = new UsersDAO();
+		int id = Integer.parseInt(request.getParameter("id"));
 		if(action.equals("update")) {
-			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("name");
 			String mail = request.getParameter("mail");
 			String addressNum = request.getParameter("address_number");
@@ -46,6 +47,10 @@ public class UserpageServlet extends HttpServlet{
 				response.sendRedirect(request.getContextPath() + "/top");
 			}
 			
+		}else if(action.equals("delete")) {
+			dao.delete(id);
+			// セッション破棄
+			response.sendRedirect(request.getContextPath() + "/admin/user");
 		}
 	}
 }
