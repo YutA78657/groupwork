@@ -54,7 +54,7 @@ public class BookDAO extends DAO{
 						rs.getString("description"),
 						rs.getString("cname"),
 						rs.getString("publisher"),
-						rs.getBoolean("recommend_flg"),
+						rs.getInt("recommend_flg"),
 						rs.getString("img")
 						);
 
@@ -113,7 +113,7 @@ public class BookDAO extends DAO{
 						rs.getString("description"),
 						rs.getString("cname"),
 						rs.getString("publisher"),
-						rs.getBoolean("recommend_flg"),
+						rs.getInt("recommend_flg"),
 						rs.getString("img")
 						);
 				
@@ -181,7 +181,7 @@ public class BookDAO extends DAO{
 	                rs.getString("description"),
 	                rs.getString("cname"),
 	                rs.getString("publisher"),
-	                rs.getBoolean("recommend_flg"),
+	                rs.getInt("recommend_flg"),
 	                rs.getString("img")
 	            ));
 	        }
@@ -236,7 +236,7 @@ public class BookDAO extends DAO{
 						rs.getString("description"),
 						rs.getString("cname"),
 						rs.getString("publisher"),
-						rs.getBoolean("recommend_flg"),
+						rs.getInt("recommend_flg"),
 						rs.getString("img")
 						);
 			}

@@ -34,16 +34,15 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
         String pass = request.getParameter("pass");
-
+        HttpSession session = request.getSession();
         User user = logic.LoginLogic.execute(email, pass);
 
         if (user != null) {
-            HttpSession session = request.getSession();
             session.setAttribute("loginUser", user);
-
+            session.setAttribute("mes", "ログインしました");
             response.sendRedirect(request.getContextPath() + "/index");
         } else {
-            request.setAttribute("error", "メールアドレスまたはパスワードが違います");
+            request.setAttribute("mes", "メールアドレスまたはパスワードが違います");
             request.getRequestDispatcher("/WEB-INF/jsp/login.jsp")
                    .forward(request, response);
         }

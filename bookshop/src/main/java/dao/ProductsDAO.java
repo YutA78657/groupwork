@@ -160,7 +160,7 @@ public class ProductsDAO extends DAO{
         String sql = """
         		INSERT INTO product(
         		title, price, stock, author, description, publisher, recommend_flg, img, category_id, series_id)
-        		VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+        		VALUES(?, ?, ?, ?, ?, ?, 0, ?, ?, null)
         """;
         
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
@@ -174,13 +174,13 @@ public class ProductsDAO extends DAO{
             ps.setString(6, product.getPublisher());
             ps.setString(7, product.getImg());
             ps.setInt(8, product.getCategory_id());
-            ps.setInt(9, product.getSeries_id());
             
             int result = ps.executeUpdate();
 
             return result == 1;
             
         } catch(Exception e) {
+        	System.out.println("error");
             e.printStackTrace();
         }
         
@@ -202,8 +202,7 @@ public class ProductsDAO extends DAO{
 				        description = ?,
 				        publisher = ?,
 				        img = ?,
-				        category_id = ?,
-				        series_id = ?
+				        category_id = ?
 				    WHERE id = ?
 				""";
 
@@ -218,8 +217,7 @@ public class ProductsDAO extends DAO{
 			ps.setString(6, product.getPublisher());
 			ps.setString(7, product.getImg());
 			ps.setInt(8, product.getCategory_id());
-			ps.setInt(9, product.getSeries_id());
-			ps.setInt(10, product.getId());
+			ps.setInt(9, product.getId());
 
 			int result = ps.executeUpdate();
 			return result == 1;
@@ -242,6 +240,34 @@ public class ProductsDAO extends DAO{
 				PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setInt(1, id);
+
+			int result = ps.executeUpdate();
+			return result == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	//購入時の在庫変更
+	public boolean stockChange(int id,int quantity) {
+
+		load();
+
+		String sql = """
+				    UPDATE product
+				    SET
+				        stock = ?
+				    WHERE id = ?
+				""";
+
+		try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			
+			ps.setInt(1, quantity);
+			ps.setInt(2, id);
 
 			int result = ps.executeUpdate();
 			return result == 1;

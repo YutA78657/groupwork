@@ -165,10 +165,6 @@
 
 					<!-- 購入フォーム（更新の右隣） -->
 					<form action="cart" method="post">
-
-						<!-- 購入フラグ -->
-						<input type="hidden" name="purchase" value="true">
-
 						<%
 						// 購入用 hidden（ID 重複防止のため shared-buyX）
 						for (Cart cart : cartlist) {
@@ -182,6 +178,7 @@
 						%>
 
 						<!-- 購入ボタン -->
+						<input type="hidden" name="action" value="buy">
 						<input type="submit" value="購入する">
 					</form>
 

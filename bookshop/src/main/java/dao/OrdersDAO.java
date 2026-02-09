@@ -16,7 +16,7 @@ public class OrdersDAO extends DAO {
 		load();
 		List<Orders> list = new ArrayList<>();
 
-		String sql = "SELECT id, user_Id, order_date, status FROM orders ORDER BY id";
+		String sql = "SELECT * FROM orders ORDER BY order_date desc";
 
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -26,6 +26,10 @@ public class OrdersDAO extends DAO {
 				Orders orders = new Orders(rs.getInt("id"), 
 						rs.getInt("user_Id"),
 						rs.getDate("order_date"),
+						rs.getString("address_number"),
+						rs.getString("address1"),
+						rs.getString("address2"),
+						rs.getString("address3"),
 						rs.getString("status"));
 				list.add(orders);
 			}
@@ -39,7 +43,7 @@ public class OrdersDAO extends DAO {
 		load();
 		List<Orders> list = new ArrayList<>();
 
-		String sql = "SELECT id, user_Id, order_date, status FROM orders where id = ? ORDER BY order_date desc";
+		String sql = "SELECT * FROM orders where user_id = ? ORDER BY order_date desc";
 
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -50,6 +54,10 @@ public class OrdersDAO extends DAO {
 				Orders orders = new Orders(rs.getInt("id"), 
 						rs.getInt("user_Id"),
 						rs.getDate("order_date"),
+						rs.getString("address_number"),
+						rs.getString("address1"),
+						rs.getString("address2"),
+						rs.getString("address3"),
 						rs.getString("status"));
 				list.add(orders);
 			}
@@ -63,13 +71,17 @@ public class OrdersDAO extends DAO {
 	public boolean insert(Orders order) {
 		load();
 		
-        String sql = "INSERT INTO orders(user_Id, order_date, status) VALUES(?, ?,'発送準備中')";
+        String sql = "INSERT INTO orders(id,user_Id, order_date,address_number,address1,address2,address3, status) VALUES(?,?, CURRENT_TIMESTAMP,?,?,?,?,'発送準備中')";
 
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, order.getUserId());
-            ps.setDate(2, order.getOrder_date());
+            ps.setInt(1, order.getId());
+            ps.setInt(2, order.getUserId());
+            ps.setString(3,order.getAddress_number());
+            ps.setString(4,order.getAddress1());
+            ps.setString(5,order.getAddress2());
+            ps.setString(6,order.getAddress3());
 
             int result = ps.executeUpdate();
             return result == 1;

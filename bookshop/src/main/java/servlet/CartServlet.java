@@ -22,23 +22,23 @@ import model.Cart;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CartServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CartServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		request.getRequestDispatcher("WEB-INF/jsp/cart.jsp").forward(request, response);
+
+
+
+		request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(request, response);
 	}
 
 	/**
@@ -47,41 +47,55 @@ public class CartServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		List<Cart> cart = (List<Cart>)session.getAttribute("cart");;
 		if(cart == null) {
 			cart = new ArrayList<>();
 		}
 		String action = (String)request.getParameter("action");
-		int addQuantity = Integer.parseInt(request.getParameter("quantity"));
-		
-		
-		if(action.equals("add")) {
-			int pid = Integer.parseInt(request.getParameter("pid"));
-			cart = AddCart.execute(cart, pid,addQuantity);
-		}else if(action.equals("update")){
+		if(action.equals("buy")){
 			String[] spid = request.getParameterValues("pid[]");
 			String[] squantity = request.getParameterValues("quantity[]");
 			int[] pid = new int[spid.length];
 			int[] quantity = new int[squantity.length];
 			for(int i = 0;i<pid.length;i++) {
 				pid[i] = Integer.parseInt(spid[i]);
-				System.out.println(pid[i]);
 			}
 			for(int i = 0;i<quantity.length;i++) {
 				quantity[i] = Integer.parseInt(squantity[i]);
-				System.out.println(quantity[i]);
 			}
 			cart = UpdateCart.execute(pid, quantity);
-		}else if(action.equals("delete")) {
-			int pid = Integer.parseInt(request.getParameter("pid"));
-			cart = DeleteCart.execute(cart,pid);
-			if(cart.size()==0) {
-				cart = null;
+			session.setAttribute("cart", cart);
+			response.sendRedirect(request.getContextPath() + "/checkPreview");
+		}else {
+			if(action.equals("add")) {
+				int addQuantity = Integer.parseInt(request.getParameter("quantity"));
+				int pid = Integer.parseInt(request.getParameter("pid"));
+				cart = AddCart.execute(cart, pid,addQuantity);
+			}else if(action.equals("update")){
+				String[] spid = request.getParameterValues("pid[]");
+				String[] squantity = request.getParameterValues("quantity[]");
+				int[] pid = new int[spid.length];
+				int[] quantity = new int[squantity.length];
+				for(int i = 0;i<pid.length;i++) {
+					pid[i] = Integer.parseInt(spid[i]);
+				}
+				for(int i = 0;i<quantity.length;i++) {
+					quantity[i] = Integer.parseInt(squantity[i]);
+				}
+				cart = UpdateCart.execute(pid, quantity);
+			}else if(action.equals("delete")) {
+				int pid = Integer.parseInt(request.getParameter("pid"));
+				cart = DeleteCart.execute(cart,pid);
+				if(cart.size()==0) {
+					cart = null;
+				}
 			}
+			session.setAttribute("cart", cart);
+			request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(request, response);
 		}
-		session.setAttribute("cart", cart);
-		request.getRequestDispatcher("WEB-INF/jsp/cart.jsp").forward(request, response);
+
+
 	}
 
 }
