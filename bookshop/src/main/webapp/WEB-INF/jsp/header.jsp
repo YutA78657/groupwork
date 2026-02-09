@@ -69,10 +69,7 @@
         </div>
 
     </div>
-    <div class="messege-box">
-    	<h2><%=mes %></h2>
-    
-    </div>
+
 
     <div id="menu-box">
         

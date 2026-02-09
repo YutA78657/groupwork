@@ -5,7 +5,7 @@ public class Book {
 	private String title;
 	private int price;
 	private int stock;
-	private String auther;
+	private String author;
 	private String description;
 	private String cname;
 	private String publisher;
@@ -17,7 +17,7 @@ public class Book {
 		this.title = title;
 		this.price = price;
 		this.stock = stock;
-		this.auther = auther;
+		this.author = auther;
 		this.description = description;
 		this.cname = cname;
 		this.publisher = publisher;
@@ -43,7 +43,7 @@ public class Book {
 	}
 
 	public String getAuthor() {
-		return auther;
+		return author;
 	}
 
 	public String getDescription() {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%String mes = (String)request.getAttribute("mes"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,9 @@
 	<!-- ログインフォーム -->
 	<div class="login-container">
 		<h1>ログイン</h1>
-
+		<%if(mes != null){ %>
+		<div class="mes"><%=mes %></div>
+		<%} %>
 		<form action="login" method="post">
 			<div class="form-group">
 				<label>メールアドレス：</label> <input type="text" name="email">

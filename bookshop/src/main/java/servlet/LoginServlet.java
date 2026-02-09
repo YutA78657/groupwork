@@ -39,7 +39,6 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null) {
             session.setAttribute("loginUser", user);
-            session.setAttribute("mes", "ログインしました");
             response.sendRedirect(request.getContextPath() + "/index");
         } else {
             request.setAttribute("mes", "メールアドレスまたはパスワードが違います");

@@ -9,6 +9,7 @@ int price = 0;
 for (Cart cart : cartlist) {
 	price += cart.getProduct().getPrice() * cart.getQuantity();
 }
+String mes = (String)request.getAttribute("mes");
 %>
 <html>
 <head>
@@ -28,6 +29,9 @@ for (Cart cart : cartlist) {
 						<h2>お届け先住所</h2>
 						<a href="mypage" class="address_title_link">変更</a>
 					</div>
+					<%if(mes != null){ %>
+					<div class="mes"><%=mes %></div>
+					<%} %>
 					<h3>郵便番号</h3>
 					<p>
 						<%

@@ -39,7 +39,11 @@ public class CheckServlet extends HttpServlet {
 		if(user.getAddressNum() == null ||
 				user.getAddress1() == null  ||
 				user.getAddress2() == null  ||
-				user.getAddress3() == null ) {
+				user.getAddress3() == null  ||
+				user.getAddressNum().equals("") ||
+				user.getAddress1().equals("")  ||
+				user.getAddress2().equals("")  ||
+				user.getAddress3().equals("") ) {
 			flg = false;
 			mes = "お届け先住所が未設定です";
 		}
@@ -55,7 +59,7 @@ public class CheckServlet extends HttpServlet {
 				}
 			}
 		}else {
-			request.setAttribute(mes,"mes");
+			request.setAttribute("mes",mes);
 			request.getRequestDispatcher("/WEB-INF/jsp/checkPreview.jsp").forward(request, response);
 		}
 
