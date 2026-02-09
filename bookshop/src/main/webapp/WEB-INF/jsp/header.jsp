@@ -17,6 +17,7 @@
     }
 
     List<Category> clist = (List<Category>)request.getAttribute("clist");
+    String mes = (String)session.getAttribute("mes");
 %>
 
 <!DOCTYPE html>
@@ -68,6 +69,10 @@
         </div>
 
     </div>
+    <div class="messege-box">
+    	<h2><%=mes %></h2>
+    
+    </div>
 
     <div id="menu-box">
         
@@ -98,7 +103,7 @@
       }
     %>    
     </div>
-
+		
     <div id="overlay"></div>
 </header>
 

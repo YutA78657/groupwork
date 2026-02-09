@@ -185,3 +185,26 @@ header {
 #overlay.active {
     display: block;
 }
+
+
+
+
+
+.messege-box{
+	position: fixed;
+	top: 100px;
+	left: 0;
+	height: 40px;
+	width: 100%;
+	background-color: rgb(78, 78, 78);
+}
+
+.messege-box h2{
+	color:white;	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	margin:0;
+}
