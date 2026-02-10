@@ -7,6 +7,7 @@ function searchUser() {
 
     for (let i = 0; i < users.length; i++) {
         const text = users[i].innerText.toLowerCase();
-        users[i].style.display = text.includes(keyword) ? "block" : "none";
+        // 検索ヒット時は "flex" にして横並びを維持
+        users[i].style.display = text.includes(keyword) ? "flex" : "none";
     }
 }
