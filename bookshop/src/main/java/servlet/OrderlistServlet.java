@@ -30,6 +30,7 @@ public class OrderlistServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<OrderSet> orderSets = logic.GetAllOrdersLogic.execute();
 		request.setAttribute("orderSets", orderSets);
@@ -40,8 +41,10 @@ public class OrderlistServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String oidStr = request.getParameter("orderId");
+		
+    	String oidStr = request.getParameter("orderId");
 		String status = request.getParameter("status");
 		int oid = 0;
 		if(oidStr != null) {

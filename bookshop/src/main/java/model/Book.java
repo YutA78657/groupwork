@@ -5,19 +5,19 @@ public class Book {
 	private String title;
 	private int price;
 	private int stock;
-	private String auther;
+	private String author;
 	private String description;
 	private String cname;
 	private String publisher;
 	private int recommend_flg;
 	private String img;
 	
-	public Book(int pid,String title,int price,int stock,String auther,String description,String cname,String publisher,int recommend_flg,String img) {
+	public Book(int pid,String title,int price,int stock,String author,String description,String cname,String publisher,int recommend_flg,String img) {
 		this.pid = pid;
 		this.title = title;
 		this.price = price;
 		this.stock = stock;
-		this.auther = auther;
+		this.author = author;
 		this.description = description;
 		this.cname = cname;
 		this.publisher = publisher;
@@ -43,7 +43,7 @@ public class Book {
 	}
 
 	public String getAuthor() {
-		return auther;
+		return author;
 	}
 
 	public String getDescription() {
