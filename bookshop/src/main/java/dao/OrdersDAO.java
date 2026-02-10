@@ -47,7 +47,7 @@ public class OrdersDAO extends DAO {
 		load();
 		List<Orders> list = new ArrayList<>();
 
-		String sql = "SELECT * FROM orders where user_id = ? ORDER BY order_date desc";
+		String sql = "SELECT * FROM orders where id = ? ORDER BY order_date desc";
 
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -57,7 +57,7 @@ public class OrdersDAO extends DAO {
 			while(rs.next()) {
 				Orders orders = new Orders(
 						rs.getInt("id"), 
-						rs.getInt("user_Id"),
+						rs.getInt("user_id"),
 						rs.getDate("order_date"),
 						rs.getString("address_number"),
 						rs.getString("address1"),
