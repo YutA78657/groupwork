@@ -71,7 +71,7 @@ public class ProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		ProductsDAO dao = new ProductsDAO();
-
+		BookDAO bd = new BookDAO();
 
 
 		// ---------- 商品更新 ----------
@@ -81,7 +81,7 @@ public class ProductServlet extends HttpServlet {
 			InputStream input = filePart.getInputStream();
 			File file = new File("C:/git/bookshop/src/main/webapp/image/" + fileName);
 			int id = Integer.parseInt(request.getParameter("id"));
-			BookDAO bd = new BookDAO();
+			
 			Book book = bd.findById(id);
 			if(fileName.equals("")) {
 				fileName = book.getImg();
@@ -117,11 +117,12 @@ public class ProductServlet extends HttpServlet {
 		}
 
 		// ---------- おすすめ切替 ----------
-		if ("recommend".equals(action)) {
+		if ("reco".equals(action)) {
+			System.out.println("reco");
 			int id = Integer.parseInt(request.getParameter("id"));
 			dao.toggleRecommend(id);
-
-			request.setAttribute("product", dao.findById(id));
+			Book book = bd.findById(id);
+			request.setAttribute("book", book);
 			request.getRequestDispatcher("/WEB-INF/jsp/productM.jsp")
 			.forward(request, response);
 			return;

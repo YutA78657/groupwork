@@ -45,6 +45,13 @@
 
 
 			<!-- 右：商品情報フォーム -->
+
+
+
+
+
+
+
 			<div id="product-info">
 				<form id="product-form" action="product" method="post"
 					enctype="multipart/form-data">
@@ -62,8 +69,9 @@
 						<%
 						for (Category category : clist) {
 						%>
-						<option value="<%=category.getId() %>" <%if (category.getName().equals(book.getCname())) {%>
-							selected <%}%>><%=category.getName()%></option>
+						<option value="<%=category.getId()%>"
+							<%if (category.getName().equals(book.getCname())) {%> selected
+							<%}%>><%=category.getName()%></option>
 						<%
 						}
 						%>
@@ -77,6 +85,11 @@
 					<!-- 著者 -->
 					<label for="author">著者：</label><br> <input type="text"
 						id="author" name="author" size="50" value="<%=book.getAuthor()%>"><br>
+					<br>
+					
+					
+					<label for="publisher">出版社：</label><br> <input type="text"
+						id="publisher" name="publisher" size="50" value="<%=book.getPublisher() %>"><br>
 					<br>
 
 					<!-- 価格 -->
@@ -95,10 +108,22 @@
 					<br> <br>
 
 					<!-- 更新ボタン -->
-					<input type="hidden" name="id" value="<%=book.getPid() %>">
-					<input type="hidden" name="action" value="update"> 
-					<input class="submit" type="submit" value="商品を更新">
+					<input type="hidden" name="id" value="<%=book.getPid()%>">
+					<input type="hidden" name="action" value="update"> <input
+						class="submit" type="submit" value="商品を更新">
+
+
 				</form>
+				<form id="reco" action="product" method="post">
+					<input type="hidden" name="action" value="reco"> <input
+						type="hidden" name="id" value="<%=book.getPid()%>"> <input
+						id="reco-btn" type="submit" <%if (book.isRecommend() == false) {%>
+						value="おすすめに追加" <%} else {%> value="おすすめから削除" <%}%>>
+
+
+
+				</form>
+
 			</div>
 		</div>
 	</div>

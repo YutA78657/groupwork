@@ -55,7 +55,8 @@ label,
 
 .submit {
   padding: 8px 16px;
-  background-color: #0078d7;
+  background-color: #2196F3;
+  border-radius: 4px;
   color: white;
   border: none;
   cursor: pointer;
@@ -74,4 +75,9 @@ input[type="submit"]:hover {
 
 #product-description p {
   line-height: 1.6;
+}
+
+#reco-btn{
+	background-color: #0078d7;
+	color: white;
 }

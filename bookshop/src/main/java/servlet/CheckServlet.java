@@ -54,8 +54,10 @@ public class CheckServlet extends HttpServlet {
 			if(result == true) {
 				Boolean r2 = logic.CheckLogic.execute(user,cartlist);
 				if(r2 == true) {
+					mes = "商品の購入が完了しました";
+					session.setAttribute("mes",mes);
 					session.removeAttribute("cart");
-					request.getRequestDispatcher("/WEB-INF/jsp/check.jsp").forward(request, response);
+					response.sendRedirect(request.getContextPath() + "/index");
 				}
 			}
 		}else {

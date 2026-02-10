@@ -7,6 +7,8 @@
     // コントローラから渡されたデータを受け取る
     List<Book> recobooks = (List<Book>) request.getAttribute("recBooks");
     List<CategorySet> categorysets = (List<CategorySet>) request.getAttribute("CategoryBooks");
+    String mes = (String)session.getAttribute("mes");
+    session.removeAttribute("mes");
 %>
 
 <html>
@@ -27,6 +29,11 @@
 
     <!-- ヘッダー -->
     <jsp:include page="header.jsp" />
+    <%if(mes!=null){ %>
+    <div class="mes-box">
+    	<h2><%=mes %></h2>
+    </div>
+    <%} %>
 
     <div class="parent">
 

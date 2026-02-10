@@ -31,7 +31,8 @@
 			%>
 
 			<!-- 空表示 -->
-			<p style="padding: 20px;">カートは空です。</p>
+			<p style="margin-left:auto; 
+			          margin-right:auto;">カートは空です</p>
 
 			<%
 			} else {

@@ -32,6 +32,7 @@
 				</p>
 				<h2 class="title"><%=book.getTitle() %></h2>
 				<p class="author">著者：<%=book.getAuthor() %></p>
+				<p class="publisher">出版社：<%=book.getPublisher() %></p>
 				<p class="price">￥<%=book.getPrice() %> </p>
 
 				<form id="product-form" action="cart" method="post">

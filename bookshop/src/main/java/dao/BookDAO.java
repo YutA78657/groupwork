@@ -152,7 +152,7 @@ public class BookDAO extends DAO{
 	    }
 
 	    if (word != null) {
-	        sql.append(" AND (p.title LIKE ? OR p.author LIKE ?) ");
+	        sql.append(" AND (p.title LIKE ? OR p.author LIKE ? OR p.publisher LIKE ?) ");
 	    }
 
 	    try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
@@ -166,7 +166,7 @@ public class BookDAO extends DAO{
 	        if (word != null) {
 	            ps.setString(idx++, "%" + word + "%");
 	            ps.setString(idx++, "%" + word + "%");
-	            System.out.println("!");
+	            ps.setString(idx++, "%" + word + "%");
 	        }
 
 	        ResultSet rs = ps.executeQuery();
@@ -188,7 +188,6 @@ public class BookDAO extends DAO{
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        System.out.println("!");
 	    }
 
 	    return list;

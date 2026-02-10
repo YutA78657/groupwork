@@ -71,10 +71,9 @@
 					<div class="order-header">
 						<h1>
 							注文番号：<%=order.getId() %></h1>
-						<h1><%=order.getOrder_date() %></h1>
+						<h1>配送予定日：<%=order.getDeliveryDate() %></h1>
 					</div>
-
-					<!-- 上段の区切り線 -->
+					
 					<div class="order-header-line"></div>
 
 					<!-- 商品一覧（スクロール可能） -->

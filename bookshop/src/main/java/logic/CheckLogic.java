@@ -1,5 +1,6 @@
 package logic;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +36,8 @@ public class CheckLogic {
 		}
          
         Orders order = new Orders(id,user.getId(),user.getAddressNum(),user.getAddress1(),user.getAddress2(),user.getAddress3());
+        LocalDate deliveryDate = LocalDate.now().plusDays(2);
+		order.setDeliveryDate(deliveryDate);
 		
 		Boolean r1 = od.insert(order);
 		if(r1 == true) {			

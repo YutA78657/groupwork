@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="model.User"%>
+	pageEncoding="UTF-8" import="model.User"%>
 <!DOCTYPE html>
-<%  User user = (User)session.getAttribute("loginUser");%>
+<%
+User user = (User) session.getAttribute("loginUser");
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -12,7 +14,7 @@
 	href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-<script>
+	<script>
 function searchAddress() {
 	  const el = document.getElementById("zipcode");
 	  console.log(el);
@@ -57,7 +59,18 @@ function searchAddress() {
 
 </script>
 
-<jsp:include page="header.jsp" />
+	<jsp:include page="header.jsp" />
+	<%
+	String mes = (String)session.getAttribute("mes");
+    session.removeAttribute("mes");
+	if (mes != null) {
+	%>
+	<div class="mes-box">
+		<h2><%=mes%></h2>
+	</div>
+	<%
+	}
+	%>
 	<div class="parent">
 		<div class="box">
 			<h1>マイページ</h1>
@@ -75,24 +88,29 @@ function searchAddress() {
 					</div>
 
 					<div class="form-group">
-						<label>郵便番号</label> <input type="text" size="7" name="address_number"
-							id="zipcode" <%if(user.getAddressNum() != null){ %>value="<%=user.getAddressNum()%>"<%}%>>
+						<label>郵便番号</label> <input type="text" size="7"
+							name="address_number" id="zipcode"
+							<%if (user.getAddressNum() != null) {%>
+							value="<%=user.getAddressNum()%>" <%}%>>
 						<button type="button" onclick="searchAddress()">住所検索</button>
 					</div>
-					
+
 					<div class="form-group">
 						<label>住所１</label> <input type="text" size="50" name="address1"
-							id="address1" <%if(user.getAddress1() != null){ %>value="<%=user.getAddress1()%>"<%} %>>
+							id="address1" <%if (user.getAddress1() != null) {%>
+							value="<%=user.getAddress1()%>" <%}%>>
 					</div>
-					
+
 					<div class="form-group">
 						<label>住所２</label> <input type="text" size="50" name="address2"
-							id="address2" <%if(user.getAddress2() != null){ %>value="<%=user.getAddress2()%>"<%} %>>
+							id="address2" <%if (user.getAddress2() != null) {%>
+							value="<%=user.getAddress2()%>" <%}%>>
 					</div>
-					
+
 					<div class="form-group">
 						<label>住所３</label> <input type="text" size="50" name="address3"
-							id="address3" <%if(user.getAddress3() != null){ %>value="<%=user.getAddress3()%>"<%} %>>
+							id="address3" <%if (user.getAddress3() != null) {%>
+							value="<%=user.getAddress3()%>" <%}%>>
 					</div>
 
 					<div class="form-actions">

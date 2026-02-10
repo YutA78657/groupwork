@@ -28,7 +28,6 @@
   background-color: rgb(255, 255, 255);
   border-radius: 0 0 8px 8px;
   border-top: 1px solid black;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -174,10 +173,6 @@
 /* =========================
    他 JSP で使用される要素
 ========================= */
-#mes {
-  align-items: center;
-  margin: auto;
-}
 
 .box {
   display: flex;
@@ -187,4 +182,20 @@
   margin-top: 20px;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+
+.mes-box{
+	height: 36px;
+	width: 100%;
+	background-color: rgb(128, 128, 128);
+}
+
+.mes-box h2{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: auto;
+	margin:0;
+	color:rgb(255, 255, 255);
 }

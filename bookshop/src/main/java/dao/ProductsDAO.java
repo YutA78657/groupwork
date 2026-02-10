@@ -134,9 +134,9 @@ public class ProductsDAO extends DAO{
     public void toggleRecommend(int id) {
 
         String sql =
-            "UPDATE products " +
-            "SET recommend = CASE " +
-            "WHEN recommend = 1 THEN 0 " +
+            "UPDATE product " +
+            "SET recommend_flg = CASE " +
+            "WHEN recommend_flg = 1 THEN 0 " +
             "ELSE 1 END " +
             "WHERE id = ?";
 

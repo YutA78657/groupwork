@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,14 +24,17 @@ public class OrdersDAO extends DAO {
 				ResultSet rs = ps.executeQuery()){
 
 			while(rs.next()) {
-				Orders orders = new Orders(rs.getInt("id"), 
-						rs.getInt("user_Id"),
+				Orders orders = new Orders(
+						rs.getInt("id"),
+						rs.getInt("user_id"),
 						rs.getDate("order_date"),
 						rs.getString("address_number"),
 						rs.getString("address1"),
 						rs.getString("address2"),
 						rs.getString("address3"),
-						rs.getString("status"));
+						rs.getString("status"),
+						rs.getDate("delivery_date").toLocalDate()
+						);
 				list.add(orders);
 			}
 		} catch (SQLException e) {
@@ -51,14 +55,17 @@ public class OrdersDAO extends DAO {
 			ps.setInt(1,id);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				Orders orders = new Orders(rs.getInt("id"), 
-						rs.getInt("user_Id"),
+				Orders orders = new Orders(
+						rs.getInt("id"), 
+						rs.getInt("user_id"),
 						rs.getDate("order_date"),
 						rs.getString("address_number"),
 						rs.getString("address1"),
 						rs.getString("address2"),
 						rs.getString("address3"),
-						rs.getString("status"));
+						rs.getString("status"),
+						rs.getDate("delivery_date").toLocalDate()
+						);
 				list.add(orders);
 			}
 		} catch (SQLException e) {
@@ -71,17 +78,18 @@ public class OrdersDAO extends DAO {
 	public boolean insert(Orders order) {
 		load();
 		
-        String sql = "INSERT INTO orders(id,user_Id, order_date,address_number,address1,address2,address3, status) VALUES(?,?, CURRENT_TIMESTAMP,?,?,?,?,'発送準備中')";
+        String sql = "INSERT INTO orders(id, user_Id, order_date, delivery_date, address_number,address1,address2,address3, status) VALUES(?, ?, CURRENT_TIMESTAMP,?,?,?,?,?,'発送準備中')";
 
         try (Connection con = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, order.getId());
+        	ps.setInt(1, order.getId());
             ps.setInt(2, order.getUserId());
-            ps.setString(3,order.getAddress_number());
-            ps.setString(4,order.getAddress1());
-            ps.setString(5,order.getAddress2());
-            ps.setString(6,order.getAddress3());
+            ps.setDate(3, Date.valueOf(order.getDeliveryDate()));
+            ps.setString(4,order.getAddress_number());
+            ps.setString(5,order.getAddress1());
+            ps.setString(6,order.getAddress2());
+            ps.setString(7,order.getAddress3());
 
             int result = ps.executeUpdate();
             return result == 1;
