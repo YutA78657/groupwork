@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import dao.BookDAO;
+import dao.ProductsDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,9 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-
-import dao.BookDAO;
-import dao.ProductsDAO;
 import model.Book;
 import model.Product;
 import model.User;
@@ -79,41 +79,106 @@ public class ProductServlet extends HttpServlet {
 			Part filePart = request.getPart("image");
 			String fileName = filePart.getSubmittedFileName();
 			InputStream input = filePart.getInputStream();
-			File file = new File("C:/git/bookshop/src/main/webapp/image/" + fileName);
+			File file = new File("C:/git/groupwork/bookshop/src/main/webapp/image/" + fileName);
 			int id = Integer.parseInt(request.getParameter("id"));
-			
-			Book book = bd.findById(id);
+
+			String title = request.getParameter("title");
+			String priceStr = request.getParameter("price");
+			String stockStr = request.getParameter("stock");
+			String author = request.getParameter("author");
+			String description = request.getParameter("description");
+			String publisher = request.getParameter("publisher");
+			boolean flg = true;
+			String mes1 = "";
+			String mes2 = "";
+			String mes3 = "";
+			String mes4 = "";
+			String mes5 = "";
+			String mes6 = "";
+			String mes7 = "";
+
+
 			if(fileName.equals("")) {
-				fileName = book.getImg();
-			}else {
-				if (!file.exists()) {
-					try (FileOutputStream output = new FileOutputStream(file)) {
-						input.transferTo(output);
+				mes1 = "書影が入力されていません";
+				flg = false;
+			}
+			if(title.equals("")) {
+				mes2 = "タイトルが入力されていません";
+				flg = false;
+			}
+
+			if(author.equals("")) {
+				mes3 = "著者が入力されていません";
+				flg = false;
+			}
+
+			if(publisher.equals("")) {
+				mes4 = "出版社が入力されていません";
+				flg = false;
+			}
+			if(priceStr.equals("")) {
+				mes5 = "価格が入力されていません";
+				flg = false;
+			}
+
+			if(stockStr.equals("")) {
+				mes6 = "在庫数が入力されていません";
+				flg = false;
+			}
+
+			if(description.equals("")) {
+				mes7 = "商品詳細が入力されていません";
+				flg = false;
+			}
+
+			request.setAttribute("mes1", mes1);
+			request.setAttribute("mes2", mes2);
+			request.setAttribute("mes3", mes3);
+			request.setAttribute("mes4", mes4);
+			request.setAttribute("mes5", mes5);
+			request.setAttribute("mes6", mes6);
+			request.setAttribute("mes7", mes7);
+			Book book = bd.findById(id);
+			if(flg) {
+				
+				if(fileName.equals("")) {
+					fileName = book.getImg();
+				}else {
+					if (!file.exists()) {
+						try (FileOutputStream output = new FileOutputStream(file)) {
+							input.transferTo(output);
+						}
 					}
 				}
+
+
+				Product product = new Product(
+						id,
+						request.getParameter("title"),
+						Integer.parseInt(request.getParameter("price")),
+						Integer.parseInt(request.getParameter("stock")),
+						fileName,
+						request.getParameter("author"),
+						request.getParameter("description"),
+						request.getParameter("publisher"),
+						Integer.parseInt(request.getParameter("category"))
+						);
+
+
+				// 更新後は再表示
+				dao.update(product);
+				book = bd.findById(id);
+				request.setAttribute("book", book);
+				request.getRequestDispatcher("/WEB-INF/jsp/productM.jsp")
+				.forward(request, response);
+				return;
+			}else {
+				request.setAttribute("book", book);
+				RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/jsp/productM.jsp");
+				dis.forward(request, response);
 			}
 
 
-			Product product = new Product(
-					id,
-					request.getParameter("title"),
-					Integer.parseInt(request.getParameter("price")),
-					Integer.parseInt(request.getParameter("stock")),
-					fileName,
-					request.getParameter("author"),
-					request.getParameter("description"),
-					request.getParameter("publisher"),
-					Integer.parseInt(request.getParameter("category"))
-					);
-
-
-			// 更新後は再表示
-			dao.update(product);
-			book = bd.findById(id);
-			request.setAttribute("book", book);
-			request.getRequestDispatcher("/WEB-INF/jsp/productM.jsp")
-			.forward(request, response);
-			return;
 		}
 
 		// ---------- おすすめ切替 ----------
@@ -133,7 +198,7 @@ public class ProductServlet extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			dao.delete(id);
 
-			response.sendRedirect("topM");
+			response.sendRedirect(request.getContextPath() + "/index");
 			return;
 		}
 	}

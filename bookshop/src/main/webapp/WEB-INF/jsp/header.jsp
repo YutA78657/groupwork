@@ -15,6 +15,11 @@
     if(word == null){
         word = "";
     }
+    
+    String categoryName = (String)session.getAttribute("categoryName");
+    if(categoryName == null){
+    	categoryName = "";
+    }
 
     List<Category> clist = (List<Category>)request.getAttribute("clist");
 %>
@@ -44,7 +49,7 @@
             <select id="search-type" name="categoryName">
                 <option value="">すべて</option>
                 <% for(Category category:clist){ %>
-                    <option><%=category.getName() %></option>
+                    <option <%if(categoryName.equals(category.getName())){ %>selected<%} %>><%=category.getName() %></option>
                 <% } %>
             </select>
 

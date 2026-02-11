@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 
+import dao.UsersDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,8 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import dao.UsersDAO;
 import model.User;
 
 /**
@@ -39,24 +38,45 @@ public class MypageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User luser = (User)session.getAttribute("loginUser");
 		UsersDAO dao = new UsersDAO();
+		String mes1  = "";
+		String mes2  = "";
+		boolean flg = true;
 		// ---------- ユーザー更新 ----------済
 		if (action.equals("update")) {
-			User user = new User(
-					luser.getId(),
-					request.getParameter("mail"),
-					request.getParameter("name"),
-					request.getParameter("address_number"),
-					request.getParameter("address1"),
-					request.getParameter("address2"),
-					request.getParameter("address3")
-					);
+			String name = request.getParameter("name");
+			String mail = request.getParameter("mail");
+			if(name.equals("")) {
+				mes1 = "ユーザネームが入力されていません";
+				flg = false;
+			}
+			if(mail.equals("")) {
+				mes2 = "メールアドレスが入力されていません";
+				flg = false;
+			}
+			request.setAttribute("mes1", mes1);
+			request.setAttribute("mes2", mes2);
+			if(flg) {
+				User user = new User(
+						luser.getId(),
+						request.getParameter("mail"),
+						request.getParameter("name"),
+						request.getParameter("address_number"),
+						request.getParameter("address1"),
+						request.getParameter("address2"),
+						request.getParameter("address3")
+						);
 
-			dao.update(user);
+				dao.update(user);
 
-			// 更新後は再表示
-			session.setAttribute("loginUser", dao.findById(user.getId()));
-			request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
-			.forward(request, response);
+				// 更新後は再表示
+				session.setAttribute("loginUser", dao.findById(user.getId()));
+				request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
+				.forward(request, response);
+			}else {
+				request.getRequestDispatcher("WEB-INF/jsp/mypage.jsp")
+				.forward(request, response);
+			}
+
 
 			// ---------- パスワードリセット ----------
 		}else if(action.equals("reset")){

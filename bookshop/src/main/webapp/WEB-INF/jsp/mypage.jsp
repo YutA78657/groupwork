@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <%
 User user = (User) session.getAttribute("loginUser");
+String mes1 = (String) request.getAttribute("mes1");
+String mes2 = (String) request.getAttribute("mes2");
 %>
 <html>
 <head>
@@ -78,11 +80,25 @@ function searchAddress() {
 				<form action="mypage" method="post">
 					<input type="hidden" name="action" value="update">
 					<div class="form-group">
+				<%
+				if (mes1 != null) {
+				%>
+						<div class="mes"><%=mes1%></div>
+				<%
+				}
+				%>
 						<label>ユーザネーム</label> <input type="text" name="name"
 							value="<%=user.getName()%>">
 					</div>
 
 					<div class="form-group">
+				<%
+				if (mes2 != null) {
+				%>
+						<div class="mes"><%=mes2%></div>
+				<%
+				}
+				%>
 						<label>メールアドレス</label> <input type="text" name="mail"
 							value="<%=user.getEmail()%>">
 					</div>

@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import dao.ProductsDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,8 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-
-import dao.ProductsDAO;
 import model.Product;
 
 /**
@@ -50,45 +50,63 @@ public class ProductRegisterServlet extends HttpServlet {
 		String publisher = request.getParameter("publisher");
 		String categoryStr = request.getParameter("category");
 		String fileName = filePart.getSubmittedFileName();
+		
+		String mes1 = "";
+		String mes2 = "";
+		String mes3 = "";
+		String mes4 = "";
+		String mes5 = "";
+		String mes6 = "";
+		String mes7 = "";
+		
+		
+		if(fileName.equals("")) {
+			mes1 = "書影が入力されていません";
+			flg = false;
+		}
 		if(title.equals("")) {
-			System.out.println("title");
+			mes2 = "タイトルが入力されていません";
+			flg = false;
+		}
+		
+		if(author.equals("")) {
+			mes3 = "著者が入力されていません";
+			flg = false;
+		}
+		
+		if(publisher.equals("")) {
+			mes4 = "出版社が入力されていません";
 			flg = false;
 		}
 		if(priceStr.equals("")) {
-			System.out.println("price");
+			mes5 = "価格が入力されていません";
 			flg = false;
 		}
+		
 		if(stockStr.equals("")) {
-			System.out.println("stock");
+			mes6 = "在庫数が入力されていません";
 			flg = false;
 		}
-		if(author.equals("")) {
-			System.out.println("author");
-			flg = false;
-		}
+		
 		if(description.equals("")) {
-			System.out.println("descrption");
+			mes7 = "商品詳細が入力されていません";
 			flg = false;
 		}
-		if(publisher.equals("")) {
-			System.out.println("publisher");
-			flg = false;
-		}
-		if(categoryStr.equals("")) {
-			System.out.println("category");
-			flg = false;
-		}
-		if(fileName.equals("")) {
-			System.out.println("file");
-			flg = false;
-		}
+		
+		request.setAttribute("mes1", mes1);
+		request.setAttribute("mes2", mes2);
+		request.setAttribute("mes3", mes3);
+		request.setAttribute("mes4", mes4);
+		request.setAttribute("mes5", mes5);
+		request.setAttribute("mes6", mes6);
+		request.setAttribute("mes7", mes7);
 		if(flg) {
 			int price = Integer.parseInt(priceStr);
 			int stock = Integer.parseInt(stockStr);
 			int category = Integer.parseInt(categoryStr);
 				
 			InputStream input = filePart.getInputStream();
-			File file = new File("C:/git/bookshop/src/main/webapp/image/" + fileName);
+			File file = new File("C:/git/groupwork/bookshop/src/main/webapp/image/" + fileName);
 			try (FileOutputStream output = new FileOutputStream(file)) {
 				input.transferTo(output);
 			}
@@ -112,7 +130,14 @@ public class ProductRegisterServlet extends HttpServlet {
 			// リダイレクト
 			response.sendRedirect(request.getContextPath() + "/index");
 		}else {
-			response.sendRedirect(request.getContextPath() + "/index");
+			request.setAttribute("title", title);
+			request.setAttribute("author", author);
+			request.setAttribute("publisher", publisher);
+			request.setAttribute("price", priceStr);
+			request.setAttribute("stock", stockStr);
+			request.setAttribute("description",description);
+			RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/jsp/productRegister.jsp");
+			dis.forward(request, response);
 		}
 
 	}

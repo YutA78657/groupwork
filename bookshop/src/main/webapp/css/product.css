@@ -77,7 +77,7 @@ input[type="submit"]:hover {
   line-height: 1.6;
 }
 
-#reco-btn{
-	background-color: #0078d7;
-	color: white;
+
+.mes{
+	color:red;
 }

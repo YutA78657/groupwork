@@ -3,6 +3,19 @@
 <%@ page import="java.util.*, model.*"%>
 <%
 List<Category> clist = (List<Category>) request.getAttribute("clist");
+String mes1 = (String) request.getAttribute("mes1");
+String mes2 = (String) request.getAttribute("mes2");
+String mes3 = (String) request.getAttribute("mes3");
+String mes4 = (String) request.getAttribute("mes4");
+String mes5 = (String) request.getAttribute("mes5");
+String mes6 = (String) request.getAttribute("mes6");
+String mes7 = (String) request.getAttribute("mes7");
+String title = (String)request.getAttribute("title");
+String author = (String)request.getAttribute("author");
+String publisher = (String)request.getAttribute("publisher");
+String price = (String)request.getAttribute("price");
+String stock = (String)request.getAttribute("stock");
+String description = (String)request.getAttribute("description");
 %>
 <!DOCTYPE html>
 <html>
@@ -32,6 +45,13 @@ List<Category> clist = (List<Category>) request.getAttribute("clist");
 					method="post" enctype="multipart/form-data">
 
 					<div id="product-image">
+				<%
+				if (mes1 != null) {
+				%>
+						<div class="mes"><%=mes1%></div>
+				<%
+				}
+				%>
 						<label for="image">商品画像：</label><br>
 						<!-- ファイル選択時にJavaScriptでプレビュー表示 -->
 						<input type="file" id="image" name="image" accept="image/*"
@@ -54,27 +74,69 @@ List<Category> clist = (List<Category>) request.getAttribute("clist");
 					</select><br> <br>
 
 					<!-- タイトル入力 -->
+				<%
+				if (mes2 != null) {
+				%>
+						<div class="mes"><%=mes2%></div>
+				<%
+				}
+				%>
 					<label for="title">タイトル：</label><br> <input type="text"
-						id="title" name="title" size="50"><br> <br>
+						id="title" name="title" size="50" <%if(title != null){ %>value="<%=title%>"<%} %>><br> <br>
 
 					<!-- 著者名入力 -->
+				<%
+				if (mes3 != null) {
+				%>
+						<div class="mes"><%=mes3%></div>
+				<%
+				}
+				%>
 					<label for="author">著者：</label><br> <input type="text"
-						id="author" name="author" size="50"><br> <br>
+						id="author" name="author" size="50" <%if(title != null){ %>value="<%=author%>"<%} %>><br> <br>
 					<!-- 出版社名入力 -->
+				<%
+				if (mes4 != null) {
+				%>
+						<div class="mes"><%=mes4%></div>
+				<%
+				}
+				%>
 					<label for="author">出版社：</label><br> <input type="text"
-						id="author" name="publisher" size="50"><br> <br>
+						id="author" name="publisher" size="50"<%if(title != null){ %> value="<%=publisher%>"<%} %>><br> <br>
 
 					<!-- 価格入力 -->
+				<%
+				if (mes5 != null) {
+				%>
+						<div class="mes"><%=mes5%></div>
+				<%
+				}
+				%>
 					<label for="price">価格（円）：</label><br> <input type="number"
-						id="price" name="price"><br> <br>
+						id="price" name="price" <%if(title != null){ %>value="<%=price%>"<%} %>><br> <br>
 
 					<!-- 在庫数入力 -->
+				<%
+				if (mes6 != null) {
+				%>
+						<div class="mes"><%=mes6%></div>
+				<%
+				}
+				%>
 					<label for="stock">在庫数：</label><br> <input type="number"
-						id="stock" name="stock"><br> <br>
+						id="stock" name="stock" <%if(title != null){ %>value="<%=stock%>"<%} %>><br> <br>
 
 					<!-- 商品詳細入力 -->
+				<%
+				if (mes7 != null) {
+				%>
+						<div class="mes"><%=mes7%></div>
+				<%
+				}
+				%>
 					<label for="description">商品詳細：</label><br>
-					<textarea id="description" name="description" rows="8" cols="60"></textarea>
+					<textarea id="description" name="description" rows="8" cols="60" <%if(title != null){ %>value="<%=description%>"<%} %>></textarea>
 					<br> <br>
 
 					<!-- 登録ボタン -->

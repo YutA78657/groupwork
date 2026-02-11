@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import model.User;
 
 /**
@@ -34,17 +33,44 @@ public class UserRegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
-		User user = new User(email,pass,name);
-		boolean result = logic.RegisterUser.execute(user);
-		if(result) {
-			user = logic.LoginLogic.execute(email, pass);
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser",user );
-			response.sendRedirect(request.getContextPath() + "/index");
+		String mes1 = "";
+		String mes2 = "";
+		String mes3 = "";
+		
+		boolean flg = true;
+		if(name.equals("")) {
+			mes1 = "ユーザネームが入力されていません";
+			flg = false;
+		}
+		if(email.equals("")) {
+			mes2 = "メールアドレスが入力されていません";
+			flg = false;
+		}
+		if(pass.equals("")) {
+			mes3 = "パスワードが入力されていません";
+			flg = false;
+		}
+		request.setAttribute("mes1", mes1);
+		request.setAttribute("mes2", mes2);
+		request.setAttribute("mes3", mes3);
+		if(flg) {
+			User user = new User(email,pass,name);
+			boolean result = logic.RegisterUser.execute(user);
+			if(result) {
+				user = logic.LoginLogic.execute(email, pass);
+				HttpSession session = request.getSession();
+				session.setAttribute("loginUser",user );
+				response.sendRedirect(request.getContextPath() + "/index");
+			}else {
+				RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/userRegister.jsp");
+				dis.forward(request, response);
+			}
 		}else {
+			
 			RequestDispatcher dis = request.getRequestDispatcher("WEB-INF/jsp/userRegister.jsp");
 			dis.forward(request, response);
 		}
+
 	}
 
 }

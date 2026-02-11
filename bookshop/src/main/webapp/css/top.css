@@ -5,6 +5,7 @@
 ========================= */
 .book_img {
   width: auto;
+  max-width: 90%;
   height: 100%;
   display: block;
   margin: auto;
@@ -184,6 +185,10 @@
   flex-wrap: wrap;
 }
 
+
+#mes{
+	margin:auto;
+}
 
 .mes-box{
 	height: 36px;

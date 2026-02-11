@@ -13,7 +13,7 @@
 
 	<!-- ロゴ表示 -->
 	<div class="logo-area">
-		<img src="${pageContext.request.contextPath}/image/material/icon2.png"
+		<img src="${pageContext.request.contextPath}/image/material/icon3.png"
 			alt="サイトロゴ" class="site-logo">
 	</div>
 

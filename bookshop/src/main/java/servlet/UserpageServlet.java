@@ -2,13 +2,12 @@ package servlet;
 
 import java.io.IOException;
 
+import dao.UsersDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import dao.UsersDAO;
 import model.User;
 
 
@@ -29,6 +28,9 @@ public class UserpageServlet extends HttpServlet{
 		String action = request.getParameter("action");
 		UsersDAO dao = new UsersDAO();
 		int id = Integer.parseInt(request.getParameter("id"));
+		String mes1  = "";
+		String mes2  = "";
+		boolean flg = true;
 		if(action.equals("update")) {
 			String name = request.getParameter("name");
 			String mail = request.getParameter("mail");
@@ -37,16 +39,35 @@ public class UserpageServlet extends HttpServlet{
 			String address2 = request.getParameter("address2");
 			String address3 = request.getParameter("address3");
 			int adminFlg = Integer.parseInt(request.getParameter("admin_flg"));
-			User user = new User(id,mail,name,addressNum,address1,address2,address3,adminFlg);
-			boolean result = logic.UserAdminUpdateLogic.execute(user);
-			if(result) {
-				UsersDAO ud = new UsersDAO();
-				user = ud.findById(user.getId());
-				response.sendRedirect(request.getContextPath() + "/admin/userpage?id=" + id);
-			}else {
-				response.sendRedirect(request.getContextPath() + "/top");
+
+			if(name.equals("")) {
+				mes1 = "ユーザネームが入力されていません";
+				flg = false;
 			}
-			
+			if(mail.equals("")) {
+				mes2 = "メールアドレスが入力されていません";
+				flg = false;
+			}
+			request.setAttribute("mes1", mes1);
+			request.setAttribute("mes2", mes2);
+			if(flg) {
+				User user = new User(id,mail,name,addressNum,address1,address2,address3,adminFlg);
+				boolean result = logic.UserAdminUpdateLogic.execute(user);
+				if(result) {
+					UsersDAO ud = new UsersDAO();
+					user = ud.findById(user.getId());
+					response.sendRedirect(request.getContextPath() + "/admin/userpage?id=" + id);
+				}else {
+					response.sendRedirect(request.getContextPath() + "/admin/userpage?id=" + id);
+				}
+
+			}else {
+				User user = dao.findById(id);
+				request.setAttribute("searchUser", user);
+				request.getRequestDispatcher("/WEB-INF/jsp/userpage.jsp")
+				.forward(request, response);
+			}
+
 		}else if(action.equals("delete")) {
 			dao.delete(id);
 			// セッション破棄

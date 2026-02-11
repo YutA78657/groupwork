@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+String mes1 = (String) request.getAttribute("mes1");
+String mes2 = (String) request.getAttribute("mes2");
+String mes3 = (String) request.getAttribute("mes3");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ログイン</title>
+<title>新規作成</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/userRegister.css">
 </head>
@@ -12,7 +17,7 @@
 
 	<!-- ロゴ表示 -->
 	<div class="logo-area">
-		<img src="${pageContext.request.contextPath}/image/material/icon2.png"
+		<img src="${pageContext.request.contextPath}/image/material/icon3.png"
 			alt="サイトロゴ" class="site-logo">
 	</div>
 
@@ -22,13 +27,34 @@
 
 		<form action="userRegister" method="post">
 			<div class="form-group">
+				<%
+				if (mes1 != null) {
+				%>
+				<div class="mes"><%=mes1%></div>
+				<%
+				}
+				%>
 				<label>ユーザーネーム：</label> <input type="text" name="name">
 			</div>
 			<div class="form-group">
+				<%
+				if (mes2 != null) {
+				%>
+				<div class="mes"><%=mes2%></div>
+				<%
+				}
+				%>
 				<label>メールアドレス：</label> <input type="text" name="email">
 			</div>
 
 			<div class="form-group">
+				<%
+				if (mes3 != null) {
+				%>
+				<div class="mes"><%=mes3%></div>
+				<%
+				}
+				%>
 				<label>パスワード：</label> <input type="password" name="pass">
 			</div>
 

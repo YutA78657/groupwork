@@ -139,7 +139,7 @@
                                 <%= order.getStatus().equals("発送準備中") ? "status-preparing" : "" %>
                                 <%= order.getStatus().equals("発送済み") ? "status-shipped" : "" %>
                                 <%= order.getStatus().equals("配達中") ? "status-delivering" : "" %>
-                                <%= order.getStatus().equals("配達済み") ? "status-delivered" : "" %>
+                                <%= order.getStatus().equals("配達完了") ? "status-delivered" : "" %>
                                 <%= order.getStatus().equals("キャンセル") ? "status-cancel" : "" %>
                             ">
 								<%=order.getStatus()%>
