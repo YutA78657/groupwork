@@ -16,7 +16,7 @@ String mes = (String)request.getAttribute("mes");
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/checkPreview.css">
-<title>Insert title here</title>
+<title>購入内容確認</title>
 </head>
 <body>
 	<jsp:include page="header.jsp" />

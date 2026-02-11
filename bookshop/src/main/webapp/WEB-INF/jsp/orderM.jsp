@@ -13,7 +13,7 @@ User user = (User) session.getAttribute("loginUser");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>注文履歴</title>
+<title>注文一覧</title>
 
 <!-- CSS 読み込み -->
 <link rel="stylesheet"

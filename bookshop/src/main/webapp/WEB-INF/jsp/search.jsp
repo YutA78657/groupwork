@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>商品検索</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/top.css">
 <link rel="stylesheet"

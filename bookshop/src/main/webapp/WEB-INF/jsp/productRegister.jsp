@@ -21,7 +21,7 @@ String description = (String)request.getAttribute("description");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品登録 - 管理者画面</title>
+<title>商品登録</title>
 
 <!-- 共通のCSSを読み込み（利用者側と同じデザイン） -->
 <link rel="stylesheet"

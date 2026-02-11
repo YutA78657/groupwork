@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*"%>
+<%Book book = (Book) request.getAttribute("book"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品編集 - 管理者画面</title>
+<title>商品編集 - <%=book.getTitle()%></title>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/product.css">
@@ -30,7 +31,6 @@
 <body>
 	<%
 	List<Category> clist = (List<Category>) request.getAttribute("clist");
-	Book book = (Book) request.getAttribute("book");
 	String mes1 = (String) request.getAttribute("mes1");
 	String mes2 = (String) request.getAttribute("mes2");
 	String mes3 = (String) request.getAttribute("mes3");

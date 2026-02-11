@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品詳細 - 応用情報技術者 試験によくでる問題集</title>
+<title>商品詳細 - <%=book.getTitle() %></title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/product.css">
 <link rel="stylesheet"
@@ -28,7 +28,7 @@
 
 			<div id="product-info">
 				<p class="category">
-					<a href="Category"><%=book.getCname() %></a>
+					<a href="search?categoryName=<%=book.getCname() %>"><%=book.getCname() %></a>
 				</p>
 				<h2 class="title"><%=book.getTitle() %></h2>
 				<p class="author">著者：<%=book.getAuthor() %></p>

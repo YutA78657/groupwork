@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Book Shop - Top</title>
+<title>さんわ書店</title>
 
 <!-- 各種CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/top.css">

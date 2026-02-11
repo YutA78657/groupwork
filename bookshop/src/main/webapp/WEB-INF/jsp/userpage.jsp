@@ -9,7 +9,7 @@ String mes2 = (String) request.getAttribute("mes2");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ユーザ編集</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/mypage.css">
 <link rel="stylesheet"

@@ -2,7 +2,7 @@
 <%@ page import="java.util.*, model.*"%>
 <html>
 <head>
-<title>カートの中身</title>
+<title>カート</title>
 
 <!-- 共通CSS -->
 <link rel="stylesheet" href="css/style.css">
